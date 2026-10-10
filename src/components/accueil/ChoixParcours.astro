@@ -1,0 +1,95 @@
+---
+/**
+ * Choix du parcours : la première décision du visiteur.
+ * Deux grandes cartes (une par parcours), puis deux sorties de secours :
+ * l'appel découverte pour qui hésite, l'e-book pour qui veut avancer seul.
+ * Tous les textes et prix viennent de src/config/offres.ts.
+ */
+import Bouton from '../Bouton.astro';
+import Icon, { type NomIcone } from '../Icon.astro';
+import { offres, formaterPrix, prixMinimum } from '../../config/offres';
+
+const icones: Record<string, NomIcone> = { alternance: 'document', orientation: 'boussole' };
+const appel = offres.appelDecouverte;
+---
+
+<section id="parcours" class="section conteneur" aria-labelledby="parcours-titre">
+  <div class="max-w-2xl">
+    <p class="surtitre">Étape 1</p>
+    <h2 id="parcours-titre" class="mt-3 text-4xl md:text-5xl">Choisis ton parcours</h2>
+  </div>
+
+  <ul class="mt-10 grid gap-5 md:grid-cols-2">
+    {
+      offres.parcours.map((p) => {
+        const min = prixMinimum(p);
+        return (
+          <li>
+            <a
+              href={`/${p.id}`}
+              class="group flex h-full flex-col rounded-carte border border-ligne bg-carte p-6 transition-colors hover:border-encre md:p-8"
+            >
+              <div class="flex items-center justify-between">
+                <span class="inline-flex size-12 items-center justify-center rounded-full bg-sable text-accent">
+                  <Icon nom={icones[p.id] ?? 'fleche'} class="size-6" />
+                </span>
+                <span class="text-sm font-semibold text-gris">Parcours {p.numero}</span>
+              </div>
+
+              <h3 class="mt-6 text-[1.75rem] md:text-3xl">{p.titre}</h3>
+              <p class="mt-3 text-gris">{p.resume}</p>
+
+              <ul class="mt-5 flex flex-wrap gap-2" aria-label="Formules">
+                {p.formules.map((f) => (
+                  <li class="rounded-full border border-ligne px-3 py-1 text-sm font-medium">{f.nom}</li>
+                ))}
+              </ul>
+
+              <div class="mt-auto flex flex-wrap items-end justify-between gap-x-4 gap-y-2 pt-8">
+                <p class="text-gris">
+                  {min !== null ? (
+                    <>
+                      À partir de <strong class="font-titre text-2xl font-extrabold text-encre">{formaterPrix(min)}</strong>
+                    </>
+                  ) : (
+                    <>
+                      {p.formules.length} formules
+                    </>
+                  )}
+                </p>
+                <span class="inline-flex min-h-12 items-center gap-2 font-semibold whitespace-nowrap">
+                  Voir les formules
+                  <Icon nom="fleche" class="size-5 transition-transform group-hover:translate-x-1" />
+                </span>
+              </div>
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+
+  <!-- Pour qui hésite : l'appel découverte -->
+  <div
+    class="mt-5 flex flex-col gap-6 rounded-carte bg-nuit p-6 text-white md:flex-row md:items-center md:justify-between md:p-8"
+  >
+    <div class="max-w-xl">
+      <h3 class="text-2xl md:text-[1.75rem]">Tu hésites entre les deux ?</h3>
+      <p class="mt-2 text-nuit-clair">
+        {appel.nom} : {appel.duree}, en {appel.format.toLowerCase()}, gratuit. {appel.description}
+      </p>
+    </div>
+    <Bouton href={appel.lien} variante="inverse" fleche class="shrink-0" evenement="appel-decouverte-parcours">
+      Réserver mon appel découverte gratuit
+    </Bouton>
+  </div>
+
+  <!-- Pour qui veut avancer seul : l'e-book -->
+  <p class="mt-6 flex flex-wrap items-center gap-x-2 text-gris">
+    <Icon nom="livre" class="size-5" />
+    Tu préfères avancer en autonomie ?
+    <a href="#ebook" class="inline-flex min-h-11 items-center font-semibold text-encre underline decoration-2 underline-offset-4">
+      Découvre l’e-book
+    </a>
+  </p>
+</section>

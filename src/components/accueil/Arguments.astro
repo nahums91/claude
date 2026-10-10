@@ -1,0 +1,44 @@
+---
+/**
+ * Bandeau de 3 arguments, tirés de ton parcours (sans ajout de ma part).
+ * Modifie librement les textes ci-dessous.
+ */
+import Icon, { type NomIcone } from '../Icon.astro';
+
+const arguments_: { icone: NomIcone; titre: string; texte: string }[] = [
+  {
+    icone: 'diplome',
+    titre: 'Étudiant à ICN Business School',
+    texte: 'En dernière année du Programme Grande École, en alternance commerciale dans une grande ESN.',
+  },
+  {
+    icone: 'telephone',
+    titre: 'Ancien SDR',
+    texte: 'Prospection, cold calling, LinkedIn.',
+  },
+  {
+    icone: 'communaute',
+    titre: 'Créateur de contenu',
+    texte:
+      'Plusieurs milliers d’abonnés sur TikTok, Instagram et LinkedIn, pour aider les étudiants à trouver une alternance.',
+  },
+];
+---
+
+<section aria-label="Pourquoi me faire confiance" class="border-y border-ligne bg-carte">
+  <ul class="conteneur grid divide-y divide-ligne md:grid-cols-3 md:divide-x md:divide-y-0">
+    {
+      arguments_.map((a) => (
+        <li class="flex gap-4 py-7 md:flex-col md:gap-3 md:px-8 md:py-10 md:first:pl-0 md:last:pr-0">
+          <span class="inline-flex size-12 shrink-0 items-center justify-center rounded-full border border-ligne bg-sable text-accent">
+            <Icon nom={a.icone} class="size-6" />
+          </span>
+          <div>
+            <h2 class="text-xl">{a.titre}</h2>
+            <p class="mt-1.5 text-gris">{a.texte}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</section>

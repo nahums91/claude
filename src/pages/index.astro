@@ -1,0 +1,17 @@
+---
+/**
+ * Page d'accueil : le tunnel complet, du hero à l'appel à l'action final.
+ * Chaque section est un composant dans src/components/accueil/.
+ */
+import Base from '../layouts/Base.astro';
+import Hero from '../components/accueil/Hero.astro';
+import Arguments from '../components/accueil/Arguments.astro';
+import ChoixParcours from '../components/accueil/ChoixParcours.astro';
+import { site } from '../config/site';
+---
+
+<Base titre={site.nom}>
+  <Hero />
+  <Arguments />
+  <ChoixParcours />
+</Base>

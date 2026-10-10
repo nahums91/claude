@@ -1,0 +1,63 @@
+---
+/**
+ * Bouton en forme de pilule. C'est toujours un vrai lien <a> (on change de page
+ * ou on ouvre Cal.com / Stripe), avec une hauteur minimale de 48 px pour le tactile.
+ *
+ * Variantes :
+ * - principal  : orange, l'action principale (appel découverte, réserver)
+ * - secondaire : contour sombre, action secondaire
+ * - inverse    : blanc, à utiliser sur fond bleu nuit
+ * - contour-inverse : contour clair, action secondaire sur fond bleu nuit
+ */
+import Icon from './Icon.astro';
+
+interface Props {
+  href: string;
+  variante?: 'principal' | 'secondaire' | 'inverse' | 'contour-inverse';
+  /** Affiche une flèche à droite du texte. */
+  fleche?: boolean;
+  /** Le bouton occupe toute la largeur disponible. */
+  pleineLargeur?: boolean;
+  class?: string;
+  /** Texte alternatif plus précis pour les lecteurs d'écran, si besoin. */
+  ariaLabel?: string;
+  /** Nom de l'événement transmis à l'outil de statistiques (data-evenement). */
+  evenement?: string;
+}
+
+const {
+  href,
+  variante = 'principal',
+  fleche = false,
+  pleineLargeur = false,
+  class: classe = '',
+  ariaLabel,
+  evenement,
+} = Astro.props;
+
+const styles = {
+  principal: 'bg-accent text-white hover:bg-accent-fonce',
+  secondaire: 'border-2 border-encre text-encre hover:bg-encre hover:text-sable',
+  inverse: 'bg-white text-nuit hover:bg-sable',
+  'contour-inverse': 'border-2 border-white/70 text-white hover:bg-white hover:text-nuit',
+};
+
+const externe = href.startsWith('http');
+---
+
+<a
+  href={href}
+  class:list={[
+    'inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-5 py-3 text-center text-[0.9375rem] leading-tight font-semibold transition-colors duration-200 sm:px-6 sm:text-base',
+    styles[variante],
+    pleineLargeur && 'w-full',
+    classe,
+  ]}
+  aria-label={ariaLabel}
+  rel={externe ? 'noopener' : undefined}
+  data-evenement={evenement}
+>
+  <slot />
+  {/* La flèche est masquée sur petit écran pour garder le texte sur une ligne */}
+  {fleche && <Icon nom="fleche" class="hidden size-5 shrink-0 sm:block" />}
+</a>

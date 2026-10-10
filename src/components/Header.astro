@@ -1,0 +1,125 @@
+---
+/**
+ * En-tête collant : logo texte, navigation et bouton principal.
+ * Sur mobile, la navigation est repliée derrière un bouton « Menu ».
+ */
+import Bouton from './Bouton.astro';
+import Icon from './Icon.astro';
+import { site } from '../config/site';
+import { offres } from '../config/offres';
+
+const liens = [
+  { href: '/alternance', label: 'Alternance' },
+  { href: '/orientation', label: 'Orientation' },
+  { href: '/#ebook', label: 'E-book' },
+  { href: '/#faq', label: 'FAQ' },
+];
+
+const cheminActuel = Astro.url.pathname.replace(/\.html$/, '');
+---
+
+<header class="sticky top-0 z-40 border-b border-ligne bg-sable/95 backdrop-blur-sm">
+  <div class="conteneur flex h-16 items-center justify-between gap-4 md:h-[4.5rem]">
+    <!-- Logo texte : le point est en couleur d'accent -->
+    <a
+      href="/"
+      class="font-titre -ml-1 inline-flex min-h-11 items-center px-1 text-[1.375rem] font-extrabold tracking-tight"
+      aria-label={`${site.nom}, retour à l'accueil`}
+    >
+      Nahum<span class="text-accent">.</span>Apc
+    </a>
+
+    <!-- Navigation ordinateur -->
+    <nav aria-label="Navigation principale" class="hidden lg:block">
+      <ul class="flex items-center gap-1">
+        {
+          liens.map((l) => (
+            <li>
+              <a
+                href={l.href}
+                class="inline-flex min-h-11 items-center rounded-full px-4 font-medium text-encre transition-colors hover:bg-ligne/70"
+                aria-current={cheminActuel === l.href ? 'page' : undefined}
+              >
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="hidden lg:block">
+      <Bouton href={offres.appelDecouverte.lien} evenement="appel-decouverte-header">
+        Réserver mon appel découverte gratuit
+      </Bouton>
+    </div>
+
+    <!-- Bouton du menu mobile -->
+    <button
+      type="button"
+      class="-mr-2 inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full px-3 font-medium lg:hidden"
+      aria-expanded="false"
+      aria-controls="menu-mobile"
+      data-menu-bouton
+    >
+      <span data-menu-libelle>Menu</span>
+      <Icon nom="menu" class="size-6" />
+    </button>
+  </div>
+
+  <!-- Panneau du menu mobile (masqué par défaut) -->
+  <div id="menu-mobile" class="border-t border-ligne bg-sable lg:hidden" hidden data-menu-panneau>
+    <nav aria-label="Navigation mobile" class="conteneur py-4">
+      <ul class="flex flex-col">
+        {
+          liens.map((l) => (
+            <li>
+              <a
+                href={l.href}
+                class="font-titre flex min-h-14 items-center justify-between border-b border-ligne text-2xl font-extrabold"
+                aria-current={cheminActuel === l.href ? 'page' : undefined}
+              >
+                {l.label}
+                <Icon nom="fleche" class="size-5 text-gris" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="pt-6 pb-2">
+        <Bouton href={offres.appelDecouverte.lien} pleineLargeur evenement="appel-decouverte-menu">
+          Réserver mon appel découverte gratuit
+        </Bouton>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  // Ouverture / fermeture du menu mobile, accessible au clavier.
+  const bouton = document.querySelector<HTMLButtonElement>('[data-menu-bouton]');
+  const panneau = document.querySelector<HTMLElement>('[data-menu-panneau]');
+  const libelle = document.querySelector<HTMLElement>('[data-menu-libelle]');
+
+  function basculer(ouvrir: boolean) {
+    if (!bouton || !panneau) return;
+    bouton.setAttribute('aria-expanded', String(ouvrir));
+    panneau.hidden = !ouvrir;
+    if (libelle) libelle.textContent = ouvrir ? 'Fermer' : 'Menu';
+  }
+
+  bouton?.addEventListener('click', () => {
+    basculer(bouton.getAttribute('aria-expanded') !== 'true');
+  });
+
+  // Fermeture avec Échap, focus rendu au bouton
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && bouton?.getAttribute('aria-expanded') === 'true') {
+      basculer(false);
+      bouton.focus();
+    }
+  });
+
+  // Fermeture quand on clique sur un lien (utile pour les ancres #faq, #ebook)
+  panneau?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => basculer(false)));
+</script>

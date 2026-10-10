@@ -1,0 +1,51 @@
+---
+/**
+ * Hero de l'accueil : accroche, bouton principal, accès aux formules et photo.
+ * Le bloc [data-hero-cta] sert de repère à la barre d'action mobile :
+ * elle n'apparaît qu'une fois ce bouton sorti de l'écran.
+ */
+import Bouton from '../Bouton.astro';
+import Icon from '../Icon.astro';
+import { offres } from '../../config/offres';
+
+const appel = offres.appelDecouverte;
+---
+
+<section class="conteneur pt-10 pb-16 md:pt-16 md:pb-24" aria-labelledby="hero-titre">
+  <div class="grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+    <div>
+      <p class="surtitre">Coaching alternance et orientation</p>
+      <h1 id="hero-titre" class="mt-4 text-[2.5rem] sm:text-6xl lg:text-[4.25rem]">
+        [TITRE DU HERO : ta promesse en une phrase]
+      </h1>
+      <p class="mt-5 max-w-xl text-lg text-gris md:text-xl">
+        [SOUS-TITRE DU HERO : pour qui, quel résultat]
+      </p>
+
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap" data-hero-cta>
+        <Bouton href={appel.lien} fleche evenement="appel-decouverte-hero">
+          Réserver mon appel découverte gratuit
+        </Bouton>
+        <Bouton href="#parcours" variante="secondaire">Voir les formules</Bouton>
+      </div>
+
+      <!-- Rappel des modalités de l'appel, juste sous le bouton -->
+      <ul class="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[0.9375rem] text-gris">
+        <li class="flex items-center gap-2"><Icon nom="horloge" class="size-5" />{appel.duree}</li>
+        <li class="flex items-center gap-2"><Icon nom="visio" class="size-5" />En {appel.format.toLowerCase()}</li>
+        <li class="flex items-center gap-2"><Icon nom="check" class="size-5" />Gratuit</li>
+      </ul>
+    </div>
+
+    <!--
+      Photo de Nahum.
+      Quand tu l'as : dépose-la dans src/assets/nahum.jpg, puis remplace ce bloc par
+      <Image src={photo} alt="[DESCRIPTION DE LA PHOTO]" ... /> (voir README).
+    -->
+    <div
+      class="mx-auto aspect-[4/5] w-full max-w-sm rounded-carte border border-ligne bg-carte lg:max-w-none"
+    >
+      <div class="flex h-full items-center justify-center p-6 text-center text-gris">[PHOTO DE NAHUM]</div>
+    </div>
+  </div>
+</section>

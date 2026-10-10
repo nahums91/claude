@@ -1,0 +1,290 @@
+/**
+ * ============================================================================
+ *  TOUTES LES OFFRES DU SITE
+ * ============================================================================
+ *
+ *  C'est le seul fichier à modifier pour changer un prix, une durée, une
+ *  inclusion ou un lien de réservation. Le site (cartes, tableau comparatif,
+ *  données pour Google) se met à jour tout seul.
+ *
+ *  Règles simples :
+ *  - prix : un nombre (ex. 117) ou un texte entre crochets tant que tu ne l'as
+ *    pas fixé (ex. '[PRIX]'). 0 affiche « Gratuit ».
+ *  - liens : remplace chaque 'https://cal.com/[...]' par ton vrai lien.
+ *  - le texte entre [CROCHETS] est un emplacement à compléter.
+ *
+ *  Si tu fais une erreur de format (ex. un prix négatif, un lien sans https),
+ *  la commande `npm run build` s'arrête et t'indique la ligne à corriger,
+ *  plutôt que de publier une page cassée.
+ * ============================================================================
+ */
+import { z } from 'astro/zod';
+
+/* ---------------------------------------------------------------------------
+ * 1. Appel découverte : la porte d'entrée, bouton principal partout
+ * ------------------------------------------------------------------------- */
+const appelDecouverte = {
+  nom: 'Appel découverte',
+  duree: '20 min',
+  format: 'Visio',
+  prix: 0,
+  description: "J'écoute ta situation et je t'oriente vers la bonne formule.",
+  lien: 'https://cal.com/[TON-COMPTE]/appel-decouverte',
+};
+
+/* ---------------------------------------------------------------------------
+ * 2. Parcours et formules
+ *
+ *  Chaque formule a :
+ *  - id : identifiant technique, ne pas modifier (utilisé dans le tableau)
+ *  - miseEnAvant : true pour la carte bleu nuit (une seule par parcours)
+ *  - reservation.type : 'cal' (rendez-vous Cal.com) ou 'stripe' (paiement direct)
+ * ------------------------------------------------------------------------- */
+const parcours = [
+  {
+    id: 'alternance',
+    numero: 1,
+    titre: 'Décrocher ton alternance',
+    resume:
+      'CV, lettre de motivation, profil LinkedIn, préparation aux entretiens et suivi pendant ta recherche.',
+    formules: [
+      {
+        id: 'essentiel',
+        nom: 'Essentiel',
+        prix: 117,
+        precisionPrix: '',
+        duree: 'Livraison sous 5 jours ouvrés',
+        format: 'Sans visio',
+        description: 'Refonte de ton CV, de ta lettre de motivation et de ton profil LinkedIn.',
+        points: [
+          'Refonte du CV',
+          'Refonte de la lettre de motivation',
+          'Refonte du profil LinkedIn',
+          'Livraison sous 5 jours ouvrés',
+        ],
+        miseEnAvant: false,
+        reservation: {
+          type: 'stripe',
+          libelle: 'Commander',
+          // Lien de paiement Stripe. Après paiement, Stripe redirige vers
+          // /commande-essentiel où la personne envoie ses documents.
+          lien: 'https://buy.stripe.com/[LIEN-ESSENTIEL]',
+        },
+      },
+      {
+        id: 'accompagne',
+        nom: 'Accompagné',
+        prix: '[PRIX]',
+        precisionPrix: '',
+        duree: '[DURÉE DE LA VISIO, ex. 1 h]',
+        format: 'Refonte + visio',
+        description:
+          "La refonte complète, plus une visio de restitution pour t'approprier tes documents et préparer tes entretiens.",
+        points: [
+          'Tout le contenu de la formule Essentiel',
+          'Visio de restitution',
+          'Préparation aux entretiens',
+        ],
+        miseEnAvant: false,
+        reservation: {
+          type: 'cal',
+          libelle: 'Réserver',
+          lien: 'https://cal.com/[TON-COMPTE]/accompagne',
+        },
+      },
+      {
+        id: 'suivi',
+        nom: 'Suivi',
+        prix: '[PRIX]',
+        precisionPrix: '',
+        duree: '[DURÉE DU SUIVI]',
+        format: 'Refonte + visios régulières',
+        description:
+          "L'offre Accompagné, plus des visios de suivi régulières pendant ta recherche et l'accès au groupe privé.",
+        points: [
+          'Tout le contenu de la formule Accompagné',
+          'Visios de suivi régulières pendant ta recherche',
+          'Accès au groupe privé des élèves (Podia)',
+          'Entraide, partage d’offres, motivation',
+        ],
+        miseEnAvant: true,
+        reservation: {
+          type: 'cal',
+          libelle: 'Réserver',
+          lien: 'https://cal.com/[TON-COMPTE]/suivi',
+        },
+      },
+    ],
+    /**
+     * Tableau comparatif. Pour chaque ligne :
+     *   true = inclus, false = non inclus, ou un texte court (ex. '1 visio').
+     * Les clés (essentiel, accompagne, suivi) correspondent aux id ci-dessus.
+     */
+    comparatif: [
+      { critere: 'Refonte du CV', essentiel: true, accompagne: true, suivi: true },
+      { critere: 'Refonte de la lettre de motivation', essentiel: true, accompagne: true, suivi: true },
+      { critere: 'Refonte du profil LinkedIn', essentiel: true, accompagne: true, suivi: true },
+      { critere: 'Visio de restitution', essentiel: false, accompagne: true, suivi: true },
+      { critere: 'Préparation aux entretiens', essentiel: false, accompagne: true, suivi: true },
+      { critere: 'Visios de suivi pendant la recherche', essentiel: false, accompagne: false, suivi: '[RYTHME]' },
+      { critere: 'Groupe privé des élèves (Podia)', essentiel: false, accompagne: false, suivi: true },
+    ],
+  },
+  {
+    id: 'orientation',
+    numero: 2,
+    titre: 'Clarifier ton projet',
+    resume:
+      'Choisir une formation ou une école, ou construire un projet professionnel clair avec un plan d’action.',
+    formules: [
+      {
+        id: 'orientation-scolaire',
+        nom: 'Orientation scolaire',
+        prix: '[PRIX]',
+        precisionPrix: '',
+        duree: '1 h',
+        format: 'Visio, avec un parent ou un proche',
+        description:
+          'Une séance avec toi et un parent ou un proche pour choisir une formation ou une école.',
+        points: [
+          'Séance de 1 h en visio',
+          'Avec un parent ou un proche',
+          'Choix de formation ou d’école',
+        ],
+        miseEnAvant: false,
+        reservation: {
+          type: 'cal',
+          libelle: 'Réserver',
+          lien: 'https://cal.com/[TON-COMPTE]/orientation-scolaire',
+        },
+      },
+      {
+        id: 'orientation-pro',
+        nom: 'Orientation professionnelle',
+        prix: '[PRIX]',
+        precisionPrix: '',
+        duree: '1 h',
+        format: 'Visio',
+        description:
+          'Pour un étudiant qui se sent perdu ou un projet de reconversion : construire un projet clair et un plan d’action.',
+        points: [
+          'Séance de 1 h en visio',
+          'Étudiant perdu ou projet de reconversion',
+          'Projet clair et plan d’action',
+        ],
+        miseEnAvant: false,
+        reservation: {
+          type: 'cal',
+          libelle: 'Réserver',
+          lien: 'https://cal.com/[TON-COMPTE]/orientation-pro',
+        },
+      },
+    ],
+    comparatif: [],
+  },
+];
+
+/* ---------------------------------------------------------------------------
+ * 3. E-book (en autonomie)
+ * ------------------------------------------------------------------------- */
+const ebook = {
+  titre: '[TITRE DE L’E-BOOK]',
+  sousTitre: '[SOUS-TITRE OU PROMESSE DE L’E-BOOK]',
+  prix: '[PRIX]' as number | string,
+  points: ['[CE QUE CONTIENT L’E-BOOK 1]', '[CE QUE CONTIENT L’E-BOOK 2]', '[CE QUE CONTIENT L’E-BOOK 3]'],
+  // Lien d'achat externe : Systeme.io, Gumroad ou Stripe Payment Link.
+  lien: 'https://[LIEN-ACHAT-EBOOK]',
+  // Image de couverture : dépose-la dans /public puis indique son chemin, ex. '/ebook-couverture.webp'.
+  couverture: '',
+};
+
+/* ---------------------------------------------------------------------------
+ * 4. Formulaire de commande Essentiel (envoi des documents après paiement)
+ * ------------------------------------------------------------------------- */
+const commandeEssentiel = {
+  // Lien du formulaire Tally (gratuit, accepte l'envoi de fichiers).
+  lienFormulaire: 'https://tally.so/r/[ID-FORMULAIRE]',
+};
+
+/* ===========================================================================
+ *  Vérification automatique (ne pas modifier en dessous)
+ * ========================================================================= */
+const prixSchema = z.union([z.number().min(0), z.string().min(1)]);
+const lienSchema = z.string().startsWith('https://', 'Un lien doit commencer par https://');
+
+const formuleSchema = z.object({
+  id: z.string(),
+  nom: z.string(),
+  prix: prixSchema,
+  precisionPrix: z.string(),
+  duree: z.string(),
+  format: z.string(),
+  description: z.string(),
+  points: z.array(z.string()),
+  miseEnAvant: z.boolean(),
+  reservation: z.object({
+    type: z.enum(['cal', 'stripe']),
+    libelle: z.string(),
+    lien: lienSchema,
+  }),
+});
+
+const schema = z.object({
+  appelDecouverte: z.object({
+    nom: z.string(),
+    duree: z.string(),
+    format: z.string(),
+    prix: prixSchema,
+    description: z.string(),
+    lien: lienSchema,
+  }),
+  parcours: z.array(
+    z.object({
+      id: z.string(),
+      numero: z.number(),
+      titre: z.string(),
+      resume: z.string(),
+      formules: z.array(formuleSchema).min(1),
+      comparatif: z.array(
+        z.object({ critere: z.string() }).catchall(z.union([z.boolean(), z.string()])),
+      ),
+    }),
+  ),
+  ebook: z.object({
+    titre: z.string(),
+    sousTitre: z.string(),
+    prix: prixSchema,
+    points: z.array(z.string()),
+    lien: lienSchema,
+    couverture: z.string(),
+  }),
+  commandeEssentiel: z.object({ lienFormulaire: lienSchema }),
+});
+
+export const offres = schema.parse({ appelDecouverte, parcours, ebook, commandeEssentiel });
+
+export type Formule = z.infer<typeof formuleSchema>;
+export type Parcours = (typeof offres.parcours)[number];
+
+/* ---------------------------------------------------------------------------
+ *  Petites fonctions utilitaires pour l'affichage
+ * ------------------------------------------------------------------------- */
+
+/** Affiche un prix : 117 → « 117 € », 0 → « Gratuit », '[PRIX]' → « [PRIX] ». */
+export function formaterPrix(prix: number | string): string {
+  if (typeof prix === 'string') return prix;
+  if (prix === 0) return 'Gratuit';
+  return `${prix.toLocaleString('fr-FR')} €`;
+}
+
+/** Plus petit prix connu d'un parcours, pour afficher « à partir de ». */
+export function prixMinimum(p: Parcours): number | null {
+  const prix = p.formules.map((f) => f.prix).filter((x): x is number => typeof x === 'number');
+  return prix.length ? Math.min(...prix) : null;
+}
+
+export function trouverParcours(id: string): Parcours {
+  const p = offres.parcours.find((x) => x.id === id);
+  if (!p) throw new Error(`Parcours introuvable : ${id}`);
+  return p;
+}

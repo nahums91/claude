@@ -1,0 +1,114 @@
+/*
+ * Charte graphique Nahum.Apc
+ * Les couleurs et polices sont déclarées une seule fois ici, sous forme de
+ * variables. Tailwind génère automatiquement les classes correspondantes
+ * (ex. bg-sable, text-accent, font-titre).
+ */
+@import 'tailwindcss';
+
+@theme {
+  /* Couleurs */
+  --color-sable: #f5f1ea; /* fond principal */
+  --color-carte: #fbf9f5; /* fond des cartes, légèrement plus clair que le sable */
+  --color-encre: #15171c; /* texte principal */
+  --color-gris: #57534e; /* texte secondaire (contraste 6,9:1 sur le sable) */
+  --color-ligne: #e4ddd1; /* bordures */
+  --color-accent: #c2410c; /* boutons principaux (texte blanc : 5,2:1) */
+  --color-accent-fonce: #9a3412; /* survol des boutons principaux */
+  --color-nuit: #14213d; /* formule mise en avant */
+  --color-nuit-clair: #c9d1e3; /* texte secondaire sur fond nuit (contraste 10:1) */
+
+  /* Polices (auto-hébergées, voir src/layouts/Base.astro) */
+  --font-titre: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-texte: 'DM Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+  /* Coins arrondis */
+  --radius-carte: 1.5rem; /* 24 px */
+  --radius-petit: 1.25rem; /* 20 px */
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Laisse de la place au header collant lors des sauts d'ancre (#parcours…) */
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    background-color: var(--color-sable);
+    color: var(--color-encre);
+    font-family: var(--font-texte);
+    font-size: 1.0625rem; /* 17 px : confortable sur mobile */
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-titre);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Focus clavier bien visible, uniquement à la navigation au clavier */
+  :focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+@layer components {
+  /* Conteneur centré avec 20 px de marge latérale sur mobile */
+  .conteneur {
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .conteneur {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Espacement vertical généreux entre les sections */
+  .section {
+    padding-block: 4.5rem;
+  }
+  @media (min-width: 768px) {
+    .section {
+      padding-block: 6.5rem;
+    }
+  }
+
+  /* Petit libellé au-dessus des titres de section */
+  .surtitre {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-gris);
+  }
+}
