@@ -1,7 +1,8 @@
 ---
 /**
- * Bandeau de 3 arguments, tirés de ton parcours (sans ajout de ma part).
+ * 3 arguments, tirés de ton parcours (sans ajout de ma part).
  * Modifie librement les textes ci-dessous.
+ * Motion : les cartes apparaissent l'une après l'autre au défilement.
  */
 import Icon, { type NomIcone } from '../Icon.astro';
 
@@ -25,18 +26,20 @@ const arguments_: { icone: NomIcone; titre: string; texte: string }[] = [
 ];
 ---
 
-<section aria-label="Pourquoi me faire confiance" class="border-y border-ligne bg-carte">
-  <ul class="conteneur grid divide-y divide-ligne md:grid-cols-3 md:divide-x md:divide-y-0">
+<section aria-label="Pourquoi me faire confiance" class="conteneur pt-16 md:pt-24">
+  <ul class="grid gap-4 md:grid-cols-3">
     {
-      arguments_.map((a) => (
-        <li class="flex gap-4 py-7 md:flex-col md:gap-3 md:px-8 md:py-10 md:first:pl-0 md:last:pr-0">
-          <span class="inline-flex size-12 shrink-0 items-center justify-center rounded-full border border-ligne bg-sable text-accent">
-            <Icon nom={a.icone} class="size-6" />
+      arguments_.map((a, i) => (
+        <li
+          class="rounded-carte border border-ligne bg-surface p-6 md:p-7"
+          data-reveal
+          style={`--delai: ${i * 100}ms`}
+        >
+          <span class="inline-flex size-11 items-center justify-center rounded-2xl bg-vif text-encre">
+            <Icon nom={a.icone} class="size-5" />
           </span>
-          <div>
-            <h2 class="text-xl">{a.titre}</h2>
-            <p class="mt-1.5 text-gris">{a.texte}</p>
-          </div>
+          <h2 class="mt-6 text-xl tracking-[-0.03em] md:text-[1.375rem]">{a.titre}</h2>
+          <p class="mt-2 text-gris">{a.texte}</p>
         </li>
       ))
     }

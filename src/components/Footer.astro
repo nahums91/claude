@@ -38,7 +38,7 @@ const annee = new Date().getFullYear();
   <div class="conteneur">
     <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
       <div>
-        <a href="/" class="font-titre inline-flex min-h-11 items-center text-2xl font-extrabold tracking-tight">
+        <a href="/" class="font-titre inline-flex min-h-11 items-center text-2xl font-bold tracking-[-0.05em]">
           Nahum<span class="text-accent">.</span>Apc
         </a>
         <p class="mt-2 max-w-xs text-gris">Coaching alternance et orientation.</p>
@@ -74,7 +74,7 @@ const annee = new Date().getFullYear();
       {
         colonnes.map((c) => (
           <nav aria-label={c.titre}>
-            <h2 class="surtitre">{c.titre}</h2>
+            <h2 class="text-sm font-medium text-gris">{c.titre}</h2>
             <ul class="mt-3">
               {c.liens.map((l) => (
                 <li>

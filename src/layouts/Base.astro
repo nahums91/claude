@@ -7,12 +7,14 @@
  *   plus celles propres à chaque page : Service, FAQPage…)
  * - en-tête, pied de page et lien d'évitement pour la navigation au clavier
  */
-import '@fontsource-variable/bricolage-grotesque';
-import '@fontsource-variable/dm-sans';
+import '@fontsource-variable/geist';
+// Instrument Serif : uniquement l'italique, pour les mots mis en valeur
+import '@fontsource/instrument-serif/400-italic.css';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import BarreMobile from '../components/BarreMobile.astro';
+import Animations from '../components/Animations.astro';
 import { site } from '../config/site';
 
 interface Props {
@@ -65,7 +67,10 @@ const organisation = {
     {noindex && <meta name="robots" content="noindex, follow" />}
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#F5F1EA" />
+    <meta name="theme-color" content="#FAFAF7" />
+
+    <!-- Signale que JavaScript est actif : les animations d'apparition peuvent démarrer masquées -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
 
     <!-- Open Graph : aperçu sur Instagram, LinkedIn, WhatsApp… -->
     <meta property="og:type" content="website" />
@@ -91,7 +96,7 @@ const organisation = {
   <body class="min-h-dvh">
     <a
       href="#contenu"
-      class="sr-only z-50 rounded-full bg-encre px-5 py-3 text-sable focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+      class="sr-only z-50 rounded-full bg-encre px-5 py-3 text-fond focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
     >
       Aller au contenu
     </a>
@@ -101,5 +106,6 @@ const organisation = {
     </main>
     <Footer />
     <BarreMobile />
+    <Animations />
   </body>
 </html>

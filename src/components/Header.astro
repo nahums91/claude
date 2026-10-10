@@ -18,12 +18,12 @@ const liens = [
 const cheminActuel = Astro.url.pathname.replace(/\.html$/, '');
 ---
 
-<header class="sticky top-0 z-40 border-b border-ligne bg-sable/95 backdrop-blur-sm">
+<header class="sticky top-0 z-40 border-b border-ligne/70 bg-fond/80 backdrop-blur-md">
   <div class="conteneur flex h-16 items-center justify-between gap-4 md:h-[4.5rem]">
     <!-- Logo texte : le point est en couleur d'accent -->
     <a
       href="/"
-      class="font-titre -ml-1 inline-flex min-h-11 items-center px-1 text-[1.375rem] font-extrabold tracking-tight"
+      class="font-titre -ml-1 inline-flex min-h-11 items-center px-1 text-[1.375rem] font-bold tracking-[-0.05em]"
       aria-label={`${site.nom}, retour à l'accueil`}
     >
       Nahum<span class="text-accent">.</span>Apc
@@ -37,7 +37,7 @@ const cheminActuel = Astro.url.pathname.replace(/\.html$/, '');
             <li>
               <a
                 href={l.href}
-                class="inline-flex min-h-11 items-center rounded-full px-4 font-medium text-encre transition-colors hover:bg-ligne/70"
+                class="inline-flex min-h-11 items-center rounded-full px-4 font-medium text-encre transition-colors hover:bg-encre/5"
                 aria-current={cheminActuel === l.href ? 'page' : undefined}
               >
                 {l.label}
@@ -68,15 +68,15 @@ const cheminActuel = Astro.url.pathname.replace(/\.html$/, '');
   </div>
 
   <!-- Panneau du menu mobile (masqué par défaut) -->
-  <div id="menu-mobile" class="border-t border-ligne bg-sable lg:hidden" hidden data-menu-panneau>
-    <nav aria-label="Navigation mobile" class="conteneur py-4">
+  <div id="menu-mobile" class="border-t border-ligne bg-fond lg:hidden" hidden data-menu-panneau>
+    <nav aria-label="Navigation mobile" class="conteneur anim-entree py-4" style="--delai: 0ms">
       <ul class="flex flex-col">
         {
           liens.map((l) => (
             <li>
               <a
                 href={l.href}
-                class="font-titre flex min-h-14 items-center justify-between border-b border-ligne text-2xl font-extrabold"
+                class="font-titre flex min-h-14 items-center justify-between border-b border-ligne text-2xl font-semibold tracking-[-0.04em]"
                 aria-current={cheminActuel === l.href ? 'page' : undefined}
               >
                 {l.label}

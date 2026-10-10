@@ -6,8 +6,10 @@
  * Variantes :
  * - principal  : orange, l'action principale (appel découverte, réserver)
  * - secondaire : contour sombre, action secondaire
- * - inverse    : blanc, à utiliser sur fond bleu nuit
- * - contour-inverse : contour clair, action secondaire sur fond bleu nuit
+ * - inverse    : blanc, à utiliser sur fond sombre
+ * - contour-inverse : contour clair, action secondaire sur fond sombre
+ *
+ * Micro-animations : la flèche glisse au survol, le bouton s'enfonce au toucher.
  */
 import Icon from './Icon.astro';
 
@@ -37,9 +39,9 @@ const {
 
 const styles = {
   principal: 'bg-accent text-white hover:bg-accent-fonce',
-  secondaire: 'border-2 border-encre text-encre hover:bg-encre hover:text-sable',
-  inverse: 'bg-white text-nuit hover:bg-sable',
-  'contour-inverse': 'border-2 border-white/70 text-white hover:bg-white hover:text-nuit',
+  secondaire: 'border border-encre/15 bg-surface text-encre hover:border-encre',
+  inverse: 'bg-white text-encre hover:bg-vif',
+  'contour-inverse': 'border border-white/40 text-white hover:bg-white hover:text-encre',
 };
 
 const externe = href.startsWith('http');
@@ -48,7 +50,7 @@ const externe = href.startsWith('http');
 <a
   href={href}
   class:list={[
-    'inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-5 py-3 text-center text-[0.9375rem] leading-tight font-semibold transition-colors duration-200 sm:px-6 sm:text-base',
+    'group/bouton inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-5 py-3 text-center text-[0.9375rem] leading-tight font-medium tracking-[-0.01em] transition-[background-color,border-color,color,transform] duration-300 ease-(--ease-douce) active:scale-[0.97] sm:px-6 sm:text-base',
     styles[variante],
     pleineLargeur && 'w-full',
     classe,
@@ -59,5 +61,5 @@ const externe = href.startsWith('http');
 >
   <slot />
   {/* La flèche est masquée sur petit écran pour garder le texte sur une ligne */}
-  {fleche && <Icon nom="fleche" class="hidden size-5 shrink-0 sm:block" />}
+  {fleche && <Icon nom="fleche" class="hidden size-5 shrink-0 transition-transform duration-300 ease-(--ease-douce) group-hover/bouton:translate-x-1 sm:block" />}
 </a>

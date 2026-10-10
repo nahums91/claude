@@ -4,6 +4,8 @@
  * Deux grandes cartes (une par parcours), puis deux sorties de secours :
  * l'appel découverte pour qui hésite, l'e-book pour qui veut avancer seul.
  * Tous les textes et prix viennent de src/config/offres.ts.
+ * Motion : apparition au défilement, carte qui se soulève et flèche qui se
+ * remplit au survol.
  */
 import Bouton from '../Bouton.astro';
 import Icon, { type NomIcone } from '../Icon.astro';
@@ -14,9 +16,9 @@ const appel = offres.appelDecouverte;
 ---
 
 <section id="parcours" class="section conteneur" aria-labelledby="parcours-titre">
-  <div class="max-w-2xl">
+  <div class="max-w-2xl" data-reveal>
     <p class="surtitre">Étape 1</p>
-    <h2 id="parcours-titre" class="mt-3 text-4xl md:text-5xl">Choisis ton parcours</h2>
+    <h2 id="parcours-titre" class="mt-5 text-[2.5rem] md:text-6xl">Choisis ton <em>parcours</em></h2>
   </div>
 
   <ul class="mt-10 grid gap-5 md:grid-cols-2">
@@ -24,19 +26,19 @@ const appel = offres.appelDecouverte;
       offres.parcours.map((p) => {
         const min = prixMinimum(p);
         return (
-          <li>
+          <li data-reveal style={`--delai: ${(p.numero - 1) * 120}ms`}>
             <a
               href={`/${p.id}`}
-              class="group flex h-full flex-col rounded-carte border border-ligne bg-carte p-6 transition-colors hover:border-encre md:p-8"
+              class="group flex h-full flex-col rounded-carte border border-ligne bg-surface p-6 transition-[transform,box-shadow,border-color] duration-500 ease-(--ease-douce) hover:-translate-y-1.5 hover:border-encre/20 hover:shadow-[0_24px_60px_-28px_rgb(11_11_15/0.35)] md:p-8"
             >
               <div class="flex items-center justify-between">
-                <span class="inline-flex size-12 items-center justify-center rounded-full bg-sable text-accent">
+                <span class="inline-flex size-12 items-center justify-center rounded-2xl bg-vif text-encre">
                   <Icon nom={icones[p.id] ?? 'fleche'} class="size-6" />
                 </span>
-                <span class="text-sm font-semibold text-gris">Parcours {p.numero}</span>
+                <span class="font-titre text-sm font-medium text-gris tabular-nums">0{p.numero}</span>
               </div>
 
-              <h3 class="mt-6 text-[1.75rem] md:text-3xl">{p.titre}</h3>
+              <h3 class="mt-8 text-[1.875rem] md:text-4xl">{p.titre}</h3>
               <p class="mt-3 text-gris">{p.resume}</p>
 
               <ul class="mt-5 flex flex-wrap gap-2" aria-label="Formules">
@@ -49,7 +51,7 @@ const appel = offres.appelDecouverte;
                 <p class="text-gris">
                   {min !== null ? (
                     <>
-                      À partir de <strong class="font-titre text-2xl font-extrabold text-encre">{formaterPrix(min)}</strong>
+                      À partir de <strong class="font-titre text-2xl font-bold tracking-[-0.04em] text-encre">{formaterPrix(min)}</strong>
                     </>
                   ) : (
                     <>
@@ -57,9 +59,11 @@ const appel = offres.appelDecouverte;
                     </>
                   )}
                 </p>
-                <span class="inline-flex min-h-12 items-center gap-2 font-semibold whitespace-nowrap">
+                <span class="inline-flex min-h-12 items-center gap-3 font-medium whitespace-nowrap">
                   Voir les formules
-                  <Icon nom="fleche" class="size-5 transition-transform group-hover:translate-x-1" />
+                  <span class="inline-flex size-10 items-center justify-center rounded-full border border-ligne transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-white">
+                    <Icon nom="fleche" class="size-5 transition-transform duration-300 group-hover:-rotate-45" />
+                  </span>
                 </span>
               </div>
             </a>
@@ -71,11 +75,13 @@ const appel = offres.appelDecouverte;
 
   <!-- Pour qui hésite : l'appel découverte -->
   <div
-    class="mt-5 flex flex-col gap-6 rounded-carte bg-nuit p-6 text-white md:flex-row md:items-center md:justify-between md:p-8"
+    class="mt-4 flex flex-col gap-6 rounded-carte bg-sombre p-6 text-white md:flex-row md:items-center md:justify-between md:p-10"
+    data-reveal
+    style="--delai: 240ms"
   >
     <div class="max-w-xl">
-      <h3 class="text-2xl md:text-[1.75rem]">Tu hésites entre les deux ?</h3>
-      <p class="mt-2 text-nuit-clair">
+      <h3 class="text-[1.75rem] md:text-4xl">Tu hésites entre <em class="text-vif">les deux</em> ?</h3>
+      <p class="mt-2 text-sombre-doux">
         {appel.nom} : {appel.duree}, en {appel.format.toLowerCase()}, gratuit. {appel.description}
       </p>
     </div>
@@ -85,10 +91,10 @@ const appel = offres.appelDecouverte;
   </div>
 
   <!-- Pour qui veut avancer seul : l'e-book -->
-  <p class="mt-6 flex flex-wrap items-center gap-x-2 text-gris">
+  <p class="mt-6 flex flex-wrap items-center gap-x-2 text-gris" data-reveal style="--delai: 300ms">
     <Icon nom="livre" class="size-5" />
     Tu préfères avancer en autonomie ?
-    <a href="#ebook" class="inline-flex min-h-11 items-center font-semibold text-encre underline decoration-2 underline-offset-4">
+    <a href="#ebook" class="inline-flex min-h-11 items-center font-medium text-encre underline decoration-accent decoration-2 underline-offset-4">
       Découvre l’e-book
     </a>
   </p>

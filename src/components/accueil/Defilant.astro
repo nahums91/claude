@@ -1,0 +1,37 @@
+---
+/**
+ * Bandeau défilant sous le hero : ce que couvrent les accompagnements.
+ * La liste est doublée pour que la boucle soit continue ; la copie est
+ * masquée des lecteurs d'écran. Pause au survol, immobile si l'utilisateur
+ * a demandé à réduire les animations.
+ */
+const elements = [
+  'Refonte du CV',
+  'Lettre de motivation',
+  'Profil LinkedIn',
+  'Préparation aux entretiens',
+  'Suivi pendant ta recherche',
+  'Orientation scolaire',
+  'Orientation professionnelle',
+  'Groupe privé',
+];
+---
+
+<section class="defilant overflow-hidden bg-sombre py-5 text-white md:py-6" aria-label="Ce que couvrent les accompagnements">
+  <div class="defilant-piste animate-defilement flex w-max">
+    {
+      [0, 1].map((copie) => (
+        <ul class="flex shrink-0 items-center" aria-hidden={copie === 1 ? 'true' : undefined}>
+          {elements.map((e) => (
+            <li class="flex items-center text-xl font-medium tracking-[-0.03em] whitespace-nowrap md:text-2xl">
+              <span class="px-6 md:px-8">{e}</span>
+              <svg class="size-5 text-vif" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                <path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4" />
+              </svg>
+            </li>
+          ))}
+        </ul>
+      ))
+    }
+  </div>
+</section>
