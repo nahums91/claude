@@ -18,7 +18,7 @@ export const site = {
   prenom: 'Nahum',
   /** Description par défaut, utilisée par Google et lors des partages. 150 à 160 caractères. */
   descriptionParDefaut:
-    'Coaching alternance et orientation : CV, lettre de motivation, LinkedIn, entretiens, choix de formation. Réserve ton appel découverte gratuit de 20 min.',
+    'Coaching alternance et orientation : CV, lettre de motivation, LinkedIn, entretiens, choix de formation. Réservez votre appel découverte gratuit de 20 min.',
   langue: 'fr-FR',
 
   contact: {

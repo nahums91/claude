@@ -28,7 +28,7 @@ const appelDecouverte = {
   duree: '20 min',
   format: 'Visio',
   prix: 0,
-  description: "J'écoute ta situation et je t'oriente vers la bonne formule.",
+  description: "J'écoute votre situation et je vous oriente vers la bonne formule.",
   lien: 'https://cal.com/[TON-COMPTE]/appel-decouverte',
 };
 
@@ -44,9 +44,9 @@ const parcours = [
   {
     id: 'alternance',
     numero: 1,
-    titre: 'Décrocher ton alternance',
+    titre: 'Décrocher votre alternance',
     resume:
-      'CV, lettre de motivation, profil LinkedIn, préparation aux entretiens et suivi pendant ta recherche.',
+      'CV, lettre de motivation, profil LinkedIn, préparation aux entretiens et suivi pendant votre recherche.',
     pourQui: 'les étudiants en recherche d’alternance.',
     formules: [
       {
@@ -56,7 +56,7 @@ const parcours = [
         precisionPrix: '',
         duree: 'Livraison sous 5 jours ouvrés',
         format: 'Sans visio',
-        description: 'Refonte de ton CV, de ta lettre de motivation et de ton profil LinkedIn.',
+        description: 'Refonte de votre CV, de votre lettre de motivation et de votre profil LinkedIn.',
         points: [
           'Refonte du CV',
           'Refonte de la lettre de motivation',
@@ -80,7 +80,7 @@ const parcours = [
         duree: '[DURÉE DE LA VISIO, ex. 1 h]',
         format: 'Refonte + visio',
         description:
-          "La refonte complète, plus une visio de restitution pour t'approprier tes documents et préparer tes entretiens.",
+          "La refonte complète, plus une visio de restitution pour vous approprier vos documents et préparer vos entretiens.",
         points: [
           'Tout le contenu de la formule Essentiel',
           'Visio de restitution',
@@ -101,10 +101,10 @@ const parcours = [
         duree: '[DURÉE DU SUIVI]',
         format: 'Refonte + visios régulières',
         description:
-          "L'offre Accompagné, plus des visios de suivi régulières pendant ta recherche et l'accès au groupe privé.",
+          "L'offre Accompagné, plus des visios de suivi régulières pendant votre recherche et l'accès au groupe privé.",
         points: [
           'Tout le contenu de la formule Accompagné',
-          'Visios de suivi régulières pendant ta recherche',
+          'Visios de suivi régulières pendant votre recherche',
           'Accès au groupe privé des élèves (Podia)',
           'Entraide, partage d’offres, motivation',
         ],
@@ -134,7 +134,7 @@ const parcours = [
   {
     id: 'orientation',
     numero: 2,
-    titre: 'Clarifier ton projet',
+    titre: 'Clarifier votre projet',
     resume:
       'Choisir une formation ou une école, ou construire un projet professionnel clair avec un plan d’action.',
     pourQui: 'les étudiants (avec un parent ou un proche s’ils le souhaitent) et les projets de reconversion.',
@@ -147,7 +147,7 @@ const parcours = [
         duree: '1 h',
         format: 'Visio, avec un parent ou un proche',
         description:
-          'Une séance avec toi et un parent ou un proche pour choisir une formation ou une école.',
+          'Une séance avec l’étudiant et un parent ou un proche pour choisir une formation ou une école.',
         points: [
           'Séance de 1 h en visio',
           'Avec un parent ou un proche',
