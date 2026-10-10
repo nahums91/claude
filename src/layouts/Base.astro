@@ -7,6 +7,7 @@
  *   plus celles propres à chaque page : Service, FAQPage…)
  * - en-tête, pied de page et lien d'évitement pour la navigation au clavier
  */
+import '@fontsource-variable/bricolage-grotesque';
 import '@fontsource-variable/geist';
 import '@fontsource-variable/geist-mono';
 // Instrument Serif : uniquement l'italique, pour les mots mis en valeur
@@ -29,12 +30,6 @@ interface Props {
   jsonLd?: Record<string, unknown>[];
   /** true pour exclure la page des moteurs de recherche. */
   noindex?: boolean;
-  /**
-   * true si la page commence par une section pleine hauteur qui passe sous
-   * l'en-tête flottant (comme le hero de l'accueil). Sinon, un espace est
-   * ajouté en haut pour que l'en-tête ne cache pas le contenu.
-   */
-  sousEntete?: boolean;
 }
 
 const {
@@ -43,7 +38,6 @@ const {
   image = '/og.png',
   jsonLd = [],
   noindex = false,
-  sousEntete = false,
 } = Astro.props;
 
 const titreComplet = titre === site.nom ? titre : `${titre} | ${site.nom}`;
@@ -75,7 +69,7 @@ const organisation = {
     {noindex && <meta name="robots" content="noindex, follow" />}
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#0E1626" />
+    <meta name="theme-color" content="#FBFAF7" />
 
     <!-- Signale que JavaScript est actif : les animations d'apparition peuvent démarrer masquées -->
     <script is:inline>document.documentElement.classList.add('js');</script>
@@ -109,7 +103,7 @@ const organisation = {
       Aller au contenu
     </a>
     <Header />
-    <main id="contenu" class:list={[!sousEntete && 'pt-24 md:pt-28']}>
+    <main id="contenu">
       <slot />
     </main>
     <Footer />

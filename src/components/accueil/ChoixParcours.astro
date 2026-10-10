@@ -32,7 +32,7 @@ const appel = offres.appelDecouverte;
               class="group flex h-full flex-col rounded-carte border border-ligne bg-surface p-6 transition-[transform,box-shadow,border-color] duration-500 ease-(--ease-douce) hover:-translate-y-1.5 hover:border-encre/20 hover:shadow-[0_24px_60px_-28px_rgb(11_11_15/0.35)] md:p-8"
             >
               <div class="flex items-center justify-between">
-                <span class="inline-flex size-12 items-center justify-center rounded-xl bg-accent-doux text-accent-fonce">
+                <span class="inline-flex size-12 items-center justify-center rounded-xl bg-accent-doux text-accent">
                   <Icon nom={icones[p.id] ?? 'fleche'} class="size-6" />
                 </span>
                 <span class="mono text-gris">Parcours 0{p.numero}</span>
@@ -41,13 +41,13 @@ const appel = offres.appelDecouverte;
               <h3 class="mt-8 text-[1.875rem] md:text-4xl">{p.titre}</h3>
               <p class="mt-3 text-gris">{p.resume}</p>
               <p class="mt-4 flex gap-2 text-[0.9375rem]">
-                <Icon nom="communaute" class="mt-0.5 size-5 shrink-0 text-accent-fonce" />
+                <Icon nom="communaute" class="mt-0.5 size-5 shrink-0 text-accent" />
                 <span><span class="font-medium">Pour qui :</span> {p.pourQui}</span>
               </p>
 
               <ul class="mt-5 flex flex-wrap gap-2" aria-label="Formules">
                 {p.formules.map((f) => (
-                  <li class="mono rounded-md border border-ligne px-2.5 py-1.5 text-[0.6875rem]">{f.nom}</li>
+                  <li class="rounded-full border border-ligne px-3 py-1 text-sm font-medium">{f.nom}</li>
                 ))}
               </ul>
 
@@ -55,7 +55,7 @@ const appel = offres.appelDecouverte;
                 <p class="text-gris">
                   {min !== null ? (
                     <>
-                      À partir de <strong class="font-titre text-3xl font-medium tracking-[-0.04em] text-encre">{formaterPrix(min)}</strong>
+                      À partir de <strong class="font-titre text-3xl font-bold tracking-[-0.04em] text-encre">{formaterPrix(min)}</strong>
                     </>
                   ) : (
                     <>
@@ -65,7 +65,7 @@ const appel = offres.appelDecouverte;
                 </p>
                 <span class="inline-flex min-h-12 items-center gap-3 font-medium whitespace-nowrap">
                   Voir les formules
-                  <span class="inline-flex size-10 items-center justify-center rounded-bouton border border-ligne transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-encre">
+                  <span class="inline-flex size-10 items-center justify-center rounded-bouton border border-ligne transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-creme">
                     <Icon nom="fleche" class="size-5 transition-transform duration-300 group-hover:-rotate-45" />
                   </span>
                 </span>
@@ -98,7 +98,7 @@ const appel = offres.appelDecouverte;
   <p class="mt-6 flex flex-wrap items-center gap-x-2 text-gris" data-reveal style="--delai: 300ms">
     <Icon nom="livre" class="size-5" />
     Vous préférez avancer en autonomie ?
-    <a href="#ebook" class="inline-flex min-h-11 items-center font-medium text-encre underline decoration-accent-fonce decoration-1 underline-offset-4">
+    <a href="#ebook" class="inline-flex min-h-11 items-center font-medium text-encre underline decoration-soleil decoration-[3px] underline-offset-4">
       Découvrir l’e-book
     </a>
   </p>

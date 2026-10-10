@@ -45,7 +45,7 @@ const garanties: { icone: NomIcone; texte: string }[] = [
           style={`--delai: ${i * 100}ms`}
         >
           <div class="flex items-center justify-between">
-            <span class="inline-flex size-11 items-center justify-center rounded-xl bg-accent-doux text-accent-fonce">
+            <span class="inline-flex size-11 items-center justify-center rounded-xl bg-accent-doux text-accent">
               <Icon nom={a.icone} class="size-5" />
             </span>
             <span class="mono text-gris">0{i + 1}</span>
@@ -58,7 +58,7 @@ const garanties: { icone: NomIcone; texte: string }[] = [
   </ul>
 
   <ul
-    class="mt-4 grid gap-x-8 gap-y-3 rounded-carte border border-ligne px-6 py-5 sm:grid-cols-3 md:px-7"
+    class="mt-4 grid gap-x-8 gap-y-3 rounded-carte bg-pale px-6 py-5 sm:grid-cols-3 md:px-7"
     aria-label="Garanties"
     data-reveal
     style="--delai: 300ms"
@@ -66,7 +66,7 @@ const garanties: { icone: NomIcone; texte: string }[] = [
     {
       garanties.map((g) => (
         <li class="flex items-center gap-3 text-[0.9375rem] font-medium">
-          <Icon nom={g.icone} class="size-5 shrink-0 text-accent-fonce" />
+          <Icon nom={g.icone} class="size-5 shrink-0 text-accent" />
           {g.texte}
         </li>
       ))

@@ -1,12 +1,12 @@
 ---
 /**
- * Bouton rectangulaire aux coins arrondis. C'est toujours un vrai lien <a> (on change de page
+ * Bouton en forme de pilule. C'est toujours un vrai lien <a> (on change de page
  * ou on ouvre Cal.com / Stripe), avec une hauteur minimale de 48 px pour le tactile.
  *
  * Variantes :
- * - principal  : cuivre, l'action principale (appel découverte, réserver)
- * - secondaire : contour bleu nuit, action secondaire sur fond clair
- * - inverse    : blanc, à utiliser sur fond sombre
+ * - principal  : vert sapin, l'action principale (appel découverte, réserver)
+ * - secondaire : contour, action secondaire sur fond clair
+ * - inverse    : jaune soleil, à utiliser sur fond sombre
  * - contour-inverse : contour clair, action secondaire sur fond sombre
  *
  * Micro-animations : la flèche glisse au survol, le bouton s'enfonce au toucher.
@@ -38,9 +38,9 @@ const {
 } = Astro.props;
 
 const styles = {
-  principal: 'bg-accent text-encre hover:bg-accent-fonce hover:text-creme',
-  secondaire: 'border border-encre/25 text-encre hover:border-encre hover:bg-encre hover:text-creme',
-  inverse: 'bg-creme text-encre hover:bg-accent',
+  principal: 'bg-accent text-creme hover:bg-accent-fonce',
+  secondaire: 'border border-encre/20 bg-surface text-encre hover:border-encre',
+  inverse: 'bg-soleil text-encre hover:bg-creme',
   'contour-inverse': 'border border-creme/30 text-creme hover:border-creme hover:bg-creme hover:text-encre',
 };
 

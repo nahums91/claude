@@ -14,8 +14,6 @@ const e = offres.ebook;
 
 <section id="ebook" class="section conteneur" aria-labelledby="titre-ebook">
   <div class="fond-sombre relative isolate grid items-center gap-12 overflow-hidden rounded-[2rem] bg-sombre p-6 text-creme sm:p-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:p-16">
-    <div class="motif-points absolute inset-0 -z-10 text-creme/[0.06]" aria-hidden="true"></div>
-
     <!-- Couverture -->
     <div class="mx-auto w-full max-w-[17rem]" data-reveal>
       {
@@ -30,12 +28,12 @@ const e = offres.ebook;
           />
         ) : (
           <div
-            class="flex aspect-[3/4] -rotate-3 flex-col justify-between rounded-xl bg-fond p-6 text-encre shadow-[0_30px_60px_-20px_rgb(0_0_0/0.6)] transition-transform duration-500 ease-(--ease-douce) hover:rotate-0"
+            class="flex aspect-[3/4] -rotate-3 flex-col justify-between rounded-xl border-l-[10px] border-accent bg-fond p-6 text-encre shadow-[0_30px_60px_-20px_rgb(0_0_0/0.6)] transition-transform duration-500 ease-(--ease-douce) hover:rotate-0"
             aria-hidden="true"
           >
-            <span class="inline-flex size-10 items-center justify-center rounded-md border border-accent-fonce/60 font-serif text-2xl text-accent-fonce italic">N</span>
+            <span class="inline-flex size-10 items-center justify-center rounded-full bg-soleil text-encre"><Icon nom="livre" class="size-5" /></span>
             <div>
-              <p class="font-titre text-2xl leading-tight font-medium tracking-[-0.03em]">{e.titre}</p>
+              <p class="font-titre text-2xl leading-tight font-bold tracking-[-0.03em]">{e.titre}</p>
               <p class="mono mt-4 text-[0.625rem] text-gris">{site.nom}</p>
             </div>
           </div>
@@ -53,7 +51,7 @@ const e = offres.ebook;
         {
           e.points.map((point) => (
             <li class="flex gap-3">
-              <span class="mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-accent text-encre">
+              <span class="mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-soleil text-encre">
                 <Icon nom="check" class="size-3.5" />
               </span>
               {point}
@@ -63,7 +61,7 @@ const e = offres.ebook;
       </ul>
 
       <div class="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
-        <p class="font-titre text-5xl font-medium tracking-[-0.045em]">{formaterPrix(e.prix)}</p>
+        <p class="font-titre text-5xl font-bold tracking-[-0.04em]">{formaterPrix(e.prix)}</p>
         <Bouton href={e.lien} variante="inverse" fleche evenement="ebook-achat">Acheter l’e-book</Bouton>
       </div>
     </div>

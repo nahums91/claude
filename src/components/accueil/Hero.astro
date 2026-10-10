@@ -1,120 +1,73 @@
 ---
 /**
- * Hero de l'accueil : section sombre pleine hauteur qui passe sous l'en-tête.
+ * Hero de l'accueil, sur fond clair :
+ * à gauche l'accroche et le bouton principal, à droite le « dossier de
+ * candidature » à onglets (voir Dossier.astro).
  *
- * - Sans photo (site.photoHero vide) : motif de points et trois cadres
- *   d'annotation qui montrent ce que vous travaillez ensemble (CV, LinkedIn,
- *   entretiens).
- * - Avec photo : la photo occupe tout le fond, sous un voile bleu nuit.
+ * Avec une photo (site.photoHero renseigné), elle remplace le dossier.
  *
- * Motion : les cadres se déploient l'un après l'autre, puis le texte monte.
+ * Motion : les blocs entrent l'un après l'autre et le mot-clé du titre
+ * se fait surligner en jaune.
  * Le bloc [data-hero-cta] sert de repère à la barre d'action mobile.
  */
 import Bouton from '../Bouton.astro';
 import Icon from '../Icon.astro';
+import Dossier from './Dossier.astro';
 import { offres } from '../../config/offres';
 import { site } from '../../config/site';
 
 const appel = offres.appelDecouverte;
-
-// Cadres d'annotation (décoratifs). Positions en % de la zone visuelle.
-const cadres = [
-  { label: '01 CV · Refonte', classe: 'top-[13%] left-[46%] h-[20%] w-[40%] lg:top-[20%] lg:left-[44%] lg:h-[22%] lg:w-[15%]', delai: 200 },
-  { label: '02 LinkedIn · Profil', classe: 'top-[25%] left-[6%] h-[12%] w-[52%] lg:top-[27%] lg:left-[54%] lg:h-[24%] lg:w-[24%]', delai: 450 },
-  { label: '03 Entretiens · Préparation', classe: 'hidden sm:block sm:top-[12%] sm:left-[8%] sm:h-[14%] sm:w-[30%] lg:top-[18%] lg:left-[72%] lg:h-[17%] lg:w-[16%]', delai: 700 },
-];
-
-// Sommaire latéral (grand écran) : liens vers les sections de la page
-const sommaire = [
-  { numero: '01', label: 'Parcours', href: '#parcours' },
-  { numero: '02', label: 'Formules', href: '#alternance' },
-  { numero: '03', label: 'E-book', href: '#ebook' },
-];
 ---
 
-<section
-  class="fond-sombre relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-sombre text-creme"
-  aria-labelledby="hero-titre"
->
-  <!-- Fond -->
-  {
-    site.photoHero ? (
-      <>
-        <img
-          src={site.photoHero}
-          alt=""
-          class="absolute inset-0 -z-20 size-full object-cover"
-          fetchpriority="high"
-          decoding="async"
-        />
-        <div class="absolute inset-0 -z-10 bg-sombre/70" />
-      </>
-    ) : (
-      <div class="absolute inset-0 -z-10" aria-hidden="true">
-        <div class="motif-points absolute inset-0 text-creme/[0.07]" />
-        {cadres.map((c) => (
-          <div class:list={['cadre anim-cadre', c.classe]} style={`--delai: ${c.delai}ms`}>
-            <span class="mono absolute -top-px left-0 -translate-y-full bg-accent px-2.5 py-1.5 text-[0.625rem] whitespace-nowrap text-encre sm:text-[0.6875rem]">
-              {c.label}
-            </span>
-          </div>
-        ))}
-      </div>
-    )
-  }
+<section class="conteneur pt-10 pb-16 md:pt-20 md:pb-24" aria-labelledby="hero-titre">
+  <div class="grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+    <div>
+      <p class="surtitre anim-entree"><span>00</span> Coaching alternance et orientation</p>
 
-  <!-- Sommaire latéral -->
-  <nav aria-label="Sommaire de la page" class="absolute top-1/2 right-8 hidden -translate-y-1/2 xl:block">
-    <ul class="space-y-4 text-right">
-      {
-        sommaire.map((s) => (
-          <li>
-            <a href={s.href} class="mono group inline-flex items-center gap-3 text-[0.6875rem] text-sombre-doux transition-colors hover:text-creme">
-              <span class="text-accent">{s.numero}</span> · {s.label}
-              <span class="h-px w-6 bg-current transition-all duration-300 group-hover:w-12" />
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </nav>
-
-  <!-- Contenu, calé en bas de l'écran -->
-  <div class="conteneur mt-auto pt-40 pb-10 md:pb-14">
-    <p class="surtitre anim-entree" style="--delai: 500ms"><span>00</span> Coaching alternance et orientation</p>
-
-    <div class="mt-6 grid gap-10 lg:grid-cols-[1.35fr_1fr] lg:items-end lg:gap-16">
       <h1
         id="hero-titre"
-        class="anim-entree text-[3rem] leading-[0.95] sm:text-7xl lg:text-[5.75rem]"
-        style="--delai: 600ms"
+        class="anim-entree mt-6 text-[2.75rem] sm:text-6xl lg:text-[4.75rem]"
+        style="--delai: 100ms"
       >
         [TITRE DU HERO : <em>votre promesse</em> en une phrase]
       </h1>
 
-      <div class="anim-entree lg:pb-3" style="--delai: 750ms">
-        <p class="text-lg text-sombre-doux md:text-xl">[SOUS-TITRE DU HERO : pour qui, quel résultat]</p>
+      <p class="anim-entree mt-6 max-w-xl text-lg text-gris md:text-xl" style="--delai: 200ms">
+        [SOUS-TITRE DU HERO : pour qui, quel résultat]
+      </p>
 
-        <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap" data-hero-cta>
-          <Bouton href={appel.lien} fleche evenement="appel-decouverte-hero">
-            Réserver mon appel découverte gratuit
-          </Bouton>
-          <Bouton href="#parcours" variante="contour-inverse">Voir les formules</Bouton>
-        </div>
-
-        <!-- Rappel des modalités de l'appel -->
-        <ul class="mono mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[0.6875rem] text-sombre-doux">
-          <li class="flex items-center gap-2"><Icon nom="horloge" class="size-4 text-accent" />{appel.duree}</li>
-          <li class="flex items-center gap-2"><Icon nom="visio" class="size-4 text-accent" />{appel.format}</li>
-          <li class="flex items-center gap-2"><Icon nom="check" class="size-4 text-accent" />Gratuit</li>
-        </ul>
+      <div
+        class="anim-entree mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
+        style="--delai: 300ms"
+        data-hero-cta
+      >
+        <Bouton href={appel.lien} fleche evenement="appel-decouverte-hero">
+          Réserver mon appel découverte gratuit
+        </Bouton>
+        <Bouton href="#parcours" variante="secondaire">Voir les formules</Bouton>
       </div>
+
+      <!-- Rappel des modalités de l'appel, juste sous le bouton -->
+      <ul class="anim-entree mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[0.9375rem] text-gris" style="--delai: 400ms">
+        <li class="flex items-center gap-2"><Icon nom="horloge" class="size-5 text-accent" />{appel.duree}</li>
+        <li class="flex items-center gap-2"><Icon nom="visio" class="size-5 text-accent" />En {appel.format.toLowerCase()}</li>
+        <li class="flex items-center gap-2"><Icon nom="check" class="size-5 text-accent" />Gratuit</li>
+      </ul>
     </div>
 
-    <!-- Indicateur de défilement (décoratif, grand écran) -->
-    <div class="mono mt-12 hidden flex-col items-center gap-3 text-[0.625rem] text-sombre-doux lg:flex" aria-hidden="true">
-      <span class="h-10 w-px bg-sombre-doux/50"></span>
-      Défiler
+    <div class="anim-entree" style="--delai: 250ms">
+      {
+        site.photoHero ? (
+          <img
+            src={site.photoHero}
+            alt="[DESCRIPTION DE LA PHOTO]"
+            class="aspect-[4/5] w-full rounded-carte object-cover"
+            fetchpriority="high"
+          />
+        ) : (
+          <Dossier />
+        )
+      }
     </div>
   </div>
 </section>

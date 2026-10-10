@@ -1,6 +1,6 @@
 ---
 /**
- * Logo provisoire : monogramme « N » en italique dans un carré, puis le nom.
+ * Logo provisoire : le nom en Bricolage Grotesque, avec un point jaune.
  * À remplacer par ton vrai logo le jour où tu en as un.
  */
 interface Props {
@@ -9,12 +9,6 @@ interface Props {
 const { class: classe = '' } = Astro.props;
 ---
 
-<span class:list={['inline-flex items-center gap-3', classe]}>
-  <span
-    class="inline-flex size-8 items-center justify-center rounded-md border border-accent/70 font-serif text-xl leading-none text-accent italic"
-    aria-hidden="true">N</span
-  >
-  <span class="text-[0.9375rem] font-medium tracking-[0.2em] uppercase">
-    Nahum<span class="text-accent">.</span>Apc
-  </span>
+<span class:list={['font-titre inline-flex items-baseline text-[1.375rem] font-bold tracking-[-0.04em]', classe]}>
+  Nahum<span class="mx-[0.08em] inline-block size-[0.32em] translate-y-[-0.02em] rounded-full bg-soleil ring-2 ring-encre/80" aria-hidden="true"></span><span class="sr-only">.</span>Apc
 </span>

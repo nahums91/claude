@@ -22,10 +22,9 @@ export const site = {
   langue: 'fr-FR',
 
   /**
-   * Photo de fond du hero (facultative). Laisse '' pour le visuel sans photo.
+   * Photo du hero (facultative). Laisse '' pour garder le « dossier de candidature ».
    * Pour en ajouter une : dépose-la dans /public (ex. public/hero.jpg, format
-   * paysage, 2000 px de large) puis indique '/hero.jpg'. Un voile bleu nuit
-   * est ajouté automatiquement pour que le texte reste lisible.
+   * portrait, 1200 px de large) puis indique '/hero.jpg'.
    */
   photoHero: '',
 

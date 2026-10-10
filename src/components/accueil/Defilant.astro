@@ -17,15 +17,15 @@ const elements = [
 ];
 ---
 
-<section class="defilant overflow-hidden border-y border-ligne bg-surface py-4 md:py-5" aria-label="Ce que couvrent les accompagnements">
+<section class="defilant overflow-hidden bg-accent py-4 text-creme md:py-5" aria-label="Ce que couvrent les accompagnements">
   <div class="defilant-piste animate-defilement flex w-max">
     {
       [0, 1].map((copie) => (
         <ul class="flex shrink-0 items-center" aria-hidden={copie === 1 ? 'true' : undefined}>
           {elements.map((e) => (
-            <li class="mono flex items-center whitespace-nowrap text-gris">
+            <li class="font-titre flex items-center text-lg font-semibold tracking-[-0.02em] whitespace-nowrap md:text-xl">
               <span class="px-6 md:px-8">{e}</span>
-              <span class="text-accent-fonce" aria-hidden="true">/</span>
+              <svg class="size-4 text-soleil" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z" /></svg>
             </li>
           ))}
         </ul>
