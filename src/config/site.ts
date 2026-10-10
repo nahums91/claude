@@ -14,12 +14,20 @@ export const SITE_URL = 'https://nahum-apc.netlify.app';
 
 export const site = {
   nom: 'Nahum.Apc',
-  /** Ton prénom, affiché dans la section « À propos » et les données structurées. */
+  /** Ton prénom, utilisé dans les données structurées. */
   prenom: 'Nahum',
   /** Description par défaut, utilisée par Google et lors des partages. 150 à 160 caractères. */
   descriptionParDefaut:
     'Coaching alternance et orientation : CV, lettre de motivation, LinkedIn, entretiens, choix de formation. Réservez votre appel découverte gratuit de 20 min.',
   langue: 'fr-FR',
+
+  /**
+   * Photo de fond du hero (facultative). Laisse '' pour le visuel sans photo.
+   * Pour en ajouter une : dépose-la dans /public (ex. public/hero.jpg, format
+   * paysage, 2000 px de large) puis indique '/hero.jpg'. Un voile bleu nuit
+   * est ajouté automatiquement pour que le texte reste lisible.
+   */
+  photoHero: '',
 
   contact: {
     email: 'snkcontent1@gmail.com',

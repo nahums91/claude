@@ -32,7 +32,7 @@ const colonnes = p.formules.length === 3 ? 'lg:grid-cols-3' : 'md:grid-cols-2';
   <div class="conteneur">
     <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between" data-reveal>
       <div class="max-w-2xl">
-        <p class="surtitre">Parcours {p.numero}</p>
+        <p class="surtitre"><span>0{p.numero + 1}</span> Parcours {p.numero}</p>
         <h2 id={`titre-${p.id}`} class="mt-5 text-[2.5rem] md:text-6xl">
           {debutTitre} <em>{dernierMot}</em>
         </h2>
@@ -40,7 +40,7 @@ const colonnes = p.formules.length === 3 ? 'lg:grid-cols-3' : 'md:grid-cols-2';
       </div>
       <a
         href={`/${p.id}`}
-        class="inline-flex min-h-11 shrink-0 items-center gap-2 font-medium underline decoration-accent decoration-2 underline-offset-4"
+        class="inline-flex min-h-11 shrink-0 items-center gap-2 font-medium underline decoration-accent-fonce decoration-1 underline-offset-4"
       >
         {p.comparatif.length ? 'Comparer les formules en détail' : 'En savoir plus'}
         <Icon nom="fleche" class="size-5" />

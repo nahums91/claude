@@ -23,9 +23,9 @@ const elements = [
       [0, 1].map((copie) => (
         <ul class="flex shrink-0 items-center" aria-hidden={copie === 1 ? 'true' : undefined}>
           {elements.map((e) => (
-            <li class="flex items-center text-base font-medium tracking-[-0.01em] whitespace-nowrap text-gris md:text-lg">
+            <li class="mono flex items-center whitespace-nowrap text-gris">
               <span class="px-6 md:px-8">{e}</span>
-              <span class="size-1.5 rounded-full bg-accent" aria-hidden="true" />
+              <span class="text-accent-fonce" aria-hidden="true">/</span>
             </li>
           ))}
         </ul>

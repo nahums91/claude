@@ -8,6 +8,7 @@
  * - en-tête, pied de page et lien d'évitement pour la navigation au clavier
  */
 import '@fontsource-variable/geist';
+import '@fontsource-variable/geist-mono';
 // Instrument Serif : uniquement l'italique, pour les mots mis en valeur
 import '@fontsource/instrument-serif/400-italic.css';
 import '../styles/global.css';
@@ -28,6 +29,12 @@ interface Props {
   jsonLd?: Record<string, unknown>[];
   /** true pour exclure la page des moteurs de recherche. */
   noindex?: boolean;
+  /**
+   * true si la page commence par une section pleine hauteur qui passe sous
+   * l'en-tête flottant (comme le hero de l'accueil). Sinon, un espace est
+   * ajouté en haut pour que l'en-tête ne cache pas le contenu.
+   */
+  sousEntete?: boolean;
 }
 
 const {
@@ -36,6 +43,7 @@ const {
   image = '/og.png',
   jsonLd = [],
   noindex = false,
+  sousEntete = false,
 } = Astro.props;
 
 const titreComplet = titre === site.nom ? titre : `${titre} | ${site.nom}`;
@@ -67,7 +75,7 @@ const organisation = {
     {noindex && <meta name="robots" content="noindex, follow" />}
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#FAFAF7" />
+    <meta name="theme-color" content="#0E1626" />
 
     <!-- Signale que JavaScript est actif : les animations d'apparition peuvent démarrer masquées -->
     <script is:inline>document.documentElement.classList.add('js');</script>
@@ -96,12 +104,12 @@ const organisation = {
   <body class="min-h-dvh">
     <a
       href="#contenu"
-      class="sr-only z-50 rounded-full bg-encre px-5 py-3 text-fond focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+      class="sr-only z-50 rounded-bouton bg-encre px-5 py-3 text-fond focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
     >
       Aller au contenu
     </a>
     <Header />
-    <main id="contenu">
+    <main id="contenu" class:list={[!sousEntete && 'pt-24 md:pt-28']}>
       <slot />
     </main>
     <Footer />

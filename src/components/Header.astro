@@ -1,10 +1,14 @@
 ---
 /**
- * En-tête collant : logo texte, navigation et bouton principal.
- * Sur mobile, la navigation est repliée derrière un bouton « Menu ».
+ * En-tête flottant : une barre bleu nuit translucide, détachée des bords,
+ * qui reste visible pendant le défilement.
+ * - grand écran : logo, navigation, bouton principal
+ * - tablette : logo, bouton principal, menu
+ * - mobile : logo et menu (le bouton principal est dans le menu et dans la barre du bas)
  */
 import Bouton from './Bouton.astro';
 import Icon from './Icon.astro';
+import Logo from './Logo.astro';
 import { site } from '../config/site';
 import { offres } from '../config/offres';
 
@@ -18,94 +22,97 @@ const liens = [
 const cheminActuel = Astro.url.pathname.replace(/\.html$/, '');
 ---
 
-<header class="sticky top-0 z-40 border-b border-ligne/70 bg-fond/80 backdrop-blur-md">
-  <div class="conteneur flex h-16 items-center justify-between gap-4 md:h-[4.5rem]">
-    <!-- Logo texte : le point est en couleur d'accent -->
-    <a
-      href="/"
-      class="font-titre -ml-1 inline-flex min-h-11 items-center px-1 text-[1.375rem] font-bold tracking-[-0.05em]"
-      aria-label={`${site.nom}, retour à l'accueil`}
-    >
-      Nahum<span class="text-accent">.</span>Apc
-    </a>
+<header class="fixed inset-x-0 top-0 z-40 px-3 pt-3 md:px-5 md:pt-4">
+  <div
+    class="mx-auto max-w-[78rem] rounded-2xl border border-white/10 bg-sombre/85 text-creme shadow-[0_10px_40px_-20px_rgb(0_0_0/0.5)] backdrop-blur-md"
+  >
+    <div class="flex h-16 items-center justify-between gap-4 pr-2 pl-4 md:h-[4.5rem] md:pl-5">
+      <a href="/" class="inline-flex min-h-11 items-center" aria-label={`${site.nom}, retour à l'accueil`}>
+        <Logo />
+      </a>
 
-    <!-- Navigation ordinateur -->
-    <nav aria-label="Navigation principale" class="hidden lg:block">
-      <ul class="flex items-center gap-1">
-        {
-          liens.map((l) => (
-            <li>
-              <a
-                href={l.href}
-                class="inline-flex min-h-11 items-center rounded-full px-4 font-medium text-encre transition-colors hover:bg-encre/5"
-                aria-current={cheminActuel === l.href ? 'page' : undefined}
-              >
-                {l.label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
+      <!-- Navigation grand écran -->
+      <nav aria-label="Navigation principale" class="hidden xl:block">
+        <ul class="flex items-center gap-1">
+          {
+            liens.map((l) => (
+              <li>
+                <a
+                  href={l.href}
+                  class="mono inline-flex min-h-11 items-center px-4 text-creme/75 transition-colors hover:text-creme aria-[current=page]:text-accent"
+                  aria-current={cheminActuel === l.href ? 'page' : undefined}
+                >
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
 
-    <div class="hidden lg:block">
-      <Bouton href={offres.appelDecouverte.lien} evenement="appel-decouverte-header">
-        Réserver mon appel découverte gratuit
-      </Bouton>
+      <div class="flex items-center gap-2">
+        <div class="hidden md:block">
+          <Bouton href={offres.appelDecouverte.lien} fleche evenement="appel-decouverte-header">
+            Réserver mon appel découverte gratuit
+          </Bouton>
+        </div>
+
+        <!-- Bouton du menu (mobile et tablette) -->
+        <button
+          type="button"
+          class="inline-flex size-12 items-center justify-center rounded-bouton border border-white/15 transition-colors hover:border-white/40 xl:hidden"
+          aria-expanded="false"
+          aria-controls="menu-mobile"
+          aria-label="Ouvrir le menu"
+          data-menu-bouton
+        >
+          <Icon nom="menu" class="size-5" />
+        </button>
+      </div>
     </div>
 
-    <!-- Bouton du menu mobile -->
-    <button
-      type="button"
-      class="-mr-2 inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full px-3 font-medium lg:hidden"
-      aria-expanded="false"
-      aria-controls="menu-mobile"
-      data-menu-bouton
-    >
-      <span data-menu-libelle>Menu</span>
-      <Icon nom="menu" class="size-6" />
-    </button>
-  </div>
-
-  <!-- Panneau du menu mobile (masqué par défaut) -->
-  <div id="menu-mobile" class="border-t border-ligne bg-fond lg:hidden" hidden data-menu-panneau>
-    <nav aria-label="Navigation mobile" class="conteneur anim-entree py-4" style="--delai: 0ms">
-      <ul class="flex flex-col">
-        {
-          liens.map((l) => (
-            <li>
-              <a
-                href={l.href}
-                class="font-titre flex min-h-14 items-center justify-between border-b border-ligne text-2xl font-semibold tracking-[-0.04em]"
-                aria-current={cheminActuel === l.href ? 'page' : undefined}
-              >
-                {l.label}
-                <Icon nom="fleche" class="size-5 text-gris" />
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-      <div class="pt-6 pb-2">
-        <Bouton href={offres.appelDecouverte.lien} pleineLargeur evenement="appel-decouverte-menu">
-          Réserver mon appel découverte gratuit
-        </Bouton>
-      </div>
-    </nav>
+    <!-- Panneau du menu (masqué par défaut) -->
+    <div id="menu-mobile" class="border-t border-white/10 xl:hidden" hidden data-menu-panneau>
+      <nav aria-label="Navigation mobile" class="anim-entree px-4 py-4 md:px-5" style="--delai: 0ms">
+        <ul class="flex flex-col">
+          {
+            liens.map((l, i) => (
+              <li>
+                <a
+                  href={l.href}
+                  class="flex min-h-14 items-center justify-between border-b border-white/10 text-2xl font-medium tracking-[-0.03em]"
+                  aria-current={cheminActuel === l.href ? 'page' : undefined}
+                >
+                  <span class="flex items-baseline gap-4">
+                    <span class="mono text-accent">0{i + 1}</span>
+                    {l.label}
+                  </span>
+                  <Icon nom="fleche" class="size-5 text-sombre-doux" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <div class="pt-5 pb-1 md:hidden">
+          <Bouton href={offres.appelDecouverte.lien} pleineLargeur evenement="appel-decouverte-menu">
+            Réserver mon appel découverte gratuit
+          </Bouton>
+        </div>
+      </nav>
+    </div>
   </div>
 </header>
 
 <script>
-  // Ouverture / fermeture du menu mobile, accessible au clavier.
+  // Ouverture / fermeture du menu, accessible au clavier.
   const bouton = document.querySelector<HTMLButtonElement>('[data-menu-bouton]');
   const panneau = document.querySelector<HTMLElement>('[data-menu-panneau]');
-  const libelle = document.querySelector<HTMLElement>('[data-menu-libelle]');
 
   function basculer(ouvrir: boolean) {
     if (!bouton || !panneau) return;
     bouton.setAttribute('aria-expanded', String(ouvrir));
+    bouton.setAttribute('aria-label', ouvrir ? 'Fermer le menu' : 'Ouvrir le menu');
     panneau.hidden = !ouvrir;
-    if (libelle) libelle.textContent = ouvrir ? 'Fermer' : 'Menu';
   }
 
   bouton?.addEventListener('click', () => {

@@ -1,11 +1,11 @@
 ---
 /**
- * Bouton en forme de pilule. C'est toujours un vrai lien <a> (on change de page
+ * Bouton rectangulaire aux coins arrondis. C'est toujours un vrai lien <a> (on change de page
  * ou on ouvre Cal.com / Stripe), avec une hauteur minimale de 48 px pour le tactile.
  *
  * Variantes :
- * - principal  : orange, l'action principale (appel découverte, réserver)
- * - secondaire : contour sombre, action secondaire
+ * - principal  : cuivre, l'action principale (appel découverte, réserver)
+ * - secondaire : contour bleu nuit, action secondaire sur fond clair
  * - inverse    : blanc, à utiliser sur fond sombre
  * - contour-inverse : contour clair, action secondaire sur fond sombre
  *
@@ -38,10 +38,10 @@ const {
 } = Astro.props;
 
 const styles = {
-  principal: 'bg-accent text-white hover:bg-accent-fonce',
-  secondaire: 'border border-encre/15 bg-surface text-encre hover:border-encre',
-  inverse: 'bg-white text-encre hover:bg-vif',
-  'contour-inverse': 'border border-white/40 text-white hover:bg-white hover:text-encre',
+  principal: 'bg-accent text-encre hover:bg-accent-fonce hover:text-creme',
+  secondaire: 'border border-encre/25 text-encre hover:border-encre hover:bg-encre hover:text-creme',
+  inverse: 'bg-creme text-encre hover:bg-accent',
+  'contour-inverse': 'border border-creme/30 text-creme hover:border-creme hover:bg-creme hover:text-encre',
 };
 
 const externe = href.startsWith('http');
@@ -50,7 +50,7 @@ const externe = href.startsWith('http');
 <a
   href={href}
   class:list={[
-    'group/bouton inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-5 py-3 text-center text-[0.9375rem] leading-tight font-medium tracking-[-0.01em] transition-[background-color,border-color,color,transform] duration-300 ease-(--ease-douce) active:scale-[0.97] sm:px-6 sm:text-base',
+    'group/bouton inline-flex min-h-12 items-center justify-center gap-2 rounded-bouton px-5 py-3 text-center text-[0.9375rem] leading-tight font-medium tracking-[-0.01em] transition-[background-color,border-color,color,transform] duration-300 ease-(--ease-douce) active:scale-[0.97] sm:px-6 sm:text-base',
     styles[variante],
     pleineLargeur && 'w-full',
     classe,
