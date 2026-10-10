@@ -8,6 +8,8 @@ import Hero from '../components/accueil/Hero.astro';
 import Defilant from '../components/accueil/Defilant.astro';
 import Arguments from '../components/accueil/Arguments.astro';
 import ChoixParcours from '../components/accueil/ChoixParcours.astro';
+import Formules from '../components/accueil/Formules.astro';
+import Ebook from '../components/accueil/Ebook.astro';
 import { site } from '../config/site';
 ---
 
@@ -16,4 +18,7 @@ import { site } from '../config/site';
   <Defilant />
   <Arguments />
   <ChoixParcours />
+  <Formules parcoursId="alternance" fondAlterne />
+  <Formules parcoursId="orientation" />
+  <Ebook />
 </Base>

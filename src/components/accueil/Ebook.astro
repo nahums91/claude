@@ -1,0 +1,74 @@
+---
+/**
+ * Section e-book (en autonomie) : couverture, contenu, prix et lien d'achat externe.
+ * Tant qu'il n'y a pas de couverture (offres.ebook.couverture vide), une
+ * couverture stylisée est dessinée en CSS à partir du titre.
+ */
+import Bouton from '../Bouton.astro';
+import Icon from '../Icon.astro';
+import { offres, formaterPrix } from '../../config/offres';
+import { site } from '../../config/site';
+
+const e = offres.ebook;
+---
+
+<section id="ebook" class="section conteneur" aria-labelledby="titre-ebook">
+  <div class="grid items-center gap-12 overflow-hidden rounded-[2rem] bg-sombre p-6 text-white sm:p-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:p-16">
+    <!-- Couverture -->
+    <div class="mx-auto w-full max-w-[17rem]" data-reveal>
+      {
+        e.couverture ? (
+          <img
+            src={e.couverture}
+            alt={`Couverture de l’e-book ${e.titre}`}
+            width="600"
+            height="800"
+            loading="lazy"
+            class="w-full rounded-xl shadow-[0_30px_60px_-20px_rgb(0_0_0/0.6)]"
+          />
+        ) : (
+          <div
+            class="flex aspect-[3/4] -rotate-3 flex-col justify-between rounded-xl bg-fond p-6 text-encre shadow-[0_30px_60px_-20px_rgb(0_0_0/0.6)] transition-transform duration-500 ease-(--ease-douce) hover:rotate-0"
+            aria-hidden="true"
+          >
+            <span class="inline-flex size-10 items-center justify-center rounded-lg bg-accent text-white">
+              <Icon nom="livre" class="size-5" />
+            </span>
+            <div>
+              <p class="font-titre text-2xl leading-tight font-bold tracking-[-0.03em]">{e.titre}</p>
+              <p class="mt-3 text-sm text-gris">{site.nom}</p>
+            </div>
+          </div>
+        )
+      }
+    </div>
+
+    <!-- Contenu -->
+    <div data-reveal style="--delai: 120ms">
+      <p class="inline-flex items-center gap-2 rounded-full border border-white/20 px-3.5 py-1.5 text-[0.8125rem] font-medium text-sombre-doux">
+        <span class="size-2 rounded-full bg-vif"></span>
+        En autonomie
+      </p>
+      <h2 id="titre-ebook" class="mt-5 text-[2.25rem] md:text-5xl">{e.titre}</h2>
+      <p class="mt-4 text-lg text-sombre-doux">{e.sousTitre}</p>
+
+      <ul class="mt-8 space-y-3">
+        {
+          e.points.map((point) => (
+            <li class="flex gap-3">
+              <span class="mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-vif text-encre">
+                <Icon nom="check" class="size-3.5" />
+              </span>
+              {point}
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
+        <p class="font-titre text-4xl font-bold tracking-[-0.04em]">{formaterPrix(e.prix)}</p>
+        <Bouton href={e.lien} variante="inverse" fleche evenement="ebook-achat">Acheter l’e-book</Bouton>
+      </div>
+    </div>
+  </div>
+</section>

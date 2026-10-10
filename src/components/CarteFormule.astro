@@ -1,0 +1,103 @@
+---
+/**
+ * Carte d'une formule : nom, format, prix, inclusions et bouton de réservation.
+ * La formule « miseEnAvant » (dans offres.ts) s'affiche en version sombre,
+ * avec un badge « Recommandée ».
+ * Toutes les données viennent de src/config/offres.ts.
+ */
+import Bouton from './Bouton.astro';
+import Icon from './Icon.astro';
+import { formaterPrix, type Formule } from '../config/offres';
+
+interface Props {
+  formule: Formule;
+  /** Décalage de l'animation d'apparition, en millisecondes. */
+  delai?: number;
+}
+
+const { formule: f, delai = 0 } = Astro.props;
+const sombre = f.miseEnAvant;
+const prixConnu = typeof f.prix === 'number';
+// Icône du format : document pour une formule sans visio, caméra sinon
+const sansVisio = /sans visio/i.test(f.format);
+---
+
+<article
+  class:list={[
+    'relative flex h-full flex-col rounded-carte border p-6 md:p-8',
+    sombre ? 'border-sombre bg-sombre text-white lg:-my-4 lg:py-12' : 'border-ligne bg-surface',
+  ]}
+  aria-labelledby={`formule-${f.id}`}
+  data-reveal
+  style={`--delai: ${delai}ms`}
+>
+  <div class="flex items-start justify-between gap-3">
+    <h3 id={`formule-${f.id}`} class="text-2xl md:text-[1.75rem]">{f.nom}</h3>
+    {
+      sombre && (
+        <span class="shrink-0 rounded-full bg-vif px-3 py-1 text-xs font-semibold text-encre">Recommandée</span>
+      )
+    }
+  </div>
+
+  <!-- Format et durée -->
+  <ul class:list={['mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm', sombre ? 'text-sombre-doux' : 'text-gris']}>
+    <li class="flex items-center gap-1.5"><Icon nom={sansVisio ? 'document' : 'visio'} class="size-4" />{f.format}</li>
+    <li class="flex items-center gap-1.5"><Icon nom="horloge" class="size-4" />{f.duree}</li>
+  </ul>
+
+  <!-- Prix -->
+  <p class="mt-6 flex items-baseline gap-2">
+    <span
+      class:list={[
+        'font-titre font-bold tracking-[-0.04em]',
+        prixConnu ? 'text-5xl' : 'text-3xl',
+      ]}
+    >
+      {formaterPrix(f.prix)}
+    </span>
+    {f.precisionPrix && <span class={sombre ? 'text-sombre-doux' : 'text-gris'}>{f.precisionPrix}</span>}
+  </p>
+
+  <p class:list={['mt-4', sombre ? 'text-sombre-doux' : 'text-gris']}>{f.description}</p>
+
+  <!-- Ce qui est inclus -->
+  <ul class:list={['mt-6 space-y-3 border-t pt-6', sombre ? 'border-white/15' : 'border-ligne']}>
+    {
+      f.points.map((point) => (
+        <li class="flex gap-3">
+          <span
+            class:list={[
+              'mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-full',
+              sombre ? 'bg-vif text-encre' : 'bg-accent-doux text-accent',
+            ]}
+          >
+            <Icon nom="check" class="size-3.5" />
+          </span>
+          <span class="text-[0.9375rem]">{point}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="mt-auto pt-8">
+    <Bouton
+      href={f.reservation.lien}
+      variante={sombre ? 'inverse' : 'principal'}
+      pleineLargeur
+      fleche
+      ariaLabel={`${f.reservation.libelle} la formule ${f.nom}`}
+      evenement={`formule-${f.id}`}
+    >
+      {f.reservation.libelle}
+    </Bouton>
+    {
+      f.reservation.type === 'stripe' && (
+        <p class:list={['mt-3 flex gap-2 text-sm', sombre ? 'text-sombre-doux' : 'text-gris']}>
+          <Icon nom="cadenas" class="mt-0.5 size-4 shrink-0" />
+          Paiement sécurisé, puis envoi de vos documents
+        </p>
+      )
+    }
+  </div>
+</article>

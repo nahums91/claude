@@ -1,0 +1,54 @@
+---
+/**
+ * Section des formules d'un parcours (utilisée deux fois sur l'accueil).
+ * Le dernier mot du titre du parcours est mis en valeur en italique.
+ */
+import CarteFormule from '../CarteFormule.astro';
+import Icon from '../Icon.astro';
+import { trouverParcours } from '../../config/offres';
+
+interface Props {
+  parcoursId: 'alternance' | 'orientation';
+  /** Fond légèrement différent pour alterner les sections. */
+  fondAlterne?: boolean;
+}
+
+const { parcoursId, fondAlterne = false } = Astro.props;
+const p = trouverParcours(parcoursId);
+
+// « Décrocher votre alternance » → « Décrocher votre » + <em>alternance</em>
+const mots = p.titre.split(' ');
+const dernierMot = mots.pop();
+const debutTitre = mots.join(' ');
+
+const colonnes = p.formules.length === 3 ? 'lg:grid-cols-3' : 'md:grid-cols-2';
+---
+
+<section
+  id={p.id}
+  class:list={['section', fondAlterne && 'border-y border-ligne bg-surface']}
+  aria-labelledby={`titre-${p.id}`}
+>
+  <div class="conteneur">
+    <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between" data-reveal>
+      <div class="max-w-2xl">
+        <p class="surtitre">Parcours {p.numero}</p>
+        <h2 id={`titre-${p.id}`} class="mt-5 text-[2.5rem] md:text-6xl">
+          {debutTitre} <em>{dernierMot}</em>
+        </h2>
+        <p class="mt-4 text-lg text-gris">{p.resume}</p>
+      </div>
+      <a
+        href={`/${p.id}`}
+        class="inline-flex min-h-11 shrink-0 items-center gap-2 font-medium underline decoration-accent decoration-2 underline-offset-4"
+      >
+        {p.comparatif.length ? 'Comparer les formules en détail' : 'En savoir plus'}
+        <Icon nom="fleche" class="size-5" />
+      </a>
+    </div>
+
+    <div class:list={['mt-12 grid items-stretch gap-4 lg:gap-5', colonnes, p.formules.length === 2 && 'mx-auto max-w-4xl']}>
+      {p.formules.map((f, i) => <CarteFormule formule={f} delai={i * 120} />)}
+    </div>
+  </div>
+</section>
