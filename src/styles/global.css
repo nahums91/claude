@@ -14,9 +14,10 @@
   --color-encre: #0b0b0f; /* texte principal (19:1 sur le fond) */
   --color-gris: #5b5b66; /* texte secondaire (6,4:1 sur le fond) */
   --color-ligne: #e6e6ea; /* bordures */
-  --color-accent: #3b5bff; /* bleu électrique : boutons principaux (texte blanc 5,1:1) */
-  --color-accent-fonce: #2a43d6; /* survol des boutons principaux */
-  --color-vif: #d4ff3f; /* citron vert : badges et surlignages, toujours avec texte encre (17:1) */
+  --color-accent: #2d4bd8; /* bleu roi : boutons principaux (texte blanc 6,8:1) */
+  --color-accent-fonce: #2338b0; /* survol des boutons principaux */
+  --color-accent-doux: #eef1fd; /* fond des pastilles d'icônes */
+  --color-vif: #d4ff3f; /* citron vert : touche signature, utilisée avec parcimonie, toujours avec texte encre (17:1) */
   --color-sombre: #0b0b0f; /* fond de la formule mise en avant */
   --color-sombre-doux: #a1a1aa; /* texte secondaire sur fond sombre (7,6:1) */
 
@@ -33,8 +34,8 @@
   --ease-douce: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* Animations déclarées ici pour être utilisables en classes Tailwind */
-  --animate-defilement: defilement 40s linear infinite;
-  --animate-flotte: flotte 6s ease-in-out infinite;
+  --animate-defilement: defilement 60s linear infinite;
+  --animate-flotte: flotte 7s ease-in-out infinite;
 
   @keyframes defilement {
     to {
@@ -47,7 +48,7 @@
       transform: translateY(0) rotate(var(--rotation, 0deg));
     }
     50% {
-      transform: translateY(-10px) rotate(var(--rotation, 0deg));
+      transform: translateY(-6px) rotate(var(--rotation, 0deg));
     }
   }
 }
@@ -80,8 +81,8 @@
   h4 {
     font-family: var(--font-titre);
     font-weight: 700;
-    line-height: 1.02;
-    letter-spacing: -0.045em;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
     text-wrap: balance;
   }
 

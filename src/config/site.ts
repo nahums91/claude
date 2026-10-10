@@ -40,7 +40,7 @@ export const site = {
    */
   legal: {
     nomComplet: '[PRÉNOM NOM]',
-    statut: '[STATUT, ex. Entrepreneur individuel (EI), micro-entreprise]',
+    statut: '[STATUT, ex. EI]',
     siret: '[SIRET]',
     adresse: '[ADRESSE OU DOMICILIATION]',
     mentionTva: '[ex. TVA non applicable, art. 293 B du CGI]',

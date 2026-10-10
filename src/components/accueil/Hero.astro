@@ -3,7 +3,8 @@
  * Hero de l'accueil : accroche, bouton principal, accès aux formules et photo.
  *
  * Motion : chaque bloc entre l'un après l'autre (classe anim-entree + --delai),
- * et trois pastilles flottent doucement autour de la photo.
+ * et trois pastilles flottent très légèrement autour de la photo (mouvement
+ * volontairement discret pour garder un rendu sérieux).
  *
  * Le bloc [data-hero-cta] sert de repère à la barre d'action mobile :
  * elle n'apparaît qu'une fois ce bouton sorti de l'écran.
@@ -16,9 +17,9 @@ const appel = offres.appelDecouverte;
 
 // Pastilles flottantes autour de la photo (reprennent le contenu des formules)
 const pastilles = [
-  { texte: 'Refonte du CV', position: 'top-6 -left-2 sm:-left-6', rotation: '-4deg', delai: '0s', vif: false },
-  { texte: 'Profil LinkedIn', position: 'top-1/3 -right-2 sm:-right-6', rotation: '3deg', delai: '-2s', vif: false },
-  { texte: 'Préparation aux entretiens', position: 'bottom-8 -left-2 sm:-left-8', rotation: '-2deg', delai: '-4s', vif: true },
+  { texte: 'Refonte du CV', position: 'top-6 -left-2 sm:-left-6', delai: '0s' },
+  { texte: 'Profil LinkedIn', position: 'top-1/3 -right-2 sm:-right-6', delai: '-2.5s' },
+  { texte: 'Préparation aux entretiens', position: 'bottom-8 -left-2 sm:-left-8', delai: '-5s' },
 ];
 ---
 
@@ -76,19 +77,13 @@ const pastilles = [
         pastilles.map((p) => (
           <span
             class:list={[
-              'animate-flotte absolute inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-medium whitespace-nowrap shadow-[0_8px_30px_-12px_rgb(11_11_15/0.25)]',
-              p.vif ? 'border-encre/10 bg-vif text-encre' : 'border-ligne bg-surface text-encre',
+              'animate-flotte absolute inline-flex items-center gap-2 rounded-full border border-ligne bg-surface px-4 py-2.5 text-sm font-medium whitespace-nowrap text-encre shadow-[0_8px_30px_-12px_rgb(11_11_15/0.2)]',
               p.position,
             ]}
-            style={`--rotation: ${p.rotation}; animation-delay: ${p.delai}`}
+            style={`animation-delay: ${p.delai}`}
             aria-hidden="true"
           >
-            <span
-              class:list={[
-                'inline-flex size-5 items-center justify-center rounded-full',
-                p.vif ? 'bg-encre text-vif' : 'bg-vif text-encre',
-              ]}
-            >
+            <span class="inline-flex size-5 items-center justify-center rounded-full bg-accent text-white">
               <Icon nom="check" class="size-3.5" />
             </span>
             {p.texte}

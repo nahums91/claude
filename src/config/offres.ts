@@ -47,6 +47,7 @@ const parcours = [
     titre: 'Décrocher ton alternance',
     resume:
       'CV, lettre de motivation, profil LinkedIn, préparation aux entretiens et suivi pendant ta recherche.',
+    pourQui: 'les étudiants en recherche d’alternance.',
     formules: [
       {
         id: 'essentiel',
@@ -136,6 +137,7 @@ const parcours = [
     titre: 'Clarifier ton projet',
     resume:
       'Choisir une formation ou une école, ou construire un projet professionnel clair avec un plan d’action.',
+    pourQui: 'les étudiants (avec un parent ou un proche s’ils le souhaitent) et les projets de reconversion.',
     formules: [
       {
         id: 'orientation-scolaire',
@@ -244,6 +246,8 @@ const schema = z.object({
       numero: z.number(),
       titre: z.string(),
       resume: z.string(),
+      /** Public visé, affiché sur la carte du parcours. */
+      pourQui: z.string(),
       formules: z.array(formuleSchema).min(1),
       comparatif: z.array(
         z.object({ critere: z.string() }).catchall(z.union([z.boolean(), z.string()])),
