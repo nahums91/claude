@@ -1,13 +1,13 @@
 ---
 /**
- * Hero de l'accueil, sur fond clair :
+ * Hero de l'accueil, sur fond bleu nuit (comme l'en-tête) :
  * à gauche l'accroche et le bouton principal, à droite le « dossier de
  * candidature » à onglets (voir Dossier.astro).
  *
  * Avec une photo (site.photoHero renseigné), elle remplace le dossier.
  *
  * Motion : les blocs entrent l'un après l'autre et le mot-clé du titre
- * se fait surligner en jaune.
+ * se fait surligner en cuivre.
  * Le bloc [data-hero-cta] sert de repère à la barre d'action mobile.
  */
 import Bouton from '../Bouton.astro';
@@ -26,8 +26,8 @@ const garanties: { icone: NomIcone; texte: string }[] = [
 ];
 ---
 
-<section class="conteneur pt-10 pb-16 md:pt-20 md:pb-24" aria-labelledby="hero-titre">
-  <div class="grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+<section class="fond-sombre bg-sombre text-creme" aria-labelledby="hero-titre">
+  <div class="conteneur grid items-center gap-14 pt-10 pb-20 md:pt-20 md:pb-28 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
     <div>
       <p class="surtitre anim-entree"><span>00</span> Coaching alternance et orientation</p>
 
@@ -39,7 +39,7 @@ const garanties: { icone: NomIcone; texte: string }[] = [
         [TITRE DU HERO : <em>votre promesse</em> en une phrase]
       </h1>
 
-      <p class="anim-entree mt-6 max-w-xl text-lg text-gris md:text-xl" style="--delai: 200ms">
+      <p class="anim-entree mt-6 max-w-xl text-lg text-sombre-doux md:text-xl" style="--delai: 200ms">
         [SOUS-TITRE DU HERO : pour qui, quel résultat]
       </p>
 
@@ -51,17 +51,17 @@ const garanties: { icone: NomIcone; texte: string }[] = [
         <Bouton href={site.boutonPrincipal.lien} fleche evenement="bouton-principal-hero">
           {site.boutonPrincipal.libelle}
         </Bouton>
-        <Bouton href={diagnostic.lien} variante="secondaire" evenement="diagnostic-hero">
+        <Bouton href={diagnostic.lien} variante="contour-inverse" evenement="diagnostic-hero">
           Réserver un diagnostic
         </Bouton>
       </div>
 
       <!-- Garanties, juste sous les boutons -->
-      <ul class="anim-entree mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[0.9375rem] text-gris" style="--delai: 400ms">
+      <ul class="anim-entree mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[0.9375rem] text-sombre-doux" style="--delai: 400ms">
         {
           garanties.map((g) => (
             <li class="flex items-center gap-2">
-              <Icon nom={g.icone} class="size-5 text-accent-fonce" />
+              <Icon nom={g.icone} class="size-5 text-accent" />
               {g.texte}
             </li>
           ))

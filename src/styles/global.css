@@ -112,12 +112,11 @@
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
   }
-  /* Sur fond sombre : mot en jaune, sans surligneur */
+  /* Sur fond sombre : même surligneur cuivre, sous un mot couleur crème */
   .fond-sombre h1 em,
   .fond-sombre h2 em,
   .fond-sombre h3 em {
-    color: var(--color-accent);
-    background-image: none;
+    color: var(--color-creme);
   }
 
   p {

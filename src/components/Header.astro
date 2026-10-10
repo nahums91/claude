@@ -1,6 +1,6 @@
 ---
 /**
- * En-tête collant, clair : logo, navigation et bouton principal.
+ * En-tête collant, bleu nuit (dans la continuité du hero) : logo, navigation et bouton principal.
  * Sur mobile et tablette, la navigation est repliée derrière un bouton « Menu ».
  */
 import Bouton from './Bouton.astro';
@@ -18,7 +18,7 @@ const liens = [
 const cheminActuel = Astro.url.pathname.replace(/\.html$/, '');
 ---
 
-<header class="sticky top-0 z-40 border-b border-ligne/80 bg-fond/85 backdrop-blur-md">
+<header class="sticky top-0 z-40 border-b border-creme/10 bg-sombre text-creme">
   <div class="conteneur flex h-16 items-center justify-between gap-4 md:h-[4.5rem]">
     <a href="/" class="inline-flex min-h-11 items-center" aria-label={`${site.nom}, retour à l'accueil`}>
       <Logo />
@@ -32,7 +32,7 @@ const cheminActuel = Astro.url.pathname.replace(/\.html$/, '');
             <li>
               <a
                 href={l.href}
-                class="inline-flex min-h-11 items-center rounded-full px-4 font-medium transition-colors hover:bg-accent-doux aria-[current=page]:bg-accent-doux"
+                class="inline-flex min-h-11 items-center rounded-full px-4 font-medium transition-colors hover:bg-creme/10 aria-[current=page]:bg-creme/10"
                 aria-current={cheminActuel === l.href ? 'page' : undefined}
               >
                 {l.label}
@@ -63,7 +63,7 @@ const cheminActuel = Astro.url.pathname.replace(/\.html$/, '');
   </div>
 
   <!-- Panneau du menu mobile (masqué par défaut) -->
-  <div id="menu-mobile" class="border-t border-ligne bg-fond lg:hidden" hidden data-menu-panneau>
+  <div id="menu-mobile" class="border-t border-creme/10 bg-sombre lg:hidden" hidden data-menu-panneau>
     <nav aria-label="Navigation mobile" class="conteneur anim-entree py-4" style="--delai: 0ms">
       <ul class="flex flex-col">
         {
@@ -71,11 +71,11 @@ const cheminActuel = Astro.url.pathname.replace(/\.html$/, '');
             <li>
               <a
                 href={l.href}
-                class="font-titre flex min-h-14 items-center justify-between border-b border-ligne text-2xl font-bold tracking-[-0.03em]"
+                class="font-titre flex min-h-14 items-center justify-between border-b border-creme/10 text-2xl font-bold tracking-[-0.03em]"
                 aria-current={cheminActuel === l.href ? 'page' : undefined}
               >
                 {l.label}
-                <Icon nom="fleche" class="size-5 text-gris" />
+                <Icon nom="fleche" class="size-5 text-accent" />
               </a>
             </li>
           ))

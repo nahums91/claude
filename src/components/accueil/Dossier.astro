@@ -38,7 +38,7 @@ const texteBadge = 'Coaching alternance · Orientation · ';
 <div class="relative mx-auto w-full max-w-md pb-10 lg:max-w-none" data-dossier>
   <!-- Feuille en arrière-plan (effet pile de documents) -->
   <div
-    class="absolute inset-x-6 top-10 bottom-2 rotate-[3deg] rounded-carte border border-ligne bg-pale"
+    class="absolute inset-x-6 top-10 bottom-2 rotate-[3deg] rounded-carte border border-creme/10 bg-sombre-2"
     aria-hidden="true"
   >
   </div>
@@ -55,7 +55,7 @@ const texteBadge = 'Coaching alternance · Orientation · ';
             aria-controls={`panneau-${o.id}`}
             aria-selected={i === 0 ? 'true' : 'false'}
             tabindex={i === 0 ? 0 : -1}
-            class="min-h-11 rounded-t-xl border border-b-0 border-ligne bg-pale px-3 text-sm font-medium text-gris transition-colors aria-selected:bg-surface aria-selected:text-encre sm:px-4"
+            class="min-h-11 rounded-t-xl border border-b-0 border-creme/10 bg-sombre-2 px-3 text-sm font-medium text-sombre-doux transition-colors hover:text-creme aria-selected:border-ligne aria-selected:bg-surface aria-selected:text-encre sm:px-4"
             data-onglet
           >
             {o.label}
@@ -65,7 +65,7 @@ const texteBadge = 'Coaching alternance · Orientation · ';
     </div>
 
     <!-- Panneaux -->
-    <div class="relative -mt-px rounded-carte rounded-tl-none border border-ligne bg-surface p-5 shadow-[0_30px_60px_-35px_rgb(20_32_26/0.35)] sm:p-6">
+    <div class="relative -mt-px rounded-carte rounded-tl-none border border-ligne bg-surface p-5 text-encre shadow-[0_30px_60px_-35px_rgb(20_32_26/0.35)] sm:p-6">
       <!-- Barre de progression du défilement automatique -->
       <div class="absolute inset-x-6 top-0 h-0.5 overflow-hidden rounded-full" aria-hidden="true">
         <div class="h-full w-full origin-left scale-x-0 bg-primaire" data-progression></div>
