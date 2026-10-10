@@ -1,26 +1,20 @@
 ---
 /**
- * Hero de l'accueil : accroche, bouton principal, accès aux formules et photo.
+ * Hero de l'accueil : accroche, bouton principal, accès aux formules et visuel.
  *
- * Motion : chaque bloc entre l'un après l'autre (classe anim-entree + --delai),
- * et trois pastilles flottent très légèrement autour de la photo (mouvement
- * volontairement discret pour garder un rendu sérieux).
+ * Pas de photo : à droite, un visuel composé de cartes d'interface (HeroVisuel).
+ * Motion : chaque bloc entre l'un après l'autre (classe anim-entree + --delai).
  *
  * Le bloc [data-hero-cta] sert de repère à la barre d'action mobile :
  * elle n'apparaît qu'une fois ce bouton sorti de l'écran.
  */
 import Bouton from '../Bouton.astro';
 import Icon from '../Icon.astro';
+import HeroVisuel from './HeroVisuel.astro';
 import { offres } from '../../config/offres';
 
 const appel = offres.appelDecouverte;
 
-// Pastilles flottantes autour de la photo (reprennent le contenu des formules)
-const pastilles = [
-  { texte: 'Refonte du CV', position: 'top-6 -left-2 sm:-left-6', delai: '0s' },
-  { texte: 'Profil LinkedIn', position: 'top-1/3 -right-2 sm:-right-6', delai: '-2.5s' },
-  { texte: 'Préparation aux entretiens', position: 'bottom-8 -left-2 sm:-left-8', delai: '-5s' },
-];
 ---
 
 <section class="conteneur overflow-x-clip pt-8 pb-16 md:pt-16 md:pb-24" aria-labelledby="hero-titre">
@@ -62,34 +56,9 @@ const pastilles = [
       </ul>
     </div>
 
-    <!--
-      Photo de Nahum.
-      Quand tu l'as : dépose-la dans src/assets/nahum.jpg, puis remplace le bloc
-      [PHOTO DE NAHUM] par <Image src={photo} alt="[DESCRIPTION DE LA PHOTO]" ... /> (voir README).
-    -->
-    <div class="anim-entree relative mx-auto w-full max-w-sm lg:max-w-none" style="--delai: 250ms">
-      <div class="aspect-[4/5] w-full overflow-hidden rounded-[2rem] border border-ligne bg-surface">
-        <div class="flex h-full items-center justify-center p-6 text-center text-gris">[PHOTO DE NAHUM]</div>
-      </div>
-
-      <!-- Pastilles décoratives (masquées des lecteurs d'écran) -->
-      {
-        pastilles.map((p) => (
-          <span
-            class:list={[
-              'animate-flotte absolute inline-flex items-center gap-2 rounded-full border border-ligne bg-surface px-4 py-2.5 text-sm font-medium whitespace-nowrap text-encre shadow-[0_8px_30px_-12px_rgb(11_11_15/0.2)]',
-              p.position,
-            ]}
-            style={`animation-delay: ${p.delai}`}
-            aria-hidden="true"
-          >
-            <span class="inline-flex size-5 items-center justify-center rounded-full bg-accent text-white">
-              <Icon nom="check" class="size-3.5" />
-            </span>
-            {p.texte}
-          </span>
-        ))
-      }
+    <!-- Visuel sans photo : composition de cartes d'interface -->
+    <div class="anim-entree" style="--delai: 250ms">
+      <HeroVisuel />
     </div>
   </div>
 </section>
