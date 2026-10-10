@@ -11,12 +11,19 @@
  * Le bloc [data-hero-cta] sert de repère à la barre d'action mobile.
  */
 import Bouton from '../Bouton.astro';
-import Icon from '../Icon.astro';
+import Icon, { type NomIcone } from '../Icon.astro';
 import Dossier from './Dossier.astro';
 import { offres } from '../../config/offres';
 import { site } from '../../config/site';
 
-const appel = offres.appelDecouverte;
+const diagnostic = offres.diagnostic;
+
+// Garanties affichées sous les boutons
+const garanties: { icone: NomIcone; texte: string }[] = [
+  { icone: 'cadenas', texte: 'Paiement sécurisé par Stripe' },
+  { icone: 'calendrier', texte: 'Réservation en ligne' },
+  { icone: 'visio', texte: 'Séances en visio' },
+];
 ---
 
 <section class="conteneur pt-10 pb-16 md:pt-20 md:pb-24" aria-labelledby="hero-titre">
@@ -41,17 +48,24 @@ const appel = offres.appelDecouverte;
         style="--delai: 300ms"
         data-hero-cta
       >
-        <Bouton href={appel.lien} fleche evenement="appel-decouverte-hero">
-          Réserver mon appel découverte gratuit
+        <Bouton href={site.boutonPrincipal.lien} fleche evenement="bouton-principal-hero">
+          {site.boutonPrincipal.libelle}
         </Bouton>
-        <Bouton href="#parcours" variante="secondaire">Voir les formules</Bouton>
+        <Bouton href={diagnostic.lien} variante="secondaire" evenement="diagnostic-hero">
+          Réserver un diagnostic
+        </Bouton>
       </div>
 
-      <!-- Rappel des modalités de l'appel, juste sous le bouton -->
+      <!-- Garanties, juste sous les boutons -->
       <ul class="anim-entree mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[0.9375rem] text-gris" style="--delai: 400ms">
-        <li class="flex items-center gap-2"><Icon nom="horloge" class="size-5 text-accent" />{appel.duree}</li>
-        <li class="flex items-center gap-2"><Icon nom="visio" class="size-5 text-accent" />En {appel.format.toLowerCase()}</li>
-        <li class="flex items-center gap-2"><Icon nom="check" class="size-5 text-accent" />Gratuit</li>
+        {
+          garanties.map((g) => (
+            <li class="flex items-center gap-2">
+              <Icon nom={g.icone} class="size-5 text-accent-fonce" />
+              {g.texte}
+            </li>
+          ))
+        }
       </ul>
     </div>
 

@@ -3,9 +3,6 @@
  * 3 arguments, tirés de ton parcours (sans ajout de ma part).
  * Modifie librement les textes ci-dessous.
  * Motion : les cartes apparaissent l'une après l'autre au défilement.
- *
- * En dessous, une rangée de garanties concrètes (paiement, réservation,
- * format) pour rassurer tous les visiteurs, y compris les parents.
  */
 import Icon, { type NomIcone } from '../Icon.astro';
 
@@ -28,11 +25,6 @@ const arguments_: { icone: NomIcone; titre: string; texte: string }[] = [
   },
 ];
 
-const garanties: { icone: NomIcone; texte: string }[] = [
-  { icone: 'cadenas', texte: 'Paiement sécurisé par Stripe' },
-  { icone: 'calendrier', texte: 'Réservation en ligne via Cal.com' },
-  { icone: 'visio', texte: 'Séances en visio' },
-];
 ---
 
 <section aria-label="Pourquoi me faire confiance" class="conteneur pt-16 md:pt-24">
@@ -45,7 +37,7 @@ const garanties: { icone: NomIcone; texte: string }[] = [
           style={`--delai: ${i * 100}ms`}
         >
           <div class="flex items-center justify-between">
-            <span class="inline-flex size-11 items-center justify-center rounded-xl bg-accent-doux text-accent">
+            <span class="inline-flex size-11 items-center justify-center rounded-xl bg-accent-doux text-accent-fonce">
               <Icon nom={a.icone} class="size-5" />
             </span>
             <span class="mono text-gris">0{i + 1}</span>
@@ -57,19 +49,4 @@ const garanties: { icone: NomIcone; texte: string }[] = [
     }
   </ul>
 
-  <ul
-    class="mt-4 grid gap-x-8 gap-y-3 rounded-carte bg-pale px-6 py-5 sm:grid-cols-3 md:px-7"
-    aria-label="Garanties"
-    data-reveal
-    style="--delai: 300ms"
-  >
-    {
-      garanties.map((g) => (
-        <li class="flex items-center gap-3 text-[0.9375rem] font-medium">
-          <Icon nom={g.icone} class="size-5 shrink-0 text-accent" />
-          {g.texte}
-        </li>
-      ))
-    }
-  </ul>
 </section>

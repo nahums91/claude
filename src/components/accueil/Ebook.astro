@@ -28,10 +28,10 @@ const e = offres.ebook;
           />
         ) : (
           <div
-            class="flex aspect-[3/4] -rotate-3 flex-col justify-between rounded-xl border-l-[10px] border-accent bg-fond p-6 text-encre shadow-[0_30px_60px_-20px_rgb(0_0_0/0.6)] transition-transform duration-500 ease-(--ease-douce) hover:rotate-0"
+            class="flex aspect-[3/4] -rotate-3 flex-col justify-between rounded-xl border-l-[10px] border-primaire bg-fond p-6 text-encre shadow-[0_30px_60px_-20px_rgb(0_0_0/0.6)] transition-transform duration-500 ease-(--ease-douce) hover:rotate-0"
             aria-hidden="true"
           >
-            <span class="inline-flex size-10 items-center justify-center rounded-full bg-soleil text-encre"><Icon nom="livre" class="size-5" /></span>
+            <span class="inline-flex size-10 items-center justify-center rounded-full bg-accent text-encre"><Icon nom="livre" class="size-5" /></span>
             <div>
               <p class="font-titre text-2xl leading-tight font-bold tracking-[-0.03em]">{e.titre}</p>
               <p class="mono mt-4 text-[0.625rem] text-gris">{site.nom}</p>
@@ -51,7 +51,7 @@ const e = offres.ebook;
         {
           e.points.map((point) => (
             <li class="flex gap-3">
-              <span class="mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-soleil text-encre">
+              <span class="mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-accent text-encre">
                 <Icon nom="check" class="size-3.5" />
               </span>
               {point}

@@ -21,15 +21,17 @@
 import { z } from 'astro/zod';
 
 /* ---------------------------------------------------------------------------
- * 1. Appel découverte : la porte d'entrée, bouton principal partout
+ * 1. Diagnostic (payant) : pour les personnes qui ne savent pas quelle
+ *    formule choisir. On fait le point sur leur situation et on identifie
+ *    la formule adaptée.
  * ------------------------------------------------------------------------- */
-const appelDecouverte = {
-  nom: 'Appel découverte',
-  duree: '20 min',
+const diagnostic = {
+  nom: 'Diagnostic',
+  duree: '[DURÉE, ex. 45 min]',
   format: 'Visio',
-  prix: 0,
-  description: "J'écoute votre situation et je vous oriente vers la bonne formule.",
-  lien: 'https://cal.com/[TON-COMPTE]/appel-decouverte',
+  prix: '[PRIX]' as number | string,
+  description: 'Un point complet sur votre situation pour identifier la formule adaptée.',
+  lien: 'https://cal.com/[TON-COMPTE]/diagnostic',
 };
 
 /* ---------------------------------------------------------------------------
@@ -232,7 +234,7 @@ const formuleSchema = z.object({
 });
 
 const schema = z.object({
-  appelDecouverte: z.object({
+  diagnostic: z.object({
     nom: z.string(),
     duree: z.string(),
     format: z.string(),
@@ -265,7 +267,7 @@ const schema = z.object({
   commandeEssentiel: z.object({ lienFormulaire: lienSchema }),
 });
 
-export const offres = schema.parse({ appelDecouverte, parcours, ebook, commandeEssentiel });
+export const offres = schema.parse({ diagnostic, parcours, ebook, commandeEssentiel });
 
 export type Formule = z.infer<typeof formuleSchema>;
 export type Parcours = (typeof offres.parcours)[number];

@@ -9,22 +9,22 @@
 
 @theme {
   /* Couleurs (contrastes vérifiés selon WCAG AA)
-   * Identité : vert sapin (croissance, confiance) + jaune soleil (énergie,
-   * effet « surligneur » sur les mots-clés), sur un fond blanc chaud. */
-  --color-fond: #fbfaf7; /* fond principal */
-  --color-pale: #eef3ee; /* fond des sections alternées (vert très pâle) */
-  --color-surface: #ffffff; /* fond des cartes */
-  --color-encre: #14201a; /* texte principal (16:1 sur le fond) */
-  --color-gris: #56615a; /* texte secondaire (6,2:1 sur le fond) */
-  --color-ligne: #dde3dc; /* bordures */
-  --color-accent: #1f5a3d; /* vert sapin : boutons principaux, texte crème dessus (7,4:1) */
-  --color-accent-fonce: #143d29; /* survol des boutons */
-  --color-accent-doux: #e3eee5; /* fond des pastilles d'icônes */
-  --color-soleil: #f6c945; /* jaune : surligneur, badges, toujours avec texte encre (10,7:1) */
-  --color-sombre: #143d29; /* vert profond : formule mise en avant, e-book */
-  --color-sombre-2: #1b4a33; /* cartes posées sur fond sombre */
-  --color-sombre-doux: #b9c9be; /* texte secondaire sur fond sombre (7:1) */
-  --color-creme: #f7f4ee; /* texte principal sur fond sombre (11:1) */
+   * Identité : bleu nuit + crème, avec une touche de cuivre (boutons,
+   * surligneur, badges). */
+  --color-fond: #f4f1ea; /* crème : fond principal */
+  --color-pale: #ebe5d9; /* fond des sections alternées */
+  --color-surface: #fbf9f5; /* fond des cartes */
+  --color-encre: #0e1626; /* bleu nuit : texte principal (16:1 sur le fond) */
+  --color-gris: #5a5f6b; /* texte secondaire (5,7:1 sur le fond) */
+  --color-ligne: #e2dcd0; /* bordures */
+  --color-primaire: #0e1626; /* bleu nuit : aplats sombres (pastilles, bandeau) */
+  --color-accent: #e39a6c; /* cuivre : boutons principaux et surligneur, texte bleu nuit dessus (7,8:1) */
+  --color-accent-fonce: #a8512a; /* cuivre foncé : icônes et liens sur fond clair (4,8:1) */
+  --color-accent-doux: #f6e4d6; /* fond des pastilles d'icônes */
+  --color-sombre: #0e1626; /* bleu nuit : formule mise en avant, e-book */
+  --color-sombre-2: #162036; /* cartes posées sur fond sombre */
+  --color-sombre-doux: #a9b0be; /* texte secondaire sur fond sombre (8,3:1) */
+  --color-creme: #f1ece2; /* texte principal sur fond sombre (15:1) */
 
   /* Polices (auto-hébergées, voir src/layouts/Base.astro) */
   --font-titre: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
@@ -105,7 +105,7 @@
     font-weight: 400;
     letter-spacing: -0.01em;
     padding-inline: 0.06em;
-    background-image: linear-gradient(var(--color-soleil), var(--color-soleil));
+    background-image: linear-gradient(var(--color-accent), var(--color-accent));
     background-repeat: no-repeat;
     background-position: 0 86%;
     background-size: 100% 0.32em;
@@ -116,7 +116,7 @@
   .fond-sombre h1 em,
   .fond-sombre h2 em,
   .fond-sombre h3 em {
-    color: var(--color-soleil);
+    color: var(--color-accent);
     background-image: none;
   }
 
@@ -181,7 +181,7 @@
     min-width: 1.75rem;
     height: 1.5rem;
     border-radius: 0.375rem;
-    background: var(--color-soleil);
+    background: var(--color-accent);
     color: var(--color-encre);
     font-weight: 600;
   }

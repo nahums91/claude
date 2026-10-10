@@ -7,7 +7,6 @@ import Bouton from './Bouton.astro';
 import Icon from './Icon.astro';
 import Logo from './Logo.astro';
 import { site } from '../config/site';
-import { offres } from '../config/offres';
 
 const liens = [
   { href: '/alternance', label: 'Alternance' },
@@ -45,8 +44,8 @@ const cheminActuel = Astro.url.pathname.replace(/\.html$/, '');
     </nav>
 
     <div class="hidden lg:block">
-      <Bouton href={offres.appelDecouverte.lien} evenement="appel-decouverte-header">
-        Réserver mon appel découverte gratuit
+      <Bouton href={site.boutonPrincipal.lien} evenement="bouton-principal-header">
+        {site.boutonPrincipal.libelle}
       </Bouton>
     </div>
 
@@ -83,8 +82,8 @@ const cheminActuel = Astro.url.pathname.replace(/\.html$/, '');
         }
       </ul>
       <div class="pt-6 pb-2">
-        <Bouton href={offres.appelDecouverte.lien} pleineLargeur evenement="appel-decouverte-menu">
-          Réserver mon appel découverte gratuit
+        <Bouton href={site.boutonPrincipal.lien} pleineLargeur evenement="bouton-principal-menu">
+          {site.boutonPrincipal.libelle}
         </Bouton>
       </div>
     </nav>

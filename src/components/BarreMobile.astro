@@ -2,11 +2,11 @@
 /**
  * Barre d'action fixée en bas de l'écran, sur mobile uniquement.
  * Elle apparaît dès que le bouton principal du haut de page n'est plus visible,
- * pour que « Réserver mon appel découverte gratuit » reste toujours à portée de pouce.
+ * pour que le bouton principal (site.boutonPrincipal) reste toujours à portée de pouce.
  * Sur une page sans repère [data-hero-cta], elle s'affiche dès qu'on a un peu défilé.
  */
 import Bouton from './Bouton.astro';
-import { offres } from '../config/offres';
+import { site } from '../config/site';
 ---
 
 <div
@@ -14,8 +14,8 @@ import { offres } from '../config/offres';
   data-barre-mobile
   aria-hidden="true"
 >
-  <Bouton href={offres.appelDecouverte.lien} pleineLargeur evenement="appel-decouverte-barre-mobile">
-    Réserver mon appel découverte gratuit
+  <Bouton href={site.boutonPrincipal.lien} pleineLargeur evenement="bouton-principal-barre-mobile">
+    {site.boutonPrincipal.libelle}
   </Bouton>
 </div>
 

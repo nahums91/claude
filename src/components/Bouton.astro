@@ -4,9 +4,9 @@
  * ou on ouvre Cal.com / Stripe), avec une hauteur minimale de 48 px pour le tactile.
  *
  * Variantes :
- * - principal  : vert sapin, l'action principale (appel découverte, réserver)
+ * - principal  : cuivre, l'action principale (choisir une formule, réserver)
  * - secondaire : contour, action secondaire sur fond clair
- * - inverse    : jaune soleil, à utiliser sur fond sombre
+ * - inverse    : cuivre, à utiliser sur fond sombre
  * - contour-inverse : contour clair, action secondaire sur fond sombre
  *
  * Micro-animations : la flèche glisse au survol, le bouton s'enfonce au toucher.
@@ -38,9 +38,9 @@ const {
 } = Astro.props;
 
 const styles = {
-  principal: 'bg-accent text-creme hover:bg-accent-fonce',
+  principal: 'bg-accent text-encre hover:bg-primaire hover:text-creme',
   secondaire: 'border border-encre/20 bg-surface text-encre hover:border-encre',
-  inverse: 'bg-soleil text-encre hover:bg-creme',
+  inverse: 'bg-accent text-encre hover:bg-creme',
   'contour-inverse': 'border border-creme/30 text-creme hover:border-creme hover:bg-creme hover:text-encre',
 };
 

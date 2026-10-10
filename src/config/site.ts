@@ -18,7 +18,7 @@ export const site = {
   prenom: 'Nahum',
   /** Description par défaut, utilisée par Google et lors des partages. 150 à 160 caractères. */
   descriptionParDefaut:
-    'Coaching alternance et orientation : CV, lettre de motivation, LinkedIn, entretiens, choix de formation. Réservez votre appel découverte gratuit de 20 min.',
+    'Coaching alternance et orientation : CV, lettre de motivation, LinkedIn, entretiens, choix de formation. Choisissez votre formule et réservez en ligne.',
   langue: 'fr-FR',
 
   /**
@@ -27,6 +27,15 @@ export const site = {
    * portrait, 1200 px de large) puis indique '/hero.jpg'.
    */
   photoHero: '',
+
+  /**
+   * Bouton principal, affiché dans l'en-tête, le hero et la barre mobile.
+   * Par défaut, il mène au choix du parcours sur l'accueil.
+   */
+  boutonPrincipal: {
+    libelle: 'Choisir ma formule',
+    lien: '/#parcours',
+  },
 
   contact: {
     email: 'snkcontent1@gmail.com',

@@ -2,7 +2,7 @@
 /**
  * Choix du parcours : la première décision du visiteur.
  * Deux grandes cartes (une par parcours), puis deux sorties de secours :
- * l'appel découverte pour qui hésite, l'e-book pour qui veut avancer seul.
+ * le diagnostic (payant) pour qui hésite, l'e-book pour qui veut avancer seul.
  * Tous les textes et prix viennent de src/config/offres.ts.
  * Motion : apparition au défilement, carte qui se soulève et flèche qui se
  * remplit au survol.
@@ -12,7 +12,7 @@ import Icon, { type NomIcone } from '../Icon.astro';
 import { offres, formaterPrix, prixMinimum } from '../../config/offres';
 
 const icones: Record<string, NomIcone> = { alternance: 'document', orientation: 'boussole' };
-const appel = offres.appelDecouverte;
+const diagnostic = offres.diagnostic;
 ---
 
 <section id="parcours" class="section conteneur" aria-labelledby="parcours-titre">
@@ -32,7 +32,7 @@ const appel = offres.appelDecouverte;
               class="group flex h-full flex-col rounded-carte border border-ligne bg-surface p-6 transition-[transform,box-shadow,border-color] duration-500 ease-(--ease-douce) hover:-translate-y-1.5 hover:border-encre/20 hover:shadow-[0_24px_60px_-28px_rgb(11_11_15/0.35)] md:p-8"
             >
               <div class="flex items-center justify-between">
-                <span class="inline-flex size-12 items-center justify-center rounded-xl bg-accent-doux text-accent">
+                <span class="inline-flex size-12 items-center justify-center rounded-xl bg-accent-doux text-accent-fonce">
                   <Icon nom={icones[p.id] ?? 'fleche'} class="size-6" />
                 </span>
                 <span class="mono text-gris">Parcours 0{p.numero}</span>
@@ -41,7 +41,7 @@ const appel = offres.appelDecouverte;
               <h3 class="mt-8 text-[1.875rem] md:text-4xl">{p.titre}</h3>
               <p class="mt-3 text-gris">{p.resume}</p>
               <p class="mt-4 flex gap-2 text-[0.9375rem]">
-                <Icon nom="communaute" class="mt-0.5 size-5 shrink-0 text-accent" />
+                <Icon nom="communaute" class="mt-0.5 size-5 shrink-0 text-accent-fonce" />
                 <span><span class="font-medium">Pour qui :</span> {p.pourQui}</span>
               </p>
 
@@ -65,7 +65,7 @@ const appel = offres.appelDecouverte;
                 </p>
                 <span class="inline-flex min-h-12 items-center gap-3 font-medium whitespace-nowrap">
                   Voir les formules
-                  <span class="inline-flex size-10 items-center justify-center rounded-bouton border border-ligne transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-creme">
+                  <span class="inline-flex size-10 items-center justify-center rounded-bouton border border-ligne transition-colors duration-300 group-hover:border-primaire group-hover:bg-primaire group-hover:text-creme">
                     <Icon nom="fleche" class="size-5 transition-transform duration-300 group-hover:-rotate-45" />
                   </span>
                 </span>
@@ -77,7 +77,7 @@ const appel = offres.appelDecouverte;
     }
   </ul>
 
-  <!-- Pour qui hésite : l'appel découverte -->
+  <!-- Pour qui hésite : le diagnostic -->
   <div
     class="fond-sombre mt-4 flex flex-col gap-6 rounded-carte bg-sombre p-6 text-creme md:flex-row md:items-center md:justify-between md:p-10"
     data-reveal
@@ -85,12 +85,14 @@ const appel = offres.appelDecouverte;
   >
     <div class="max-w-xl">
       <h3 class="text-[1.75rem] md:text-4xl">Vous hésitez entre <em>les deux</em> ?</h3>
-      <p class="mt-2 text-sombre-doux">
-        {appel.nom} : {appel.duree}, en {appel.format.toLowerCase()}, gratuit. {appel.description}
+      <p class="mt-2 text-sombre-doux">{diagnostic.description}</p>
+      <p class="mono mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[0.6875rem] text-sombre-doux">
+        <span>{diagnostic.nom}</span><span>{diagnostic.format}</span><span>{diagnostic.duree}</span>
+        <span class="text-accent">{formaterPrix(diagnostic.prix)}</span>
       </p>
     </div>
-    <Bouton href={appel.lien} variante="inverse" fleche class="shrink-0" evenement="appel-decouverte-parcours">
-      Réserver mon appel découverte gratuit
+    <Bouton href={diagnostic.lien} variante="inverse" fleche class="shrink-0" evenement="diagnostic-parcours">
+      Réserver un diagnostic
     </Bouton>
   </div>
 
@@ -98,7 +100,7 @@ const appel = offres.appelDecouverte;
   <p class="mt-6 flex flex-wrap items-center gap-x-2 text-gris" data-reveal style="--delai: 300ms">
     <Icon nom="livre" class="size-5" />
     Vous préférez avancer en autonomie ?
-    <a href="#ebook" class="inline-flex min-h-11 items-center font-medium text-encre underline decoration-soleil decoration-[3px] underline-offset-4">
+    <a href="#ebook" class="inline-flex min-h-11 items-center font-medium text-encre underline decoration-accent decoration-[3px] underline-offset-4">
       Découvrir l’e-book
     </a>
   </p>
