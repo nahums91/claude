@@ -1,0 +1,24 @@
+---
+/**
+ * Appel à l'action final, en bas de l'accueil : reprend la promesse du hero.
+ */
+import Bouton from '../Bouton.astro';
+import { offres } from '../../config/offres';
+import { site } from '../../config/site';
+---
+
+<section class="conteneur pb-20 md:pb-28" aria-labelledby="titre-appel-final">
+  <div class="fond-sombre relative overflow-hidden rounded-[2rem] bg-sombre px-6 py-14 text-center text-creme sm:px-10 md:py-20" data-reveal>
+    <h2 id="titre-appel-final" class="mx-auto max-w-3xl text-[2.25rem] md:text-6xl">
+      Prêt à faire de ton entrée dans le monde pro <em class="whitespace-nowrap">une évidence</em> ?
+    </h2>
+    <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+      <Bouton href={site.boutonPrincipal.lien} fleche evenement="bouton-principal-final">
+        {site.boutonPrincipal.libelle}
+      </Bouton>
+      <Bouton href={offres.diagnostic.lien} variante="contour-inverse" evenement="diagnostic-final">
+        Réserver un diagnostic
+      </Bouton>
+    </div>
+  </div>
+</section>

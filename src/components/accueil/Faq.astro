@@ -1,0 +1,34 @@
+---
+/**
+ * FAQ en accordéon, avec les balises natives <details>/<summary> :
+ * accessibles au clavier et aux lecteurs d'écran, sans JavaScript.
+ * Questions et réponses dans src/config/contenus.ts.
+ */
+import Icon from '../Icon.astro';
+import { faq } from '../../config/contenus';
+---
+
+<section id="faq" class="section conteneur" aria-labelledby="titre-faq">
+  <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+    <div data-reveal>
+      <p class="surtitre"><span>08</span> FAQ</p>
+      <h2 id="titre-faq" class="mt-5 text-[2.5rem] md:text-6xl">Questions <em>fréquentes</em></h2>
+    </div>
+
+    <div class="divide-y divide-ligne border-y border-ligne" data-reveal style="--delai: 120ms">
+      {
+        faq.map((item) => (
+          <details class="group">
+            <summary class="flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-5 text-lg font-medium [&::-webkit-details-marker]:hidden">
+              {item.question}
+              <span class="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-ligne transition-transform duration-300 group-open:rotate-180 group-open:border-primaire group-open:bg-primaire group-open:text-creme">
+                <Icon nom="chevron" class="size-4" />
+              </span>
+            </summary>
+            <div class="pb-6 text-gris">{item.reponse}</div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

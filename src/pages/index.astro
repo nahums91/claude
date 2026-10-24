@@ -8,17 +8,42 @@ import Hero from '../components/accueil/Hero.astro';
 import Defilant from '../components/accueil/Defilant.astro';
 import Profil from '../components/accueil/Profil.astro';
 import ChoixParcours from '../components/accueil/ChoixParcours.astro';
+import Etapes from '../components/accueil/Etapes.astro';
 import Formules from '../components/accueil/Formules.astro';
+import Temoignages from '../components/accueil/Temoignages.astro';
 import Ebook from '../components/accueil/Ebook.astro';
+import Faq from '../components/accueil/Faq.astro';
+import AppelFinal from '../components/accueil/AppelFinal.astro';
 import { site } from '../config/site';
+import { faq, estProvisoire } from '../config/contenus';
+
+// Données structurées FAQPage : uniquement les questions déjà rédigées
+const questionsPretes = faq.filter((q) => !estProvisoire(q.question) && !estProvisoire(q.reponse));
+const jsonLd = questionsPretes.length
+  ? [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: questionsPretes.map((q) => ({
+          '@type': 'Question',
+          name: q.question,
+          acceptedAnswer: { '@type': 'Answer', text: q.reponse },
+        })),
+      },
+    ]
+  : [];
 ---
 
-<Base titre={site.nom}>
+<Base titre={site.nom} jsonLd={jsonLd}>
   <Hero />
   <Defilant />
   <Profil />
   <ChoixParcours />
-  <Formules parcoursId="alternance" fondAlterne />
-  <Formules parcoursId="orientation" />
+  <Etapes />
+  <Formules parcoursId="alternance" />
+  <Formules parcoursId="orientation" fondAlterne />
+  <Temoignages />
   <Ebook />
+  <Faq />
+  <AppelFinal />
 </Base>
