@@ -46,18 +46,25 @@ export const site = {
     pitch: '[TA PRÉSENTATION EN 2 OU 3 PHRASES : pourquoi tu accompagnes les étudiants, ce qui te rend légitime]',
     // Photo de profil facultative : dépose-la dans /public puis indique son chemin (ex. '/nahum.jpg').
     photo: '',
-    // Ton parcours, du plus ancien au plus récent
+    // Ton parcours. Mets « actuel: true » sur l'étape à mettre en avant (point cuivre).
     parcours: [
-      { periode: 'Avant', titre: 'SDR', texte: 'Prospection, cold calling, LinkedIn.' },
       {
-        periode: 'Aujourd’hui',
-        titre: 'ICN Business School',
-        texte: 'Dernière année du Programme Grande École, en alternance commerciale dans une grande ESN.',
+        periode: '5 ans d’alternance',
+        titre: 'Tech Sales',
+        texte: 'Différentes fonctions : SDR, Business Developer, puis Sales Specialist.',
+        actuel: false,
+      },
+      {
+        periode: 'Diplômé',
+        titre: 'Grande école de commerce',
+        texte: 'Programme Grande École (PGE).',
+        actuel: false,
       },
       {
         periode: 'En parallèle',
         titre: 'Créateur de contenu',
         texte: 'Plusieurs milliers d’abonnés sur TikTok, Instagram et LinkedIn, pour aider les étudiants à trouver une alternance.',
+        actuel: true,
       },
     ],
   },

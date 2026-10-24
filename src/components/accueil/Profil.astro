@@ -1,6 +1,6 @@
 ---
 /**
- * « Qui suis-je » : présentation de ton profil, juste après le hero.
+ * « Qui suis-je ? » : présentation de ton profil, juste après le hero.
  * - à gauche : ton nom, ta présentation et tes réseaux
  * - à droite : une carte de profil avec ton parcours en frise
  * Les contenus se modifient dans src/config/site.ts (site.profil).
@@ -23,8 +23,8 @@ const reseaux = [
   <div class="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20">
     <!-- Présentation -->
     <div data-reveal>
-      <p class="surtitre"><span>01</span> Qui suis-je</p>
-      <h2 id="titre-profil" class="mt-5 text-[2.5rem] md:text-6xl">Moi, c’est <em>{site.prenom}</em>.</h2>
+      <p class="surtitre"><span>01</span> À propos</p>
+      <h2 id="titre-profil" class="mt-5 text-[2.5rem] md:text-6xl">Qui <em>suis-je</em> ?</h2>
       <p class="mt-6 max-w-xl text-lg text-gris">{p.pitch}</p>
 
       <div class="mt-8">
@@ -76,7 +76,7 @@ const reseaux = [
               <span
                 class:list={[
                   'absolute top-1.5 left-0 size-[0.9375rem] rounded-full border-[3px] border-surface ring-1',
-                  i === 1 ? 'bg-accent ring-accent' : 'bg-ligne ring-ligne',
+                  etape.actuel ? 'bg-accent ring-accent' : 'bg-ligne ring-ligne',
                 ]}
                 aria-hidden="true"
               />
