@@ -1,0 +1,92 @@
+---
+/**
+ * « Qui suis-je » : présentation de ton profil, juste après le hero.
+ * - à gauche : ton nom, ta présentation et tes réseaux
+ * - à droite : une carte de profil avec ton parcours en frise
+ * Les contenus se modifient dans src/config/site.ts (site.profil).
+ *
+ * Sans photo, un monogramme « N » s'affiche dans l'avatar.
+ * Motion : apparition au défilement, les étapes de la frise l'une après l'autre.
+ */
+import Icon from '../Icon.astro';
+import { site } from '../../config/site';
+
+const p = site.profil;
+const reseaux = [
+  { nom: 'TikTok', icone: 'tiktok', url: site.reseaux.tiktok },
+  { nom: 'Instagram', icone: 'instagram', url: site.reseaux.instagram },
+  { nom: 'LinkedIn', icone: 'linkedin', url: site.reseaux.linkedin },
+] as const;
+---
+
+<section id="profil" class="section conteneur" aria-labelledby="titre-profil">
+  <div class="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20">
+    <!-- Présentation -->
+    <div data-reveal>
+      <p class="surtitre"><span>01</span> Qui suis-je</p>
+      <h2 id="titre-profil" class="mt-5 text-[2.5rem] md:text-6xl">Moi, c’est <em>{site.prenom}</em>.</h2>
+      <p class="mt-6 max-w-xl text-lg text-gris">{p.pitch}</p>
+
+      <div class="mt-8">
+        <p class="mono text-gris">Me suivre</p>
+        <ul class="mt-3 flex flex-wrap gap-2">
+          {
+            reseaux
+              .filter((r) => r.url)
+              .map((r) => (
+                <li>
+                  <a
+                    href={r.url}
+                    rel="noopener"
+                    class="inline-flex min-h-11 items-center gap-2 rounded-full border border-ligne bg-surface px-4 font-medium transition-colors hover:border-primaire"
+                  >
+                    <Icon nom={r.icone} class="size-5 text-accent-fonce" />
+                    {r.nom}
+                  </a>
+                </li>
+              ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <!-- Carte de profil -->
+    <div class="rounded-carte border border-ligne bg-surface p-6 shadow-[0_30px_60px_-40px_rgb(14_22_38/0.35)] md:p-8" data-reveal style="--delai: 120ms">
+      <div class="flex items-center gap-4 border-b border-ligne pb-6">
+        {
+          p.photo ? (
+            <img src={p.photo} alt={`Portrait de ${site.prenom}`} width="64" height="64" loading="lazy" class="size-16 rounded-full object-cover" />
+          ) : (
+            <span class="inline-flex size-16 shrink-0 items-center justify-center rounded-full bg-primaire font-serif text-3xl text-accent italic" aria-hidden="true">
+              {site.prenom.charAt(0)}
+            </span>
+          )
+        }
+        <div>
+          <p class="font-titre text-2xl font-bold tracking-[-0.03em]">{site.prenom}</p>
+          <p class="text-gris">{p.role}</p>
+        </div>
+      </div>
+
+      <!-- Parcours en frise -->
+      <ol class="relative mt-6 space-y-6 before:absolute before:top-2 before:bottom-2 before:left-[0.4375rem] before:w-px before:bg-ligne">
+        {
+          p.parcours.map((etape, i) => (
+            <li class="relative pl-9" data-reveal style={`--delai: ${200 + i * 120}ms`}>
+              <span
+                class:list={[
+                  'absolute top-1.5 left-0 size-[0.9375rem] rounded-full border-[3px] border-surface ring-1',
+                  i === 1 ? 'bg-accent ring-accent' : 'bg-ligne ring-ligne',
+                ]}
+                aria-hidden="true"
+              />
+              <p class="mono text-accent-fonce">{etape.periode}</p>
+              <p class="font-titre mt-1 text-xl font-bold tracking-[-0.02em]">{etape.titre}</p>
+              <p class="mt-1 text-gris">{etape.texte}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>

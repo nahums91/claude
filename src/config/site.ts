@@ -37,6 +37,31 @@ export const site = {
     lien: '/#parcours',
   },
 
+  /**
+   * Présentation de ton profil (section « Qui suis-je » de l'accueil).
+   * Le texte entre [CROCHETS] est à rédiger par toi.
+   */
+  profil: {
+    role: 'Coach alternance et orientation',
+    pitch: '[TA PRÉSENTATION EN 2 OU 3 PHRASES : pourquoi tu accompagnes les étudiants, ce qui te rend légitime]',
+    // Photo de profil facultative : dépose-la dans /public puis indique son chemin (ex. '/nahum.jpg').
+    photo: '',
+    // Ton parcours, du plus ancien au plus récent
+    parcours: [
+      { periode: 'Avant', titre: 'SDR', texte: 'Prospection, cold calling, LinkedIn.' },
+      {
+        periode: 'Aujourd’hui',
+        titre: 'ICN Business School',
+        texte: 'Dernière année du Programme Grande École, en alternance commerciale dans une grande ESN.',
+      },
+      {
+        periode: 'En parallèle',
+        titre: 'Créateur de contenu',
+        texte: 'Plusieurs milliers d’abonnés sur TikTok, Instagram et LinkedIn, pour aider les étudiants à trouver une alternance.',
+      },
+    ],
+  },
+
   contact: {
     email: 'snkcontent1@gmail.com',
   },

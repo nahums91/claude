@@ -6,7 +6,7 @@
 import Base from '../layouts/Base.astro';
 import Hero from '../components/accueil/Hero.astro';
 import Defilant from '../components/accueil/Defilant.astro';
-import Arguments from '../components/accueil/Arguments.astro';
+import Profil from '../components/accueil/Profil.astro';
 import ChoixParcours from '../components/accueil/ChoixParcours.astro';
 import Formules from '../components/accueil/Formules.astro';
 import Ebook from '../components/accueil/Ebook.astro';
@@ -16,7 +16,7 @@ import { site } from '../config/site';
 <Base titre={site.nom}>
   <Hero />
   <Defilant />
-  <Arguments />
+  <Profil />
   <ChoixParcours />
   <Formules parcoursId="alternance" fondAlterne />
   <Formules parcoursId="orientation" />
