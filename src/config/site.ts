@@ -63,7 +63,7 @@ export const site = {
       {
         periode: 'En parallèle',
         titre: 'Créateur de contenu',
-        texte: 'Plusieurs milliers d’abonnés sur TikTok, Instagram et LinkedIn, pour aider les étudiants à trouver une alternance.',
+        texte: 'Plusieurs milliers d’abonnés sur TikTok, Instagram et LinkedIn, pour aider les étudiants à trouver une alternance et réduire l’asymétrie d’information.',
         actuel: true,
       },
     ],
