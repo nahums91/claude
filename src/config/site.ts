@@ -39,11 +39,11 @@ export const site = {
 
   /**
    * Présentation de ton profil (section « Qui suis-je » de l'accueil).
-   * Le texte entre [CROCHETS] est à rédiger par toi.
    */
   profil: {
     role: 'Coach alternance et orientation',
-    pitch: '[TA PRÉSENTATION EN 2 OU 3 PHRASES : pourquoi tu accompagnes les étudiants, ce qui te rend légitime]',
+    pitch:
+      'Ce que j’ai appris en 5 ans d’alternance, je le partage pour que ton entrée dans le monde pro ne dépende pas de qui tu connais.',
     // Photo de profil facultative : dépose-la dans /public puis indique son chemin (ex. '/nahum.jpg').
     photo: '',
     // Ton parcours. Mets « actuel: true » sur l'étape à mettre en avant (point cuivre).
