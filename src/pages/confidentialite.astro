@@ -1,0 +1,84 @@
+---
+/**
+ * Politique de confidentialité (RGPD) : STRUCTURE à compléter et à faire relire.
+ * Elle décrit les données réellement collectées par le site : formulaire de
+ * demande (Netlify Forms), paiement (Stripe), envoi de documents (e-mail),
+ * groupe privé (Podia), échanges par e-mail.
+ */
+import PageTexte from '../layouts/PageTexte.astro';
+import { site } from '../config/site';
+
+const l = site.legal;
+---
+
+<PageTexte titre="Politique de confidentialité" description={`Comment ${site.nom} collecte et protège vos données personnelles.`}>
+  <p class="note">Structure à compléter et à faire relire avant la mise en ligne.</p>
+
+  <h2>Responsable du traitement</h2>
+  <p>
+    {l.nomComplet}, {l.statut}, {l.adresse}. Contact :
+    <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.
+  </p>
+
+  <h2>Données collectées et finalités</h2>
+  <table>
+    <thead>
+      <tr><th scope="col">Quand</th><th scope="col">Données</th><th scope="col">Pourquoi</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Formulaire de demande</td>
+        <td>Prénom, e-mail, formule souhaitée, situation, disponibilités</td>
+        <td>Répondre à la demande et proposer des créneaux (mesures précontractuelles)</td>
+      </tr>
+      <tr>
+        <td>Paiement</td>
+        <td>Nom, e-mail, données de paiement (traitées par Stripe, jamais par le site)</td>
+        <td>Encaisser la prestation (exécution du contrat), comptabilité (obligation légale)</td>
+      </tr>
+      <tr>
+        <td>Formule Prêt</td>
+        <td>CV, lettre de motivation, lien LinkedIn, poste visé</td>
+        <td>Réaliser la refonte des documents (exécution du contrat)</td>
+      </tr>
+      <tr>
+        <td>Formule Accompagné</td>
+        <td>Nom, e-mail, échanges dans le groupe privé</td>
+        <td>Donner accès au groupe privé (exécution du contrat)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Destinataires et sous-traitants</h2>
+  <p>Les données ne sont jamais vendues. Elles sont accessibles au seul responsable du traitement et à ses prestataires techniques :</p>
+  <ul>
+    <li>Netlify (hébergement du site et réception du formulaire de demande), États-Unis</li>
+    <li>Stripe (paiement en ligne)</li>
+    <li>Podia (groupe privé de la formule Accompagné), États-Unis</li>
+    <li>[MESSAGERIE : ex. Google (Gmail)] pour les échanges par e-mail</li>
+  </ul>
+  <p>
+    [À VÉRIFIER : pour les prestataires situés hors de l’Union européenne, préciser les garanties encadrant le transfert
+    (ex. Data Privacy Framework, clauses contractuelles types).]
+  </p>
+
+  <h2>Durées de conservation</h2>
+  <ul>
+    <li>Demandes sans suite : [DURÉE, ex. 3 ans après le dernier contact]</li>
+    <li>Documents transmis pour une refonte : [DURÉE, ex. 6 mois après la livraison]</li>
+    <li>Factures et pièces comptables : 10 ans (obligation légale)</li>
+  </ul>
+
+  <h2>Vos droits</h2>
+  <p>
+    Vous disposez d’un droit d’accès, de rectification, d’effacement, d’opposition, de limitation et de portabilité de vos
+    données. Pour l’exercer : <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>. Vous pouvez aussi
+    adresser une réclamation à la CNIL (<a href="https://www.cnil.fr">cnil.fr</a>).
+  </p>
+
+  <h2>Cookies et mesure d’audience</h2>
+  <p>
+    Ce site n’utilise ni cookie publicitaire, ni cookie de mesure d’audience nécessitant un consentement. Aucun bandeau
+    cookies n’est donc affiché. [À METTRE À JOUR si un outil de statistiques ou un pixel publicitaire est ajouté.]
+  </p>
+</PageTexte>

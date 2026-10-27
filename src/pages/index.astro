@@ -1,0 +1,61 @@
+---
+/**
+ * Page d'accueil : le tunnel complet, du hero à l'appel à l'action final.
+ * Chaque section est un composant dans src/components/accueil/.
+ */
+import Base from '../layouts/Base.astro';
+import Hero from '../components/accueil/Hero.astro';
+import Defilant from '../components/accueil/Defilant.astro';
+import Profil from '../components/accueil/Profil.astro';
+import ChoixParcours from '../components/accueil/ChoixParcours.astro';
+import Etapes from '../components/accueil/Etapes.astro';
+import Formules from '../components/accueil/Formules.astro';
+import Temoignages from '../components/accueil/Temoignages.astro';
+import Ebook from '../components/accueil/Ebook.astro';
+import Faq from '../components/accueil/Faq.astro';
+import AppelFinal from '../components/accueil/AppelFinal.astro';
+import { site } from '../config/site';
+import { faqPrete, temoignagesPrets } from '../config/contenus';
+import { ebookPret } from '../config/offres';
+
+// Données structurées FAQPage : uniquement les questions déjà rédigées
+const questionsPretes = faqPrete;
+const jsonLd = questionsPretes.length
+  ? [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: questionsPretes.map((q) => ({
+          '@type': 'Question',
+          name: q.question,
+          acceptedAnswer: { '@type': 'Answer', text: q.reponse },
+        })),
+      },
+    ]
+  : [];
+
+// Numérotation des sections après les formules (01 à 05) : seules les
+// sections affichées reçoivent un numéro, pour éviter les trous.
+const optionnelles = [
+  ['temoignages', temoignagesPrets.length > 0],
+  ['ebook', ebookPret],
+  ['faq', faqPrete.length > 0],
+] as const;
+const numeros: Record<string, string> = {};
+let suivant = 6;
+for (const [nom, visible] of optionnelles) if (visible) numeros[nom] = String(suivant++).padStart(2, '0');
+---
+
+<Base titre={site.nom} jsonLd={jsonLd}>
+  <Hero />
+  <Defilant />
+  <Profil />
+  <ChoixParcours />
+  <Etapes />
+  <Formules parcoursId="alternance" />
+  <Formules parcoursId="orientation" fondAlterne />
+  {temoignagesPrets.length > 0 && <Temoignages numero={numeros.temoignages} />}
+  {ebookPret && <Ebook numero={numeros.ebook} />}
+  {faqPrete.length > 0 && <Faq numero={numeros.faq} />}
+  <AppelFinal />
+</Base>

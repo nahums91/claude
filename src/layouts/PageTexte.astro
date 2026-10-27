@@ -1,0 +1,26 @@
+---
+/**
+ * Gabarit des pages de texte long : mentions légales, CGV, confidentialité.
+ * En-tête sombre (comme les autres pages intérieures), puis le texte mis en
+ * forme par la classe .texte-long (voir global.css).
+ */
+import Base from './Base.astro';
+import EntetePage from '../components/EntetePage.astro';
+import { site } from '../config/site';
+
+interface Props {
+  titre: string;
+  description: string;
+}
+
+const { titre, description } = Astro.props;
+---
+
+<Base titre={titre} description={description}>
+  <EntetePage surtitre="Informations" titre={titre} intro={`Dernière mise à jour : ${site.legal.dateMiseAJour}`} />
+  <section class="conteneur pt-12 pb-24 md:pt-16">
+    <div class="texte-long">
+      <slot />
+    </div>
+  </section>
+</Base>

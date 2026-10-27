@@ -1,0 +1,113 @@
+---
+/**
+ * Gabarit commun à toutes les pages :
+ * - balises SEO (title, description, URL canonique)
+ * - Open Graph et Twitter pour de beaux aperçus sur les réseaux
+ * - données structurées JSON-LD (Organization sur toutes les pages,
+ *   plus celles propres à chaque page : Service, FAQPage…)
+ * - en-tête, pied de page et lien d'évitement pour la navigation au clavier
+ */
+import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource-variable/geist';
+import '@fontsource-variable/geist-mono';
+// Instrument Serif : uniquement l'italique, pour les mots mis en valeur
+import '@fontsource/instrument-serif/400-italic.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BarreMobile from '../components/BarreMobile.astro';
+import Animations from '../components/Animations.astro';
+import { site } from '../config/site';
+
+interface Props {
+  /** Titre de la page, 60 caractères max. Le nom du site est ajouté automatiquement. */
+  titre: string;
+  /** Description pour Google et les partages, 150 à 160 caractères. */
+  description?: string;
+  /** Image de partage (1200 × 630), chemin dans /public. */
+  image?: string;
+  /** Données structurées propres à la page. */
+  jsonLd?: Record<string, unknown>[];
+  /** true pour exclure la page des moteurs de recherche. */
+  noindex?: boolean;
+}
+
+const {
+  titre,
+  description = site.descriptionParDefaut,
+  image = '/og.png',
+  jsonLd = [],
+  noindex = false,
+} = Astro.props;
+
+const titreComplet = titre === site.nom ? titre : `${titre} | ${site.nom}`;
+const urlCanonique = new URL(Astro.url.pathname.replace(/\.html$/, ''), Astro.site).href;
+const urlImage = new URL(image, Astro.site).href;
+
+// Organisation (Nahum.Apc) : présente sur toutes les pages
+const organisation = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${Astro.site}#organisation`,
+  name: site.nom,
+  url: Astro.site?.href,
+  email: site.contact.email,
+  description: site.descriptionParDefaut,
+  founder: { '@type': 'Person', name: site.prenom },
+  sameAs: Object.values(site.reseaux).filter(Boolean),
+};
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titreComplet}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={urlCanonique} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#0E1626" />
+
+    <!-- Signale que JavaScript est actif : les animations d'apparition peuvent démarrer masquées -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
+
+    <!-- Open Graph : aperçu sur Instagram, LinkedIn, WhatsApp… -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content={site.nom} />
+    <meta property="og:title" content={titreComplet} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={urlCanonique} />
+    <meta property="og:image" content={urlImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {
+      [organisation, ...jsonLd].map((donnees) => (
+        <script type="application/ld+json" set:html={JSON.stringify(donnees)} />
+      ))
+    }
+  </head>
+
+  <body class="min-h-dvh">
+    <a
+      href="#contenu"
+      class="sr-only z-50 rounded-bouton bg-encre px-5 py-3 text-fond focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+    >
+      Aller au contenu
+    </a>
+    <Header />
+    <main id="contenu">
+      <slot />
+    </main>
+    <Footer />
+    <BarreMobile />
+    <Animations />
+  </body>
+</html>

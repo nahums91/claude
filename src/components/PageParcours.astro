@@ -1,0 +1,76 @@
+---
+/**
+ * Gabarit commun aux pages de parcours (/alternance et /orientation) :
+ * en-tête, cartes des formules, prestations à la carte, tableau comparatif (s'il existe),
+ * encart « Besoin d'y voir clair ? » et appel final.
+ */
+import Base from '../layouts/Base.astro';
+import EntetePage from './EntetePage.astro';
+import CarteFormule from './CarteFormule.astro';
+import Comparatif from './Comparatif.astro';
+import ALaCarte from './ALaCarte.astro';
+import BlocHesitation from './BlocHesitation.astro';
+import AppelFinal from './accueil/AppelFinal.astro';
+import Icon from './Icon.astro';
+import { trouverParcours } from '../config/offres';
+import { servicesDuParcours } from '../lib/donnees-structurees';
+
+interface Props {
+  parcoursId: 'alternance' | 'orientation';
+  /** Titre et description pour Google et les partages */
+  titreSeo: string;
+  descriptionSeo: string;
+  /** Titre de l'appel final (HTML autorisé) ; par défaut celui de l'accueil */
+  titreAppelFinal?: string;
+}
+
+const { parcoursId, titreSeo, descriptionSeo, titreAppelFinal } = Astro.props;
+const p = trouverParcours(parcoursId);
+const colonnes = p.formules.length === 3 ? 'lg:grid-cols-3' : 'mx-auto max-w-4xl md:grid-cols-2';
+---
+
+<Base titre={titreSeo} description={descriptionSeo} jsonLd={servicesDuParcours(p, Astro.site)}>
+  <EntetePage surtitre={`Parcours ${p.numero}`} titre={p.titre} intro={p.resume}>
+    <p class="anim-entree mt-6 flex max-w-2xl gap-2 text-sombre-doux" style="--delai: 250ms">
+      <Icon nom="communaute" class="mt-0.5 size-5 shrink-0 text-accent" />
+      <span><span class="font-medium text-creme">Pour qui :</span> {p.pourQui}</span>
+    </p>
+  </EntetePage>
+
+  <!-- Formules -->
+  <section class="section conteneur" aria-labelledby="titre-formules">
+    <h2 id="titre-formules" class="sr-only">Les formules</h2>
+    <div class:list={['grid items-stretch gap-4 lg:gap-5', colonnes]}>
+      {p.formules.map((f, i) => <CarteFormule formule={f} delai={i * 120} />)}
+    </div>
+    <ALaCarte parcours={p} class="mt-8 lg:mt-12" />
+  </section>
+
+  <!-- Comparatif -->
+  {
+    p.comparatif.length > 0 && (
+      <section class="section border-y border-ligne bg-pale" aria-labelledby="titre-comparatif" id="comparatif">
+        <div class="conteneur">
+          <div class="max-w-2xl" data-reveal>
+            <p class="surtitre">
+              <span>≡</span> Comparatif
+            </p>
+            <h2 id="titre-comparatif" class="mt-5 text-[2.5rem] md:text-6xl">
+              Comparer les <em>formules</em>
+            </h2>
+          </div>
+          <div class="mt-10">
+            <Comparatif parcours={p} />
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Pour qui hésite -->
+  <section class="section conteneur" aria-label="Besoin d’aide pour choisir">
+    <BlocHesitation />
+  </section>
+
+  <AppelFinal titre={titreAppelFinal} />
+</Base>

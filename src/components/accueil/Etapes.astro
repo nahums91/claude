@@ -1,0 +1,34 @@
+---
+/**
+ * « Comment ça se passe » en 3 étapes numérotées, reliées par une ligne.
+ * Textes dans src/config/contenus.ts.
+ * Motion : les étapes apparaissent l'une après l'autre.
+ */
+import { etapes } from '../../config/contenus';
+---
+
+<section id="etapes" class="section border-y border-ligne bg-pale" aria-labelledby="titre-etapes">
+  <div class="conteneur">
+    <div class="max-w-2xl" data-reveal>
+      <p class="surtitre"><span>03</span> Déroulé</p>
+      <h2 id="titre-etapes" class="mt-5 text-[2.5rem] md:text-6xl">Comment ça se <em>passe</em> ?</h2>
+    </div>
+
+    <ol class="relative mt-12 grid gap-4 md:grid-cols-3 md:gap-5">
+      {
+        etapes.map((e, i) => (
+          <li class="relative rounded-carte border border-ligne bg-surface p-6 md:p-8" data-reveal style={`--delai: ${i * 140}ms`}>
+            <span class="font-titre inline-flex size-12 items-center justify-center rounded-full bg-primaire text-xl font-bold text-accent" aria-hidden="true">
+              {i + 1}
+            </span>
+            <h3 class="mt-6 text-2xl">
+              <span class="sr-only">Étape {i + 1} : </span>
+              {e.titre}
+            </h3>
+            <p class="mt-3 text-gris">{e.texte}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

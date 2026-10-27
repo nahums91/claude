@@ -1,0 +1,43 @@
+---
+/**
+ * Témoignages. La section n'apparaît que si au moins un témoignage est rédigé.
+ * Textes dans src/config/contenus.ts. Mets idéalement 3 témoignages réels,
+ * avec l'accord écrit des personnes.
+ */
+import { temoignagesPrets as temoignages } from '../../config/contenus';
+
+interface Props {
+  numero: string;
+}
+const { numero } = Astro.props;
+---
+
+<section id="temoignages" class="section conteneur" aria-labelledby="titre-temoignages">
+  <div class="max-w-2xl" data-reveal>
+    <p class="surtitre"><span>{numero}</span> Témoignages</p>
+    <h2 id="titre-temoignages" class="mt-5 text-[2.5rem] md:text-6xl">Leurs <em>retours</em></h2>
+  </div>
+
+  <ul class="mt-12 grid gap-4 md:grid-cols-3 md:gap-5">
+    {
+      temoignages.map((t, i) => (
+        <li data-reveal style={`--delai: ${i * 120}ms`}>
+          <figure class="flex h-full flex-col rounded-carte border border-ligne bg-surface p-6 md:p-8">
+            <span class="font-serif text-6xl leading-none text-accent" aria-hidden="true">“</span>
+            <blockquote class="mt-2 flex-1 text-lg">{t.texte}</blockquote>
+            <figcaption class="mt-6 flex items-center gap-3 border-t border-ligne pt-5">
+              <span class="font-titre inline-flex size-10 shrink-0 items-center justify-center rounded-full bg-accent-doux font-bold text-accent-fonce" aria-hidden="true">
+                {t.auteur.replace('[', '').charAt(0)}
+              </span>
+              <span>
+                <span class="block font-medium">{t.auteur}</span>
+                <span class="block text-sm text-gris">{t.contexte}</span>
+              </span>
+              <span class="mono ml-auto rounded-full border border-ligne px-2.5 py-1 text-[0.625rem] text-gris">{t.formule}</span>
+            </figcaption>
+          </figure>
+        </li>
+      ))
+    }
+  </ul>
+</section>

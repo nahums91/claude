@@ -1,0 +1,53 @@
+---
+/**
+ * Prestations à la carte d'un parcours : un seul élément (CV, lettre,
+ * LinkedIn, entretiens) sans prendre une formule complète.
+ * Affichées en liste compacte, sous les cartes de formules.
+ * Données dans src/config/offres.ts (parcours[].aLaCarte).
+ */
+import Bouton from './Bouton.astro';
+import { formaterPrix, reservationEffective, type Parcours } from '../config/offres';
+
+interface Props {
+  parcours: Parcours;
+  class?: string;
+}
+
+const { parcours: p, class: classe = '' } = Astro.props;
+---
+
+{
+  p.aLaCarte.length > 0 && (
+    <div class:list={['rounded-carte border border-ligne bg-surface p-6 md:p-8', classe]} data-reveal>
+      <div class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+        <h3 class="text-2xl md:text-3xl">
+          Prestations <em>à la carte</em>
+        </h3>
+        <p class="text-gris">Un seul élément à retravailler, sans formule complète.</p>
+      </div>
+
+      <ul class="mt-6 divide-y divide-ligne border-t border-ligne">
+        {p.aLaCarte.map((prestation) => (
+          <li class="flex flex-col gap-4 py-5 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p class="font-titre text-lg font-bold tracking-[-0.02em]">{prestation.nom}</p>
+              <p class="text-gris">{prestation.description}</p>
+              <p class="mono mt-1 text-[0.6875rem] text-gris">{prestation.detail}</p>
+            </div>
+            <div class="flex items-center justify-between gap-5 sm:justify-end">
+              <span class="font-titre text-2xl font-bold tracking-[-0.03em]">{formaterPrix(prestation.prix)}</span>
+              <Bouton
+                href={reservationEffective(prestation).lien}
+                variante="secondaire"
+                ariaLabel={`${reservationEffective(prestation).libelle} : ${prestation.nom}`}
+                evenement={prestation.id}
+              >
+                {reservationEffective(prestation).libelle}
+              </Bouton>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}

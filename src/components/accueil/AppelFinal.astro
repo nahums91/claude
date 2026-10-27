@@ -1,0 +1,31 @@
+---
+/**
+ * Appel à l'action final, en bas de page.
+ * Par défaut il reprend la promesse du hero (tutoiement) ; on peut passer un
+ * autre titre (HTML autorisé, ex. avec <em>) pour les pages au vouvoiement.
+ */
+import Bouton from '../Bouton.astro';
+import { site } from '../../config/site';
+
+interface Props {
+  titre?: string;
+}
+
+const {
+  titre = 'Prêt à faire de ton entrée dans le monde pro <em class="whitespace-nowrap">une évidence</em> ?',
+} = Astro.props;
+---
+
+<section class="conteneur pb-20 md:pb-28" aria-labelledby="titre-appel-final">
+  <div class="fond-sombre relative overflow-hidden rounded-[2rem] bg-sombre px-6 py-14 text-center text-creme sm:px-10 md:py-20" data-reveal>
+    <h2 id="titre-appel-final" class="mx-auto max-w-3xl text-[2.25rem] md:text-6xl" set:html={titre} />
+    <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+      <Bouton href={site.boutonPrincipal.lien} fleche evenement="bouton-principal-final">
+        {site.boutonPrincipal.libelle}
+      </Bouton>
+      <Bouton href="/demande?formule=indecis" variante="contour-inverse" evenement="demande-final">
+        Faire une demande
+      </Bouton>
+    </div>
+  </div>
+</section>

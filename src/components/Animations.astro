@@ -1,0 +1,27 @@
+---
+/**
+ * Apparition des éléments [data-reveal] quand ils entrent à l'écran.
+ * Chaque élément n'est animé qu'une fois, puis n'est plus surveillé.
+ */
+---
+
+<script>
+  const elements = document.querySelectorAll<HTMLElement>('[data-reveal]');
+
+  if ('IntersectionObserver' in window) {
+    const observateur = new IntersectionObserver(
+      (entrees) => {
+        for (const entree of entrees) {
+          if (!entree.isIntersecting) continue;
+          entree.target.classList.add('est-visible');
+          observateur.unobserve(entree.target);
+        }
+      },
+      // Déclenche un peu avant que l'élément soit totalement entré
+      { rootMargin: '0px 0px -8% 0px', threshold: 0.12 },
+    );
+    elements.forEach((el) => observateur.observe(el));
+  } else {
+    elements.forEach((el) => el.classList.add('est-visible'));
+  }
+</script>

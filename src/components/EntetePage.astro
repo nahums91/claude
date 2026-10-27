@@ -1,0 +1,26 @@
+---
+/**
+ * En-tête sombre des pages intérieures (parcours, demande…), dans la
+ * continuité de l'en-tête du site. Le dernier mot du titre est mis en valeur.
+ */
+interface Props {
+  surtitre: string;
+  titre: string;
+  intro?: string;
+}
+
+const { surtitre, titre, intro } = Astro.props;
+const mots = titre.split(' ');
+const dernierMot = mots.pop();
+---
+
+<section class="fond-sombre bg-sombre text-creme">
+  <div class="conteneur pt-12 pb-16 md:pt-20 md:pb-24">
+    <p class="surtitre anim-entree"><span>→</span> {surtitre}</p>
+    <h1 class="anim-entree mt-6 max-w-4xl text-[2.75rem] sm:text-6xl lg:text-7xl" style="--delai: 100ms">
+      {mots.join(' ')} <em class="whitespace-nowrap">{dernierMot}</em>
+    </h1>
+    {intro && <p class="anim-entree mt-6 max-w-2xl text-lg text-sombre-doux md:text-xl" style="--delai: 200ms">{intro}</p>}
+    <slot />
+  </div>
+</section>

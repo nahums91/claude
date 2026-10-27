@@ -1,0 +1,162 @@
+---
+/**
+ * Page « Faire une demande » : formulaire envoyé à Nahum par e-mail.
+ *
+ * Fonctionnement : Netlify Forms (gratuit jusqu'à 100 demandes par mois).
+ * - Netlify détecte ce formulaire au déploiement (attribut data-netlify).
+ * - Chaque demande t'est envoyée par e-mail (à activer une fois dans
+ *   Netlify : Forms > Form notifications > Email notification, voir README).
+ * - Après l'envoi, le visiteur arrive sur /demande-envoyee.
+ *
+ * La formule est présélectionnée grâce au lien du bouton
+ * (ex. /demande?formule=suivi). Sans JavaScript, le visiteur la choisit lui-même.
+ * Formulation neutre : la page s'adresse à tous les publics.
+ */
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { offres, formaterPrix, reservationEffective } from '../config/offres';
+import { site } from '../config/site';
+
+// Liste des choix : « je ne sais pas encore », puis les formules de chaque parcours et l'à la carte
+const groupes = [
+  ...offres.parcours.flatMap((p) => [
+    {
+      label: p.titre,
+      options: p.formules
+        .filter((f) => reservationEffective(f).type === 'demande')
+        .map((f) => ({ id: f.id, nom: f.nom, prix: f.prix })),
+    },
+    {
+      label: `${p.titre} : à la carte`,
+      options: p.aLaCarte
+        .filter((c) => reservationEffective(c).type === 'demande')
+        .map((c) => ({ id: c.id, nom: c.nom, prix: c.prix })),
+    },
+  ]),
+].filter((g) => g.options.length > 0);
+
+const champ =
+  'mt-2 block w-full rounded-xl border border-ligne bg-surface px-4 py-3 text-base text-encre transition-colors placeholder:text-gris/70 focus:border-primaire focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-accent';
+---
+
+<Base
+  titre="Faire une demande"
+  description="Envoyez votre demande de formule : vous recevez une réponse par e-mail avec les créneaux disponibles."
+>
+  <section class="conteneur pt-12 pb-20 md:pt-20 md:pb-28">
+    <div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+      <!-- Explications -->
+      <div class="anim-entree">
+        <p class="surtitre"><span>→</span> Demande</p>
+        <h1 class="mt-5 text-[2.5rem] md:text-6xl">Faire une <em>demande</em></h1>
+        <p class="mt-6 text-lg text-gris">Réponse par e-mail avec les créneaux disponibles.</p>
+
+        <ol class="mt-10 space-y-5">
+          {
+            ['Envoi de la demande via ce formulaire', 'Réponse par e-mail avec les créneaux disponibles', 'Confirmation du créneau'].map(
+              (etape, i) => (
+                <li class="flex gap-4">
+                  <span class="font-titre inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-primaire font-bold text-accent">
+                    {i + 1}
+                  </span>
+                  <span class="pt-1.5">{etape}</span>
+                </li>
+              ),
+            )
+          }
+        </ol>
+
+        <p class="mt-10 flex flex-wrap items-center gap-x-2 text-gris">
+          <Icon nom="mail" class="size-5" />
+          Plutôt par e-mail directement ?
+          <a href={`mailto:${site.contact.email}`} class="inline-flex min-h-11 items-center font-medium text-encre underline decoration-accent decoration-[3px] underline-offset-4">
+            {site.contact.email}
+          </a>
+        </p>
+      </div>
+
+      <!-- Formulaire -->
+      <form
+        name="demande"
+        method="POST"
+        action="/demande-envoyee"
+        data-netlify="true"
+        netlify-honeypot="champ-robot"
+        class="anim-entree rounded-carte border border-ligne bg-surface p-6 md:p-10"
+        style="--delai: 120ms"
+      >
+        <!-- Champs techniques : nom du formulaire pour Netlify, et piège à robots (invisible) -->
+        <input type="hidden" name="form-name" value="demande" />
+        <p class="hidden">
+          <label>Ne pas remplir : <input name="champ-robot" tabindex="-1" autocomplete="off" /></label>
+        </p>
+
+        <div class="grid gap-6">
+          <div>
+            <label for="formule" class="font-medium">Formule souhaitée</label>
+            <select id="formule" name="formule" required class={champ} data-choix-formule>
+              <option value="">Choisir une formule</option>
+              <option value="Je ne sais pas encore" data-id="indecis">Je ne sais pas encore</option>
+              {
+                groupes.map((g) => (
+                  <optgroup label={g.label}>
+                    {g.options.map((o) => (
+                      <option value={o.nom} data-id={o.id}>
+                        {o.nom} ({formaterPrix(o.prix)})
+                      </option>
+                    ))}
+                  </optgroup>
+                ))
+              }
+            </select>
+          </div>
+
+          <div class="grid gap-6 sm:grid-cols-2">
+            <div>
+              <label for="prenom" class="font-medium">Prénom</label>
+              <input id="prenom" name="prenom" type="text" required autocomplete="given-name" class={champ} />
+            </div>
+            <div>
+              <label for="email" class="font-medium">Adresse e-mail</label>
+              <input id="email" name="email" type="email" required autocomplete="email" class={champ} />
+            </div>
+          </div>
+
+          <div>
+            <label for="message" class="font-medium">Situation et besoin</label>
+            <p id="aide-message" class="mt-1 text-sm text-gris">Études, alternance ou projet visé, échéances…</p>
+            <textarea id="message" name="message" rows="5" required aria-describedby="aide-message" class={champ}></textarea>
+          </div>
+
+          <div>
+            <label for="disponibilites" class="font-medium">Disponibilités <span class="font-normal text-gris">(facultatif)</span></label>
+            <input id="disponibilites" name="disponibilites" type="text" placeholder="Ex. soirs de semaine, samedi matin" class={champ} />
+          </div>
+
+          <p class="text-sm text-gris">
+            Ces informations servent uniquement à répondre à la demande.{' '}
+            <a href="/confidentialite" class="underline underline-offset-2">Politique de confidentialité</a>
+          </p>
+
+          <button
+            type="submit"
+            class="group/bouton inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-bouton bg-accent px-6 py-3 font-medium text-encre transition-[background-color,color,transform] duration-300 hover:bg-primaire hover:text-creme active:scale-[0.97]"
+          >
+            Envoyer la demande
+            <Icon nom="fleche" class="size-5 transition-transform duration-300 group-hover/bouton:translate-x-1" />
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Présélectionne la formule indiquée dans l'adresse (ex. ?formule=suivi)
+  const id = new URLSearchParams(window.location.search).get('formule');
+  const choix = document.querySelector<HTMLSelectElement>('[data-choix-formule]');
+  if (id && choix) {
+    const option = choix.querySelector<HTMLOptionElement>(`option[data-id="${CSS.escape(id)}"]`);
+    if (option) option.selected = true;
+  }
+</script>

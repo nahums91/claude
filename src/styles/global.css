@@ -1,0 +1,332 @@
+/*
+ * Charte graphique Nahum.Apc
+ * Les couleurs et polices sont déclarées une seule fois ici, sous forme de
+ * variables nommées par rôle (fond, accent…). Tailwind génère automatiquement
+ * les classes correspondantes (ex. bg-fond, text-accent, font-titre).
+ * Pour changer toute l'identité du site, il suffit de modifier ce bloc.
+ */
+@import 'tailwindcss';
+
+@theme {
+  /* Couleurs (contrastes vérifiés selon WCAG AA)
+   * Identité : bleu nuit + crème, avec une touche de cuivre (boutons,
+   * surligneur, badges). */
+  --color-fond: #f4f1ea; /* crème : fond principal */
+  --color-pale: #ebe5d9; /* fond des sections alternées */
+  --color-surface: #fbf9f5; /* fond des cartes */
+  --color-encre: #0e1626; /* bleu nuit : texte principal (16:1 sur le fond) */
+  --color-gris: #5a5f6b; /* texte secondaire (5,7:1 sur le fond) */
+  --color-ligne: #e2dcd0; /* bordures */
+  --color-primaire: #0e1626; /* bleu nuit : aplats sombres (pastilles, bandeau) */
+  --color-accent: #e39a6c; /* cuivre : boutons principaux et surligneur, texte bleu nuit dessus (7,8:1) */
+  --color-accent-fonce: #a8512a; /* cuivre foncé : icônes et liens sur fond clair (4,8:1) */
+  --color-accent-doux: #f6e4d6; /* fond des pastilles d'icônes */
+  --color-sombre: #0e1626; /* bleu nuit : formule mise en avant, e-book */
+  --color-sombre-2: #162036; /* cartes posées sur fond sombre */
+  --color-sombre-doux: #a9b0be; /* texte secondaire sur fond sombre (8,3:1) */
+  --color-creme: #f1ece2; /* texte principal sur fond sombre (15:1) */
+
+  /* Polices (auto-hébergées, voir src/layouts/Base.astro) */
+  --font-titre: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-texte: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
+
+  /* Coins arrondis : cartes douces, boutons légèrement arrondis */
+  --radius-carte: 1.5rem; /* 24 px */
+  --radius-petit: 1.25rem; /* 20 px */
+  --radius-bouton: 999px; /* boutons en pilule */
+
+  /* Courbe d'animation : départ rapide, arrivée très douce */
+  --ease-douce: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Animations déclarées ici pour être utilisables en classes Tailwind */
+  --animate-defilement: defilement 60s linear infinite;
+  --animate-flotte: flotte 7s ease-in-out infinite;
+
+  @keyframes defilement {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes flotte {
+    0%,
+    100% {
+      transform: translateY(0) rotate(var(--rotation, 0deg));
+    }
+    50% {
+      transform: translateY(-6px) rotate(var(--rotation, 0deg));
+    }
+  }
+}
+
+/* Transition fluide entre les pages (navigateurs récents, sans JavaScript) */
+@view-transition {
+  navigation: auto;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Laisse de la place au header collant lors des sauts d'ancre (#parcours…) */
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-fond);
+    color: var(--color-encre);
+    font-family: var(--font-texte);
+    font-size: 1.0625rem; /* 17 px : confortable sur mobile */
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-titre);
+    /* Bricolage Grotesque : du caractère, sans être austère */
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+
+  /* Mot mis en valeur dans un titre : italique à empattements, souligné
+   * par un trait de surligneur jaune qui se dessine à l'apparition.
+   * (Le trait est un aplat de couleur, pas un dégradé.) */
+  h1 em,
+  h2 em,
+  h3 em {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    padding-inline: 0.06em;
+    background-image: linear-gradient(var(--color-accent), var(--color-accent));
+    background-repeat: no-repeat;
+    background-position: 0 86%;
+    background-size: 100% 0.32em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+  /* Sur fond sombre : même surligneur cuivre, sous un mot couleur crème */
+  .fond-sombre h1 em,
+  .fond-sombre h2 em,
+  .fond-sombre h3 em {
+    color: var(--color-creme);
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-encre);
+  }
+
+  /* Focus clavier bien visible, uniquement à la navigation au clavier */
+  :focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+}
+
+@layer components {
+  /* Conteneur centré avec 20 px de marge latérale sur mobile */
+  .conteneur {
+    width: 100%;
+    max-width: 74rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .conteneur {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Espacement vertical généreux entre les sections */
+  .section {
+    padding-block: 5rem;
+  }
+  @media (min-width: 768px) {
+    .section {
+      padding-block: 7.5rem;
+    }
+  }
+
+  /* Étiquette au-dessus des titres : mono, avec numéro de section.
+   * Ex. <p class="surtitre"><span>01</span> Parcours</p> */
+  .surtitre {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-gris);
+  }
+  .surtitre span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.75rem;
+    height: 1.5rem;
+    border-radius: 0.375rem;
+    background: var(--color-accent);
+    color: var(--color-encre);
+    font-weight: 600;
+  }
+  .fond-sombre .surtitre {
+    color: var(--color-sombre-doux);
+  }
+
+  /* Mise en forme des pages de texte long (mentions légales, CGV…) */
+  .texte-long {
+    max-width: 46rem;
+    color: var(--color-encre);
+  }
+  .texte-long h2 {
+    margin-top: 3rem;
+    font-size: 1.625rem;
+  }
+  .texte-long h3 {
+    margin-top: 1.75rem;
+    font-size: 1.25rem;
+  }
+  .texte-long p,
+  .texte-long ul,
+  .texte-long table {
+    margin-top: 1rem;
+  }
+  .texte-long ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+  .texte-long li + li {
+    margin-top: 0.375rem;
+  }
+  .texte-long a {
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+  .texte-long table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
+  .texte-long th,
+  .texte-long td {
+    border-bottom: 1px solid var(--color-ligne);
+    padding: 0.625rem 0.5rem 0.625rem 0;
+    text-align: left;
+    vertical-align: top;
+  }
+  /* Encadré « à compléter / à faire relire » */
+  .texte-long .note {
+    border-left: 3px solid var(--color-accent);
+    background: var(--color-accent-doux);
+    border-radius: 0 0.75rem 0.75rem 0;
+    padding: 0.875rem 1rem;
+    font-size: 0.9375rem;
+  }
+
+  /* Texte mono pour les petites étiquettes (formats, tags…) */
+  .mono {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+}
+
+/* ==========================================================================
+ * MOTION DESIGN
+ * Tout est en CSS, avec un tout petit script pour l'apparition au défilement
+ * (src/components/Animations.astro). Aucune bibliothèque, donc aucun impact
+ * sur la vitesse de chargement.
+ * Les personnes qui ont activé « Réduire les animations » dans leur
+ * téléphone ne voient aucune animation (règle en bas de fichier).
+ * ======================================================================= */
+
+/* 1. Entrée du haut de page : les éléments montent l'un après l'autre.
+ *    Utilisation : class="anim-entree" style="--delai: 120ms" */
+@keyframes entree {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(6px);
+  }
+}
+.anim-entree {
+  animation: entree 0.9s var(--ease-douce) both;
+  animation-delay: var(--delai, 0ms);
+}
+
+/* 2. Apparition au défilement : data-reveal sur un élément, et
+ *    style="--delai: 100ms" pour décaler les éléments d'une même rangée.
+ *    La classe .js est posée par le script : sans JavaScript, tout reste visible. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.8s var(--ease-douce),
+    transform 0.8s var(--ease-douce);
+  transition-delay: var(--delai, 0ms);
+}
+.js [data-reveal].est-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* 3. Surligneur : le trait jaune sous les mots-clés se dessine de gauche à droite */
+@keyframes surligne {
+  from {
+    background-size: 0% 0.32em;
+  }
+}
+.anim-entree em,
+.js [data-reveal].est-visible em {
+  animation: surligne 0.9s var(--ease-douce) both;
+  animation-delay: calc(var(--delai, 0ms) + 350ms);
+}
+.js [data-reveal] em {
+  background-size: 0% 0.32em;
+}
+.js [data-reveal].est-visible em {
+  background-size: 100% 0.32em;
+}
+
+/* 4. Bandeau défilant : pause au survol */
+.defilant:hover .defilant-piste {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+  @view-transition {
+    navigation: none;
+  }
+}

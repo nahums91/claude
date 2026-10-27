@@ -1,0 +1,101 @@
+---
+/**
+ * Pied de page : rappel de l'identité, navigation, réseaux, contact et liens légaux.
+ */
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+import { site } from '../config/site';
+import { faqPrete } from '../config/contenus';
+import { ebookPret } from '../config/offres';
+
+const reseaux = [
+  { nom: 'TikTok', icone: 'tiktok', url: site.reseaux.tiktok },
+  { nom: 'Instagram', icone: 'instagram', url: site.reseaux.instagram },
+  { nom: 'LinkedIn', icone: 'linkedin', url: site.reseaux.linkedin },
+] as const;
+
+const colonnes = [
+  {
+    titre: 'Parcours',
+    liens: [
+      { href: '/alternance', label: 'Décroche ton alternance' },
+      { href: '/orientation', label: 'Clarifiez votre projet' },
+      ...(ebookPret ? [{ href: '/#ebook', label: 'E-book' }] : []),
+    ],
+  },
+  {
+    titre: 'Infos',
+    liens: [
+      ...(faqPrete.length > 0 ? [{ href: '/#faq', label: 'FAQ' }] : []),
+      { href: '/mentions-legales', label: 'Mentions légales' },
+      { href: '/cgv', label: 'CGV' },
+      { href: '/confidentialite', label: 'Confidentialité' },
+    ],
+  },
+];
+
+const annee = new Date().getFullYear();
+---
+
+<footer class="border-t border-ligne bg-pale pt-16 pb-28 lg:pb-12">
+  <div class="conteneur">
+    <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div>
+        <a href="/" class="inline-flex min-h-11 items-center" aria-label={`${site.nom}, retour à l'accueil`}>
+          <Logo />
+        </a>
+        <p class="mt-3 max-w-xs text-gris">Coaching alternance et orientation.</p>
+
+        <ul class="mt-6 flex gap-2" aria-label="Réseaux sociaux">
+          {
+            reseaux
+              .filter((r) => r.url)
+              .map((r) => (
+                <li>
+                  <a
+                    href={r.url}
+                    class="inline-flex size-12 items-center justify-center rounded-full border border-ligne bg-surface transition-colors hover:border-primaire hover:text-accent-fonce"
+                    aria-label={`${r.nom} de ${site.nom}`}
+                    rel="noopener"
+                  >
+                    <Icon nom={r.icone} class="size-5" />
+                  </a>
+                </li>
+              ))
+          }
+        </ul>
+
+        <a
+          href={`mailto:${site.contact.email}`}
+          class="mt-4 inline-flex min-h-11 items-center gap-2 font-medium underline decoration-accent decoration-[3px] underline-offset-4"
+        >
+          <Icon nom="mail" class="size-5" />
+          {site.contact.email}
+        </a>
+      </div>
+
+      {
+        colonnes.map((c) => (
+          <nav aria-label={c.titre}>
+            <h2 class="mono text-gris">{c.titre}</h2>
+            <ul class="mt-3">
+              {c.liens.map((l) => (
+                <li>
+                  <a href={l.href} class="inline-flex min-h-11 items-center transition-colors hover:text-accent-fonce">
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+    </div>
+
+    <!-- Identité légale visible : un signal de sérieux, notamment pour les parents -->
+    <div class="mono mt-14 flex flex-col gap-2 border-t border-ligne pt-6 text-[0.625rem] text-gris md:flex-row md:justify-between">
+      <p>© {annee} {site.nom}. Tous droits réservés.</p>
+      {!site.legal.siret.startsWith('[') && <p>{site.legal.nomComplet} · {site.legal.statut} · SIRET {site.legal.siret}</p>}
+    </div>
+  </div>
+</footer>

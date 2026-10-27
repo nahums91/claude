@@ -1,0 +1,44 @@
+---
+/**
+ * Barre d'action fixée en bas de l'écran, sur mobile uniquement.
+ * Elle apparaît dès que le bouton principal du haut de page n'est plus visible,
+ * pour que le bouton principal (site.boutonPrincipal) reste toujours à portée de pouce.
+ * Sur une page sans repère [data-hero-cta], elle s'affiche dès qu'on a un peu défilé.
+ */
+import Bouton from './Bouton.astro';
+import { site } from '../config/site';
+---
+
+<div
+  class="invisible fixed inset-x-0 bottom-0 z-30 translate-y-full border-t border-ligne bg-fond/95 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-sm transition-[transform,visibility] duration-300 lg:hidden"
+  data-barre-mobile
+  aria-hidden="true"
+>
+  <Bouton href={site.boutonPrincipal.lien} pleineLargeur evenement="bouton-principal-barre-mobile">
+    {site.boutonPrincipal.libelle}
+  </Bouton>
+</div>
+
+<script>
+  const barre = document.querySelector<HTMLElement>('[data-barre-mobile]');
+  const repere = document.querySelector('[data-hero-cta]');
+
+  function afficher(visible: boolean) {
+    if (!barre) return;
+    barre.classList.toggle('translate-y-full', !visible);
+    barre.classList.toggle('invisible', !visible);
+    // Masquée : retirée de l'arbre d'accessibilité et de la tabulation
+    barre.setAttribute('aria-hidden', String(!visible));
+    barre.querySelector('a')?.setAttribute('tabindex', visible ? '0' : '-1');
+  }
+
+  if (barre && repere) {
+    new IntersectionObserver(([entree]) => afficher(!entree.isIntersecting && entree.boundingClientRect.top < 0)).observe(
+      repere,
+    );
+  } else if (barre) {
+    const verifier = () => afficher(window.scrollY > 400);
+    window.addEventListener('scroll', verifier, { passive: true });
+    verifier();
+  }
+</script>

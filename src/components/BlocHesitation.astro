@@ -1,0 +1,36 @@
+---
+/**
+ * Encart « Besoin d'y voir clair ? » pour les personnes qui hésitent :
+ * elles décrivent leur situation via le formulaire de demande (gratuit),
+ * avec l'option « Je ne sais pas encore » déjà sélectionnée.
+ * Formulation neutre : l'encart apparaît sur des pages au « tu » et au « vous ».
+ */
+import Bouton from './Bouton.astro';
+
+interface Props {
+  /** Décalage de l'animation d'apparition, en millisecondes. */
+  delai?: number;
+  class?: string;
+}
+
+const { delai = 0, class: classe = '' } = Astro.props;
+---
+
+<div
+  class:list={[
+    'fond-sombre flex flex-col gap-6 rounded-carte bg-sombre p-6 text-creme md:flex-row md:items-center md:justify-between md:p-10',
+    classe,
+  ]}
+  data-reveal
+  style={`--delai: ${delai}ms`}
+>
+  <div class="max-w-xl">
+    <h3 class="text-[1.75rem] md:text-4xl">Besoin d’y voir <em>clair</em> ?</h3>
+    <p class="mt-2 text-sombre-doux">
+      Une description de la situation via le formulaire, et une réponse par e-mail avec la formule adaptée.
+    </p>
+  </div>
+  <Bouton href="/demande?formule=indecis" variante="inverse" fleche class="shrink-0" evenement="demande-indecis">
+    Faire une demande
+  </Bouton>
+</div>

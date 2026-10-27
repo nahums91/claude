@@ -1,0 +1,80 @@
+---
+/**
+ * Hero de l'accueil, sur fond bleu nuit (comme l'en-tête) :
+ * à gauche l'accroche et le bouton principal, à droite le « dossier de
+ * candidature » à onglets (voir Dossier.astro).
+ *
+ * Avec une photo (site.photoHero renseigné), elle remplace le dossier.
+ *
+ * Motion : les blocs entrent l'un après l'autre et le mot-clé du titre
+ * se fait surligner en cuivre.
+ * Le bloc [data-hero-cta] sert de repère à la barre d'action mobile.
+ */
+import Bouton from '../Bouton.astro';
+import Icon, { type NomIcone } from '../Icon.astro';
+import Dossier from './Dossier.astro';
+import { site } from '../../config/site';
+
+// Garanties affichées sous les boutons
+const garanties: { icone: NomIcone; texte: string }[] = [
+  { icone: 'cadenas', texte: 'Paiement sécurisé' },
+  { icone: 'mail', texte: 'Créneaux proposés par e-mail' },
+  { icone: 'visio', texte: 'Séances en visio' },
+];
+---
+
+<section class="fond-sombre bg-sombre text-creme" aria-labelledby="hero-titre">
+  <div class="conteneur grid items-center gap-14 pt-10 pb-20 md:pt-20 md:pb-28 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+    <div>
+      <p class="surtitre anim-entree"><span>00</span> Coaching alternance et orientation</p>
+
+      <h1
+        id="hero-titre"
+        class="anim-entree mt-6 text-[2.75rem] sm:text-6xl lg:text-[4.25rem]"
+        style="--delai: 100ms"
+      >
+        Fais de ton entrée dans le monde professionnel <em class="whitespace-nowrap">une évidence</em>.
+      </h1>
+
+      <div
+        class="anim-entree mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
+        style="--delai: 300ms"
+        data-hero-cta
+      >
+        <Bouton href={site.boutonPrincipal.lien} fleche evenement="bouton-principal-hero">
+          {site.boutonPrincipal.libelle}
+        </Bouton>
+        <Bouton href="/demande?formule=indecis" variante="contour-inverse" evenement="demande-hero">
+          Faire une demande
+        </Bouton>
+      </div>
+
+      <!-- Garanties, juste sous les boutons -->
+      <ul class="anim-entree mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[0.9375rem] text-sombre-doux" style="--delai: 400ms">
+        {
+          garanties.map((g) => (
+            <li class="flex items-center gap-2">
+              <Icon nom={g.icone} class="size-5 text-accent" />
+              {g.texte}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="anim-entree" style="--delai: 250ms">
+      {
+        site.photoHero ? (
+          <img
+            src={site.photoHero}
+            alt="[DESCRIPTION DE LA PHOTO]"
+            class="aspect-[4/5] w-full rounded-carte object-cover"
+            fetchpriority="high"
+          />
+        ) : (
+          <Dossier />
+        )
+      }
+    </div>
+  </div>
+</section>

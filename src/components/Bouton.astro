@@ -1,0 +1,65 @@
+---
+/**
+ * Bouton en forme de pilule. C'est toujours un vrai lien <a> (on change de page
+ * ou on ouvre Stripe), avec une hauteur minimale de 48 px pour le tactile.
+ *
+ * Variantes :
+ * - principal  : cuivre, l'action principale (choisir une formule, réserver)
+ * - secondaire : contour, action secondaire sur fond clair
+ * - inverse    : cuivre, à utiliser sur fond sombre
+ * - contour-inverse : contour clair, action secondaire sur fond sombre
+ *
+ * Micro-animations : la flèche glisse au survol, le bouton s'enfonce au toucher.
+ */
+import Icon from './Icon.astro';
+
+interface Props {
+  href: string;
+  variante?: 'principal' | 'secondaire' | 'inverse' | 'contour-inverse';
+  /** Affiche une flèche à droite du texte. */
+  fleche?: boolean;
+  /** Le bouton occupe toute la largeur disponible. */
+  pleineLargeur?: boolean;
+  class?: string;
+  /** Texte alternatif plus précis pour les lecteurs d'écran, si besoin. */
+  ariaLabel?: string;
+  /** Nom de l'événement transmis à l'outil de statistiques (data-evenement). */
+  evenement?: string;
+}
+
+const {
+  href,
+  variante = 'principal',
+  fleche = false,
+  pleineLargeur = false,
+  class: classe = '',
+  ariaLabel,
+  evenement,
+} = Astro.props;
+
+const styles = {
+  principal: 'bg-accent text-encre hover:bg-primaire hover:text-creme',
+  secondaire: 'border border-encre/20 bg-surface text-encre hover:border-encre',
+  inverse: 'bg-accent text-encre hover:bg-creme',
+  'contour-inverse': 'border border-creme/30 text-creme hover:border-creme hover:bg-creme hover:text-encre',
+};
+
+const externe = href.startsWith('http');
+---
+
+<a
+  href={href}
+  class:list={[
+    'group/bouton inline-flex min-h-12 items-center justify-center gap-2 rounded-bouton px-5 py-3 text-center text-[0.9375rem] leading-tight font-medium tracking-[-0.01em] transition-[background-color,border-color,color,transform] duration-300 ease-(--ease-douce) active:scale-[0.97] sm:px-6 sm:text-base',
+    styles[variante],
+    pleineLargeur && 'w-full',
+    classe,
+  ]}
+  aria-label={ariaLabel}
+  rel={externe ? 'noopener' : undefined}
+  data-evenement={evenement}
+>
+  <slot />
+  {/* La flèche est masquée sur petit écran pour garder le texte sur une ligne */}
+  {fleche && <Icon nom="fleche" class="hidden size-5 shrink-0 transition-transform duration-300 ease-(--ease-douce) group-hover/bouton:translate-x-1 sm:block" />}
+</a>
