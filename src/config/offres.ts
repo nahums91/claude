@@ -82,13 +82,14 @@ const parcours = [
         nom: 'Accompagné',
         prix: 107,
         precisionPrix: '',
-        duree: '[DURÉE DE LA VISIO, ex. 1 h]',
+        duree: 'Visio de 1 h · livraison sous 2 jours ouvrés',
         format: 'Refonte + visio',
         description:
           "La refonte complète, plus une visio de restitution pour t’approprier tes documents et préparer tes entretiens.",
         points: [
           'Tout le contenu de la formule Essentiel',
-          'Visio de restitution',
+          'Livraison des documents sous 2 jours ouvrés',
+          'Visio de restitution de 1 h',
           'Préparation aux entretiens',
         ],
         miseEnAvant: false,
@@ -103,7 +104,7 @@ const parcours = [
         nom: 'Suivi',
         prix: 117,
         precisionPrix: '',
-        duree: '[DURÉE DU SUIVI]',
+        duree: 'Sur l’année scolaire en cours',
         format: 'Refonte + visios régulières',
         description:
           "L'offre Accompagné, plus des visios de suivi régulières pendant ta recherche et l'accès au groupe privé.",
@@ -130,9 +131,10 @@ const parcours = [
       { critere: 'Refonte du CV', essentiel: true, accompagne: true, suivi: true },
       { critere: 'Refonte de la lettre de motivation', essentiel: true, accompagne: true, suivi: true },
       { critere: 'Refonte du profil LinkedIn', essentiel: true, accompagne: true, suivi: true },
-      { critere: 'Visio de restitution', essentiel: false, accompagne: true, suivi: true },
+      { critere: 'Délai de livraison des documents', essentiel: '5 jours ouvrés', accompagne: '2 jours ouvrés', suivi: '2 jours ouvrés' },
+      { critere: 'Visio de restitution (1 h)', essentiel: false, accompagne: true, suivi: true },
       { critere: 'Préparation aux entretiens', essentiel: false, accompagne: true, suivi: true },
-      { critere: 'Visios de suivi pendant la recherche', essentiel: false, accompagne: false, suivi: '[RYTHME]' },
+      { critere: 'Visios de suivi sur l’année scolaire', essentiel: false, accompagne: false, suivi: '[RYTHME]' },
       { critere: 'Groupe privé des élèves (Podia)', essentiel: false, accompagne: false, suivi: true },
     ],
     /**
@@ -146,7 +148,7 @@ const parcours = [
         nom: 'Refonte du CV',
         description: 'Refonte de ton CV.',
         detail: '[DÉLAI DE LIVRAISON]',
-        prix: '[PRIX]',
+        prix: 35,
         reservation: { type: 'demande', libelle: 'Faire une demande', lien: '/demande?formule=carte-cv' },
       },
       {
@@ -154,7 +156,7 @@ const parcours = [
         nom: 'Refonte de la lettre de motivation',
         description: 'Refonte de ta lettre de motivation.',
         detail: '[DÉLAI DE LIVRAISON]',
-        prix: '[PRIX]',
+        prix: 25,
         reservation: { type: 'demande', libelle: 'Faire une demande', lien: '/demande?formule=carte-lettre' },
       },
       {
@@ -162,7 +164,7 @@ const parcours = [
         nom: 'Refonte du profil LinkedIn',
         description: 'Refonte de ton profil LinkedIn.',
         detail: '[DÉLAI DE LIVRAISON]',
-        prix: '[PRIX]',
+        prix: 35,
         reservation: { type: 'demande', libelle: 'Faire une demande', lien: '/demande?formule=carte-linkedin' },
       },
       {
