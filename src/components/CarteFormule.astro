@@ -21,6 +21,8 @@ const reservation = reservationEffective(f);
 const prixConnu = typeof f.prix === 'number';
 // Icône du format : document pour une formule sans visio, caméra sinon
 const sansVisio = /sans visio/i.test(f.format);
+// Icônes : gris-vert clair sur la carte sombre, gris-vert foncé sur les cartes claires
+const couleurIcone = sombre ? 'text-accent' : 'text-accent-fonce';
 ---
 
 <article
@@ -43,8 +45,8 @@ const sansVisio = /sans visio/i.test(f.format);
 
   <!-- Format et durée -->
   <ul class:list={['mono mt-4 flex flex-col gap-1.5 text-[0.6875rem]', sombre ? 'text-sombre-doux' : 'text-gris']}>
-    <li class="flex items-center gap-1.5"><Icon nom={sansVisio ? 'document' : 'visio'} class="size-4 text-accent-fonce" />{f.format}</li>
-    <li class="flex items-center gap-1.5"><Icon nom="horloge" class="size-4 text-accent-fonce" />{f.duree}</li>
+    <li class="flex items-center gap-1.5"><Icon nom={sansVisio ? 'document' : 'visio'} class={`size-4 ${couleurIcone}`} />{f.format}</li>
+    <li class="flex items-center gap-1.5"><Icon nom="horloge" class={`size-4 ${couleurIcone}`} />{f.duree}</li>
   </ul>
 
   <!-- Prix -->
