@@ -4,7 +4,8 @@
  * ou on ouvre Stripe), avec une hauteur minimale de 48 px pour le tactile.
  *
  * Variantes :
- * - principal  : gris-vert, l'action principale (choisir une formule, réserver)
+ * - principal  : gris-vert, l'action principale (choisir une formule, réserver) ;
+ *                gris-vert foncé au survol, visible sur fond clair comme sur fond sombre
  * - secondaire : contour, action secondaire sur fond clair
  * - inverse    : gris-vert, à utiliser sur fond sombre
  * - contour-inverse : contour clair, action secondaire sur fond sombre
@@ -38,7 +39,7 @@ const {
 } = Astro.props;
 
 const styles = {
-  principal: 'bg-accent text-encre hover:bg-primaire hover:text-creme',
+  principal: 'bg-accent text-encre hover:bg-accent-fonce hover:text-creme',
   secondaire: 'border border-encre/20 bg-surface text-encre hover:border-encre',
   inverse: 'bg-accent text-encre hover:bg-creme',
   'contour-inverse': 'border border-creme/30 text-creme hover:border-creme hover:bg-creme hover:text-encre',
