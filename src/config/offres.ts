@@ -237,11 +237,15 @@ const ebook = {
 };
 
 /* ---------------------------------------------------------------------------
- * 3. Formulaire de commande de la formule Prêt (envoi des documents après paiement)
+ * 3. Envoi des documents de la formule Prêt (après paiement, page /commande)
+ *
+ *  Par défaut, le client envoie ses documents par e-mail (adresse de site.ts).
+ *  Si un jour tu préfères un formulaire avec envoi de fichiers (ex. Tally),
+ *  colle son lien ici : la page /commande affichera alors un bouton vers ce
+ *  formulaire à la place de l'adresse e-mail.
  * ------------------------------------------------------------------------- */
 const commande = {
-  // Lien du formulaire Tally (gratuit, accepte l'envoi de fichiers).
-  lienFormulaire: 'https://tally.so/r/[ID-FORMULAIRE]',
+  lienFormulaire: '',
 };
 
 /* ===========================================================================
@@ -308,7 +312,7 @@ const schema = z.object({
     lien: lienSchema,
     couverture: z.string(),
   }),
-  commande: z.object({ lienFormulaire: lienSchema }),
+  commande: z.object({ lienFormulaire: z.union([z.literal(''), lienSchema]) }),
 });
 
 export const offres = schema.parse({ parcours, ebook, commande });

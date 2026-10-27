@@ -2,7 +2,13 @@
 /**
  * Page de retour après le paiement Stripe de la formule Prêt (adresse : /commande).
  * À indiquer dans Stripe comme « page de confirmation » du lien de paiement
- * (voir README). Le client y trouve le formulaire d'envoi de ses documents.
+ * (voir README).
+ *
+ * Le client y voit quoi envoyer et à quelle adresse e-mail, avec un bouton
+ * « Copier l'adresse » (utile depuis TikTok et Instagram, où les liens
+ * e-mail fonctionnent mal). Si offres.commande.lienFormulaire est renseigné,
+ * un bouton vers ce formulaire remplace l'adresse.
+ *
  * Tutoiement : la formule Prêt s'adresse aux étudiants.
  * Exclue des moteurs de recherche et du sitemap.
  */
@@ -12,11 +18,15 @@ import Icon from '../components/Icon.astro';
 import { offres } from '../config/offres';
 import { site } from '../config/site';
 
-const etapes = [
-  'Envoie ton CV actuel, ta lettre de motivation et le lien de ton profil LinkedIn via le formulaire.',
-  'Précise l’alternance ou le poste visé, pour une refonte adaptée.',
-  'Livraison de tes documents retravaillés sous 5 jours ouvrés, par e-mail.',
+const aEnvoyer = [
+  'Ton CV actuel',
+  'Ta lettre de motivation actuelle',
+  'Le lien de ton profil LinkedIn',
+  'L’alternance ou le poste visé',
 ];
+
+const formulaire = offres.commande.lienFormulaire;
+const sujet = encodeURIComponent('Formule Prêt : mes documents');
 ---
 
 <Base titre="Commande confirmée" noindex>
@@ -26,31 +36,74 @@ const etapes = [
         <Icon nom="check" class="size-8" />
       </span>
       <h1 class="anim-entree mt-8 text-[2.5rem] md:text-6xl" style="--delai: 100ms">Paiement <em>confirmé</em></h1>
-      <p class="anim-entree mt-6 text-lg text-gris" style="--delai: 200ms">Dernière étape : l’envoi de tes documents.</p>
+      <p class="anim-entree mt-6 text-lg text-gris" style="--delai: 200ms">
+        Dernière étape : l’envoi de tes documents. Livraison de la refonte sous 5 jours ouvrés après leur réception.
+      </p>
     </div>
 
-    <ol class="mx-auto mt-12 grid max-w-3xl gap-4">
-      {
-        etapes.map((e, i) => (
-          <li class="anim-entree flex gap-4 rounded-carte border border-ligne bg-surface p-5 md:p-6" style={`--delai: ${300 + i * 100}ms`}>
-            <span class="font-titre inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-primaire font-bold text-accent">{i + 1}</span>
-            <span class="pt-1.5">{e}</span>
-          </li>
-        ))
-      }
-    </ol>
+    <div class="anim-entree mx-auto mt-12 max-w-2xl rounded-carte border border-ligne bg-surface p-6 md:p-10" style="--delai: 300ms">
+      <h2 class="text-2xl">À envoyer</h2>
+      <ul class="mt-5 space-y-3">
+        {
+          aEnvoyer.map((element) => (
+            <li class="flex gap-3">
+              <span class="mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-accent-doux text-accent-fonce">
+                <Icon nom="check" class="size-3.5" />
+              </span>
+              {element}
+            </li>
+          ))
+        }
+      </ul>
 
-    <div class="anim-entree mt-10 flex flex-col items-center gap-4" style="--delai: 600ms">
-      <Bouton href={offres.commande.lienFormulaire} fleche evenement="pret-envoi-documents">
-        Envoyer mes documents
-      </Bouton>
-      <p class="flex flex-wrap items-center justify-center gap-x-2 text-sm text-gris">
-        <Icon nom="mail" class="size-4" />
-        Un souci avec le formulaire ?
-        <a href={`mailto:${site.contact.email}`} class="inline-flex min-h-11 items-center font-medium text-encre underline decoration-accent decoration-[3px] underline-offset-4">
-          {site.contact.email}
-        </a>
-      </p>
+      <div class="mt-8 border-t border-ligne pt-8">
+        {
+          formulaire ? (
+            <Bouton href={formulaire} fleche pleineLargeur evenement="pret-envoi-documents">
+              Envoyer mes documents
+            </Bouton>
+          ) : (
+            <>
+              <p class="mono text-gris">Par e-mail, à</p>
+              <p class="font-titre mt-2 text-xl font-bold tracking-[-0.02em] break-all sm:text-2xl">{site.contact.email}</p>
+              <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+                <button
+                  type="button"
+                  class="inline-flex min-h-12 items-center justify-center gap-2 rounded-bouton bg-accent px-6 py-3 font-medium text-encre transition-colors hover:bg-primaire hover:text-creme"
+                  data-copier={site.contact.email}
+                >
+                  <Icon nom="document" class="size-5" />
+                  <span data-copier-libelle>Copier l’adresse</span>
+                </button>
+                <Bouton href={`mailto:${site.contact.email}?subject=${sujet}`} variante="secondaire" evenement="pret-mail">
+                  Ouvrir ma messagerie
+                </Bouton>
+              </div>
+              <p class="mt-4 text-sm text-gris">Indique « Formule Prêt » en objet, avec l’adresse e-mail utilisée pour le paiement.</p>
+              <p class="sr-only" role="status" aria-live="polite" data-copier-annonce></p>
+            </>
+          )
+        }
+      </div>
     </div>
   </section>
 </Base>
+
+<script>
+  // Copie l'adresse e-mail dans le presse-papiers, avec un retour visible et vocal
+  document.querySelectorAll<HTMLButtonElement>('[data-copier]').forEach((bouton) => {
+    const libelle = bouton.querySelector<HTMLElement>('[data-copier-libelle]');
+    const annonce = document.querySelector<HTMLElement>('[data-copier-annonce]');
+    bouton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(bouton.dataset.copier ?? '');
+        if (libelle) libelle.textContent = 'Adresse copiée';
+        if (annonce) annonce.textContent = 'Adresse e-mail copiée';
+        setTimeout(() => libelle && (libelle.textContent = 'Copier l’adresse'), 2500);
+      } catch {
+        // Presse-papiers indisponible : l'adresse reste affichée et sélectionnable
+        if (libelle) libelle.textContent = 'Sélectionne l’adresse ci-dessus';
+      }
+    });
+  });
+</script>
