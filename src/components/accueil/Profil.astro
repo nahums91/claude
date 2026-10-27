@@ -1,7 +1,7 @@
 ---
 /**
  * « Qui suis-je ? » : présentation de ton profil, juste après le hero.
- * - à gauche : ta photo, avec ton prénom et ton rôle en légende
+ * - à gauche : ta photo en format réduit, avec ton prénom et ton rôle dessous
  * - à droite : ta présentation, tes réseaux et ton parcours en frise
  * Les contenus se modifient dans src/config/site.ts (site.profil).
  *
@@ -21,11 +21,11 @@ const reseaux = [
 ---
 
 <section id="profil" class="section conteneur" aria-labelledby="titre-profil">
-  <div class:list={['grid gap-12 lg:gap-20', p.photo ? 'lg:grid-cols-[0.85fr_1.15fr]' : 'items-center lg:grid-cols-[1fr_1fr]']}>
-    <!-- Photo : sous le titre sur mobile, en colonne de gauche sur grand écran -->
+  <div class:list={['grid gap-12 lg:gap-20', p.photo ? 'lg:grid-cols-[17rem_1fr]' : 'items-center lg:grid-cols-[1fr_1fr]']}>
+    <!-- Photo : en vignette à côté du prénom sur mobile, en colonne de gauche sur grand écran -->
     {
       p.photo && (
-        <figure class="relative order-2 lg:sticky lg:top-28 lg:order-1 lg:row-span-2 lg:self-start" data-reveal>
+        <figure class="order-2 flex items-center gap-5 lg:sticky lg:block lg:top-28 lg:order-1 lg:row-span-2 lg:self-start" data-reveal>
           <img
             src={p.photo}
             alt={`Portrait de ${site.prenom}`}
@@ -33,9 +33,9 @@ const reseaux = [
             height="1000"
             loading="lazy"
             decoding="async"
-            class="aspect-[4/5] w-full rounded-carte bg-accent object-cover"
+            class="aspect-[4/5] w-28 shrink-0 rounded-petit bg-accent object-cover sm:w-36 lg:w-full lg:rounded-carte"
           />
-          <figcaption class="absolute inset-x-4 bottom-4 rounded-petit bg-surface/95 px-5 py-4 backdrop-blur-sm">
+          <figcaption class="lg:mt-4">
             <p class="font-titre text-xl font-bold tracking-[-0.03em]">{site.prenom}</p>
             <p class="text-gris">{p.role}</p>
           </figcaption>

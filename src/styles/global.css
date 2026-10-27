@@ -18,9 +18,9 @@
   --color-gris: #5a5f6b; /* texte secondaire (5,7:1 sur le fond) */
   --color-ligne: #e2dcd0; /* bordures */
   --color-primaire: #0e1626; /* bleu nuit : aplats sombres (pastilles, bandeau) */
-  --color-accent: #8fa3a3; /* gris-vert : boutons principaux et surligneur, texte bleu nuit dessus (6,8:1) */
-  --color-accent-fonce: #4a5d5f; /* gris-vert foncé : icônes et liens sur fond clair (6,2:1) */
-  --color-accent-doux: #dfe7e6; /* fond des pastilles d'icônes */
+  --color-accent: #74a39b; /* gris-vert soutenu : boutons principaux et surligneur, texte bleu nuit dessus (6,4:1) */
+  --color-accent-fonce: #3a635c; /* gris-vert foncé : icônes et liens sur fond clair (6:1) */
+  --color-accent-doux: #dcebe8; /* fond des pastilles d'icônes */
   --color-sombre: #0e1626; /* bleu nuit : formule mise en avant, e-book */
   --color-sombre-2: #162036; /* cartes posées sur fond sombre */
   --color-sombre-doux: #a9b0be; /* texte secondaire sur fond sombre (8,3:1) */
