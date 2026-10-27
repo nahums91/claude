@@ -1,0 +1,45 @@
+---
+/**
+ * Mentions légales (obligatoires : loi pour la confiance dans l'économie
+ * numérique, art. 6). Les informations viennent de src/config/site.ts.
+ */
+import PageTexte from '../layouts/PageTexte.astro';
+import { site, SITE_URL } from '../config/site';
+
+const l = site.legal;
+---
+
+<PageTexte titre="Mentions légales" description={`Mentions légales du site ${site.nom} : éditeur, hébergeur, propriété intellectuelle.`}>
+  <h2>Éditeur du site</h2>
+  <p>
+    Le site <a href={SITE_URL}>{SITE_URL.replace('https://', '')}</a> est édité par :
+  </p>
+  <ul>
+    <li>{l.nomComplet}, {l.statut}</li>
+    <li>Nom commercial : {site.nom}</li>
+    <li>SIRET : {l.siret}</li>
+    <li>Adresse : {l.adresse}</li>
+    <li>E-mail : <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></li>
+    <li>{l.mentionTva}</li>
+  </ul>
+  <p>Directeur de la publication : {l.nomComplet}.</p>
+
+  <h2>Hébergement</h2>
+  <p>
+    Le site est hébergé par {l.hebergeur.nom}, {l.hebergeur.adresse} (<a href={l.hebergeur.site}>{l.hebergeur.site.replace('https://', '')}</a>).
+  </p>
+
+  <h2>Propriété intellectuelle</h2>
+  <p>
+    L’ensemble des contenus du site (textes, visuels, logo, e-book) est la propriété de {l.nomComplet}, sauf mention
+    contraire. Toute reproduction, totale ou partielle, sans autorisation écrite préalable est interdite.
+  </p>
+
+  <h2>Données personnelles</h2>
+  <p>
+    Le traitement des données personnelles est détaillé dans la <a href="/confidentialite">politique de confidentialité</a>.
+  </p>
+
+  <h2>Contact</h2>
+  <p>Pour toute question : <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.</p>
+</PageTexte>

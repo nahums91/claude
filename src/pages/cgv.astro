@@ -1,0 +1,121 @@
+---
+/**
+ * Conditions générales de vente : STRUCTURE à compléter et à faire relire.
+ * Les prestations et les prix sont repris automatiquement de offres.ts.
+ * Le texte entre [CROCHETS] dépend de tes choix (annulation, paiement…).
+ */
+import PageTexte from '../layouts/PageTexte.astro';
+import { offres, formaterPrix } from '../config/offres';
+import { site } from '../config/site';
+
+const l = site.legal;
+
+// Toutes les prestations vendues, pour le tableau des prix
+const lignes = offres.parcours.flatMap((p) => [
+  ...p.formules.map((f) => ({ nom: `${f.nom} (${p.titre})`, detail: f.duree, prix: f.prix, mention: f.precisionPrix })),
+  ...p.aLaCarte.map((c) => ({ nom: `${c.nom} (à la carte)`, detail: c.detail, prix: c.prix, mention: '' })),
+]);
+---
+
+<PageTexte titre="Conditions générales de vente" description={`Conditions générales de vente des prestations de coaching ${site.nom}.`}>
+  <p class="note">
+    Structure à compléter : les passages entre crochets dépendent de tes choix. Fais relire ce document (juriste,
+    expert-comptable ou modèle d’une organisation professionnelle) avant la mise en ligne.
+  </p>
+
+  <h2>1. Objet</h2>
+  <p>
+    Les présentes conditions régissent la vente des prestations de coaching en alternance et en orientation proposées
+    par {l.nomComplet}, {l.statut} (SIRET {l.siret}), sous le nom commercial {site.nom}, ci-après « le Prestataire »,
+    à toute personne physique, ci-après « le Client ».
+  </p>
+
+  <h2>2. Prestations et prix</h2>
+  <p>
+    Les prestations sont décrites sur le site. Les prix sont indiqués en euros, toutes taxes comprises. {l.mentionTva}.
+  </p>
+  <table>
+    <thead>
+      <tr><th scope="col">Prestation</th><th scope="col">Modalités</th><th scope="col">Prix</th></tr>
+    </thead>
+    <tbody>
+      {
+        lignes.map((ligne) => (
+          <tr>
+            <td>{ligne.nom}</td>
+            <td>{ligne.detail}</td>
+            <td>
+              {formaterPrix(ligne.prix)}
+              {ligne.mention && <><br /><span class="text-sm text-gris">{ligne.mention}</span></>}
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+  <p>
+    Le « prix de lancement » est un prix temporaire. Le prix applicable est celui affiché au moment de la commande.
+  </p>
+
+  <h2>3. Commande</h2>
+  <ul>
+    <li>
+      <strong>Formule Prêt</strong> : la commande est passée en ligne, avec un paiement immédiat. Le Client transmet
+      ensuite ses documents via le formulaire indiqué après le paiement.
+    </li>
+    <li>
+      <strong>Autres prestations</strong> : le Client envoie une demande via le formulaire du site. Le Prestataire
+      répond par e-mail avec les créneaux disponibles. La commande est ferme à la confirmation du créneau et au paiement
+      [MODALITÉS : ex. lien de paiement envoyé par e-mail].
+    </li>
+  </ul>
+
+  <h2>4. Paiement</h2>
+  <p>
+    Le paiement s’effectue en ligne par carte bancaire via la plateforme sécurisée Stripe. [PRÉCISER : paiement avant
+    la séance, en une fois, etc.]
+  </p>
+
+  <h2>5. Exécution des prestations</h2>
+  <ul>
+    <li>
+      Les délais de livraison des documents retravaillés (5 ou 2 jours ouvrés selon la formule) courent à compter de la
+      réception de l’ensemble des documents nécessaires.
+    </li>
+    <li>Les séances ont lieu en visio, via [OUTIL : ex. Google Meet, Zoom].</li>
+    <li>
+      Formule Accompagné : l’accompagnement couvre l’année scolaire en cours, jusqu’au [DATE DE FIN, ex. 31 août].
+      L’accès au groupe privé (Podia) est personnel et prend fin à la même date.
+    </li>
+  </ul>
+
+  <h2>6. Report et annulation d’une séance</h2>
+  <p>[CONDITIONS : ex. report gratuit jusqu’à 24 h avant la séance ; au-delà, la séance est due.]</p>
+
+  <h2>7. Droit de rétractation</h2>
+  <p>
+    Le Client dispose d’un délai de 14 jours à compter de la commande pour se rétracter, sans avoir à se justifier
+    (Code de la consommation, art. L221-18). Si le Client demande expressément que la prestation commence avant la fin de
+    ce délai et reconnaît perdre son droit de rétractation une fois la prestation pleinement exécutée, ce droit ne
+    s’applique plus (art. L221-28). [À ADAPTER : recueillir cette demande expresse au moment de la commande.]
+  </p>
+
+  <h2>8. Obligation de moyens</h2>
+  <p>
+    Le Prestataire s’engage à mettre en œuvre tous les moyens nécessaires à la bonne réalisation des prestations. Il ne
+    garantit pas l’obtention d’une alternance, d’un entretien, d’une admission ou d’un emploi, qui dépendent de
+    nombreux facteurs extérieurs.
+  </p>
+
+  <h2>9. Client mineur</h2>
+  <p>[À PRÉCISER : pour un Client mineur (ex. orientation scolaire), la commande est passée par un parent ou un représentant légal.]</p>
+
+  <h2>10. Données personnelles</h2>
+  <p>Voir la <a href="/confidentialite">politique de confidentialité</a>.</p>
+
+  <h2>11. Médiation et litiges</h2>
+  <p>
+    En cas de litige, le Client peut recourir gratuitement au médiateur de la consommation : {l.mediateur.nom}{' '}
+    ({l.mediateur.site}). Les présentes conditions sont soumises au droit français.
+  </p>
+</PageTexte>

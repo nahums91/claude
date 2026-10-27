@@ -98,5 +98,16 @@ export const site = {
       adresse: '512 2nd Street, Suite 200, San Francisco, CA 94107, États-Unis',
       site: 'https://www.netlify.com',
     },
+    /**
+     * Médiateur de la consommation : obligatoire dès que tu vends à des
+     * particuliers. Tu dois adhérer à un médiateur agréé (liste sur
+     * economie.gouv.fr/mediation-conso) et indiquer ses coordonnées ici.
+     */
+    mediateur: {
+      nom: '[NOM DU MÉDIATEUR]',
+      site: '[SITE DU MÉDIATEUR]',
+    },
+    /** Date de dernière mise à jour des pages légales */
+    dateMiseAJour: '[DATE]',
   },
 } as const;

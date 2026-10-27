@@ -1,0 +1,27 @@
+---
+/**
+ * Page affichée quand une adresse n'existe pas.
+ * Neutre (ni « tu » ni « vous ») : elle peut s'afficher pour tous les publics.
+ */
+import Base from '../layouts/Base.astro';
+import Bouton from '../components/Bouton.astro';
+import { site } from '../config/site';
+---
+
+<Base titre="Page introuvable" noindex>
+  <section class="fond-sombre bg-sombre text-creme">
+    <div class="conteneur flex min-h-[70vh] flex-col items-start justify-center py-20">
+      <p class="surtitre anim-entree"><span>404</span> Page introuvable</p>
+      <h1 class="anim-entree mt-6 max-w-3xl text-[2.75rem] sm:text-6xl lg:text-7xl" style="--delai: 100ms">
+        Cette page n’existe <em>pas</em>.
+      </h1>
+      <p class="anim-entree mt-6 max-w-xl text-lg text-sombre-doux" style="--delai: 200ms">
+        Le lien est peut-être incomplet, ou la page a été déplacée.
+      </p>
+      <div class="anim-entree mt-10 flex flex-col gap-3 sm:flex-row" style="--delai: 300ms">
+        <Bouton href="/" fleche>Retour à l’accueil</Bouton>
+        <Bouton href={site.boutonPrincipal.lien} variante="contour-inverse">{site.boutonPrincipal.libelle}</Bouton>
+      </div>
+    </div>
+  </section>
+</Base>
