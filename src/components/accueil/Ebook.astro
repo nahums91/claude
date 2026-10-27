@@ -8,8 +8,11 @@ import Bouton from '../Bouton.astro';
 import Icon from '../Icon.astro';
 import { offres, formaterPrix } from '../../config/offres';
 import { site } from '../../config/site';
+import { estProvisoire } from '../../config/contenus';
 
 const e = offres.ebook;
+// Tant que le lien d'achat n'est pas renseigné, on affiche « Bientôt disponible »
+const disponible = !estProvisoire(e.lien);
 ---
 
 <section id="ebook" class="section conteneur" aria-labelledby="titre-ebook">
@@ -62,7 +65,13 @@ const e = offres.ebook;
 
       <div class="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
         <p class="font-titre text-5xl font-bold tracking-[-0.04em]">{formaterPrix(e.prix)}</p>
-        <Bouton href={e.lien} variante="inverse" fleche evenement="ebook-achat">Acheter l’e-book</Bouton>
+        {
+          disponible ? (
+            <Bouton href={e.lien} variante="inverse" fleche evenement="ebook-achat">Acheter l’e-book</Bouton>
+          ) : (
+            <span class="mono inline-flex min-h-12 items-center rounded-bouton border border-creme/30 px-5 text-sombre-doux">Bientôt disponible</span>
+          )
+        }
       </div>
     </div>
   </div>
