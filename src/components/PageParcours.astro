@@ -1,13 +1,14 @@
 ---
 /**
  * Gabarit commun aux pages de parcours (/alternance et /orientation) :
- * en-tête, cartes des formules, tableau comparatif (s'il existe),
+ * en-tête, cartes des formules, prestations à la carte, tableau comparatif (s'il existe),
  * encart diagnostic et appel final.
  */
 import Base from '../layouts/Base.astro';
 import EntetePage from './EntetePage.astro';
 import CarteFormule from './CarteFormule.astro';
 import Comparatif from './Comparatif.astro';
+import ALaCarte from './ALaCarte.astro';
 import BlocDiagnostic from './BlocDiagnostic.astro';
 import AppelFinal from './accueil/AppelFinal.astro';
 import Icon from './Icon.astro';
@@ -42,6 +43,7 @@ const colonnes = p.formules.length === 3 ? 'lg:grid-cols-3' : 'mx-auto max-w-4xl
     <div class:list={['grid items-stretch gap-4 lg:gap-5', colonnes]}>
       {p.formules.map((f, i) => <CarteFormule formule={f} delai={i * 120} />)}
     </div>
+    <ALaCarte parcours={p} class="mt-8 lg:mt-12" />
   </section>
 
   <!-- Comparatif -->

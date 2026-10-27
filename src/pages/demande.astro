@@ -20,13 +20,21 @@ import { site } from '../config/site';
 // Liste des choix : le diagnostic, puis les formules de chaque parcours
 const groupes = [
   { label: 'Pour faire le point', options: [{ id: 'diagnostic', nom: offres.diagnostic.nom, prix: offres.diagnostic.prix }] },
-  ...offres.parcours.map((p) => ({
-    label: p.titre,
-    options: p.formules
-      .filter((f) => f.reservation.type === 'demande')
-      .map((f) => ({ id: f.id, nom: f.nom, prix: f.prix })),
-  })),
-];
+  ...offres.parcours.flatMap((p) => [
+    {
+      label: p.titre,
+      options: p.formules
+        .filter((f) => f.reservation.type === 'demande')
+        .map((f) => ({ id: f.id, nom: f.nom, prix: f.prix })),
+    },
+    {
+      label: `${p.titre} : à la carte`,
+      options: p.aLaCarte
+        .filter((c) => c.reservation.type === 'demande')
+        .map((c) => ({ id: c.id, nom: c.nom, prix: c.prix })),
+    },
+  ]),
+].filter((g) => g.options.length > 0);
 
 const champ =
   'mt-2 block w-full rounded-xl border border-ligne bg-surface px-4 py-3 text-base text-encre transition-colors placeholder:text-gris/70 focus:border-primaire focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-accent';

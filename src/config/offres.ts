@@ -57,7 +57,7 @@ const parcours = [
       {
         id: 'essentiel',
         nom: 'Essentiel',
-        prix: 117,
+        prix: 87,
         precisionPrix: '',
         duree: 'Livraison sous 5 jours ouvrés',
         format: 'Sans visio',
@@ -80,7 +80,7 @@ const parcours = [
       {
         id: 'accompagne',
         nom: 'Accompagné',
-        prix: '[PRIX]',
+        prix: 107,
         precisionPrix: '',
         duree: '[DURÉE DE LA VISIO, ex. 1 h]',
         format: 'Refonte + visio',
@@ -101,7 +101,7 @@ const parcours = [
       {
         id: 'suivi',
         nom: 'Suivi',
-        prix: '[PRIX]',
+        prix: 117,
         precisionPrix: '',
         duree: '[DURÉE DU SUIVI]',
         format: 'Refonte + visios régulières',
@@ -135,6 +135,45 @@ const parcours = [
       { critere: 'Visios de suivi pendant la recherche', essentiel: false, accompagne: false, suivi: '[RYTHME]' },
       { critere: 'Groupe privé des élèves (Podia)', essentiel: false, accompagne: false, suivi: true },
     ],
+    /**
+     * Prestations à la carte : un seul élément, sans prendre une formule complète.
+     * - detail : délai ou durée, affiché sous le nom
+     * - reservation : même fonctionnement que les formules ('demande' ou 'stripe')
+     */
+    aLaCarte: [
+      {
+        id: 'carte-cv',
+        nom: 'Refonte du CV',
+        description: 'Refonte de ton CV.',
+        detail: '[DÉLAI DE LIVRAISON]',
+        prix: '[PRIX]',
+        reservation: { type: 'demande', libelle: 'Faire une demande', lien: '/demande?formule=carte-cv' },
+      },
+      {
+        id: 'carte-lettre',
+        nom: 'Refonte de la lettre de motivation',
+        description: 'Refonte de ta lettre de motivation.',
+        detail: '[DÉLAI DE LIVRAISON]',
+        prix: '[PRIX]',
+        reservation: { type: 'demande', libelle: 'Faire une demande', lien: '/demande?formule=carte-lettre' },
+      },
+      {
+        id: 'carte-linkedin',
+        nom: 'Refonte du profil LinkedIn',
+        description: 'Refonte de ton profil LinkedIn.',
+        detail: '[DÉLAI DE LIVRAISON]',
+        prix: '[PRIX]',
+        reservation: { type: 'demande', libelle: 'Faire une demande', lien: '/demande?formule=carte-linkedin' },
+      },
+      {
+        id: 'carte-entretiens',
+        nom: 'Préparation aux entretiens',
+        description: 'Préparation aux entretiens, en visio.',
+        detail: '[DURÉE]',
+        prix: '[PRIX]',
+        reservation: { type: 'demande', libelle: 'Faire une demande', lien: '/demande?formule=carte-entretiens' },
+      },
+    ],
   },
   {
     id: 'orientation',
@@ -147,7 +186,7 @@ const parcours = [
       {
         id: 'orientation-scolaire',
         nom: 'Orientation scolaire',
-        prix: '[PRIX]',
+        prix: 45,
         precisionPrix: '',
         duree: '1 h',
         format: 'Visio, avec un parent ou un proche',
@@ -168,7 +207,7 @@ const parcours = [
       {
         id: 'orientation-pro',
         nom: 'Orientation professionnelle',
-        prix: '[PRIX]',
+        prix: 60,
         precisionPrix: '',
         duree: '1 h',
         format: 'Visio',
@@ -188,6 +227,7 @@ const parcours = [
       },
     ],
     comparatif: [],
+    aLaCarte: [],
   },
 ];
 
@@ -260,6 +300,20 @@ const schema = z.object({
       formules: z.array(formuleSchema).min(1),
       comparatif: z.array(
         z.object({ critere: z.string() }).catchall(z.union([z.boolean(), z.string()])),
+      ),
+      aLaCarte: z.array(
+        z.object({
+          id: z.string(),
+          nom: z.string(),
+          description: z.string(),
+          detail: z.string(),
+          prix: prixSchema,
+          reservation: z.object({
+            type: z.enum(['demande', 'stripe']),
+            libelle: z.string(),
+            lien: lienOuPageSchema,
+          }),
+        }),
       ),
     }),
   ),

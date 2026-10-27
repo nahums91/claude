@@ -4,6 +4,7 @@
  * Le dernier mot du titre du parcours est mis en valeur en italique.
  */
 import CarteFormule from '../CarteFormule.astro';
+import ALaCarte from '../ALaCarte.astro';
 import Icon from '../Icon.astro';
 import { trouverParcours } from '../../config/offres';
 
@@ -50,5 +51,7 @@ const colonnes = p.formules.length === 3 ? 'lg:grid-cols-3' : 'md:grid-cols-2';
     <div class:list={['mt-12 grid items-stretch gap-4 lg:gap-5', colonnes, p.formules.length === 2 && 'mx-auto max-w-4xl']}>
       {p.formules.map((f, i) => <CarteFormule formule={f} delai={i * 120} />)}
     </div>
+
+    <ALaCarte parcours={p} class="mt-8 lg:mt-12" />
   </div>
 </section>
