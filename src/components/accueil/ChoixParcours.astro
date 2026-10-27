@@ -2,12 +2,12 @@
 /**
  * Choix du parcours : la première décision du visiteur.
  * Deux grandes cartes (une par parcours), puis deux sorties de secours :
- * le diagnostic (payant) pour qui hésite, l'e-book pour qui veut avancer seul.
+ * le formulaire de demande pour qui hésite, l'e-book pour qui veut avancer seul.
  * Tous les textes et prix viennent de src/config/offres.ts.
  * Motion : apparition au défilement, carte qui se soulève et flèche qui se
  * remplit au survol.
  */
-import BlocDiagnostic from '../BlocDiagnostic.astro';
+import BlocHesitation from '../BlocHesitation.astro';
 import Icon, { type NomIcone } from '../Icon.astro';
 import { offres, formaterPrix, prixMinimum } from '../../config/offres';
 
@@ -76,8 +76,8 @@ const icones: Record<string, NomIcone> = { alternance: 'document', orientation: 
     }
   </ul>
 
-  <!-- Pour qui hésite : le diagnostic -->
-  <BlocDiagnostic class="mt-4" delai={240} />
+  <!-- Pour qui hésite : une demande, réponse par e-mail -->
+  <BlocHesitation class="mt-4" delai={240} />
 
   <!-- Pour qui veut avancer seul : l'e-book -->
   <p class="mt-6 flex flex-wrap items-center gap-x-2 text-gris" data-reveal style="--delai: 300ms">

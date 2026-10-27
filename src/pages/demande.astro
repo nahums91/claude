@@ -17,9 +17,8 @@ import Icon from '../components/Icon.astro';
 import { offres, formaterPrix } from '../config/offres';
 import { site } from '../config/site';
 
-// Liste des choix : le diagnostic, puis les formules de chaque parcours
+// Liste des choix : « je ne sais pas encore », puis les formules de chaque parcours et l'à la carte
 const groupes = [
-  { label: 'Pour faire le point', options: [{ id: 'diagnostic', nom: offres.diagnostic.nom, prix: offres.diagnostic.prix }] },
   ...offres.parcours.flatMap((p) => [
     {
       label: p.titre,
@@ -97,6 +96,7 @@ const champ =
             <label for="formule" class="font-medium">Formule souhaitée</label>
             <select id="formule" name="formule" required class={champ} data-choix-formule>
               <option value="">Choisir une formule</option>
+              <option value="Je ne sais pas encore" data-id="indecis">Je ne sais pas encore</option>
               {
                 groupes.map((g) => (
                   <optgroup label={g.label}>

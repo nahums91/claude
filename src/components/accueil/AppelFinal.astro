@@ -5,7 +5,6 @@
  * autre titre (HTML autorisé, ex. avec <em>) pour les pages au vouvoiement.
  */
 import Bouton from '../Bouton.astro';
-import { offres } from '../../config/offres';
 import { site } from '../../config/site';
 
 interface Props {
@@ -24,8 +23,8 @@ const {
       <Bouton href={site.boutonPrincipal.lien} fleche evenement="bouton-principal-final">
         {site.boutonPrincipal.libelle}
       </Bouton>
-      <Bouton href={offres.diagnostic.lien} variante="contour-inverse" evenement="diagnostic-final">
-        Demander un diagnostic
+      <Bouton href="/demande?formule=indecis" variante="contour-inverse" evenement="demande-final">
+        Faire une demande
       </Bouton>
     </div>
   </div>

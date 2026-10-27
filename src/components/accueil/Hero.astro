@@ -13,10 +13,7 @@
 import Bouton from '../Bouton.astro';
 import Icon, { type NomIcone } from '../Icon.astro';
 import Dossier from './Dossier.astro';
-import { offres } from '../../config/offres';
 import { site } from '../../config/site';
-
-const diagnostic = offres.diagnostic;
 
 // Garanties affichées sous les boutons
 const garanties: { icone: NomIcone; texte: string }[] = [
@@ -51,8 +48,8 @@ const garanties: { icone: NomIcone; texte: string }[] = [
         <Bouton href={site.boutonPrincipal.lien} fleche evenement="bouton-principal-hero">
           {site.boutonPrincipal.libelle}
         </Bouton>
-        <Bouton href={diagnostic.lien} variante="contour-inverse" evenement="diagnostic-hero">
-          Demander un diagnostic
+        <Bouton href="/demande?formule=indecis" variante="contour-inverse" evenement="demande-hero">
+          Faire une demande
         </Bouton>
       </div>
 

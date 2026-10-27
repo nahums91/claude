@@ -13,7 +13,7 @@ export const etapes = [
   {
     titre: 'Choisir sa formule',
     texte:
-      'Un parcours (alternance ou orientation), puis la formule adaptée. En cas de doute, le diagnostic aide à trancher.',
+      'Un parcours (alternance ou orientation), puis la formule adaptée. En cas de doute, une simple demande permet d’être orienté.',
   },
   {
     titre: 'Envoyer sa demande',

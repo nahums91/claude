@@ -2,14 +2,14 @@
 /**
  * Gabarit commun aux pages de parcours (/alternance et /orientation) :
  * en-tête, cartes des formules, prestations à la carte, tableau comparatif (s'il existe),
- * encart diagnostic et appel final.
+ * encart « Besoin d'y voir clair ? » et appel final.
  */
 import Base from '../layouts/Base.astro';
 import EntetePage from './EntetePage.astro';
 import CarteFormule from './CarteFormule.astro';
 import Comparatif from './Comparatif.astro';
 import ALaCarte from './ALaCarte.astro';
-import BlocDiagnostic from './BlocDiagnostic.astro';
+import BlocHesitation from './BlocHesitation.astro';
 import AppelFinal from './accueil/AppelFinal.astro';
 import Icon from './Icon.astro';
 import { trouverParcours } from '../config/offres';
@@ -67,9 +67,9 @@ const colonnes = p.formules.length === 3 ? 'lg:grid-cols-3' : 'mx-auto max-w-4xl
     )
   }
 
-  <!-- Diagnostic -->
-  <section class="section conteneur" aria-label="Diagnostic">
-    <BlocDiagnostic />
+  <!-- Pour qui hésite -->
+  <section class="section conteneur" aria-label="Besoin d’aide pour choisir">
+    <BlocHesitation />
   </section>
 
   <AppelFinal titre={titreAppelFinal} />

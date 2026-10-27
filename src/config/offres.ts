@@ -23,21 +23,7 @@
 import { z } from 'astro/zod';
 
 /* ---------------------------------------------------------------------------
- * 1. Diagnostic (payant) : pour les personnes qui ne savent pas quelle
- *    formule choisir. On fait le point sur leur situation et on identifie
- *    la formule adaptée.
- * ------------------------------------------------------------------------- */
-const diagnostic = {
-  nom: 'Diagnostic',
-  duree: '[DURÉE, ex. 45 min]',
-  format: 'Visio',
-  prix: '[PRIX]' as number | string,
-  description: 'Un point complet sur la situation pour identifier la formule adaptée.',
-  lien: '/demande?formule=diagnostic',
-};
-
-/* ---------------------------------------------------------------------------
- * 2. Parcours et formules
+ * 1. Parcours et formules
  *
  *  Chaque formule a :
  *  - id : identifiant technique, ne pas modifier (utilisé dans le tableau)
@@ -237,7 +223,7 @@ const parcours = [
 ];
 
 /* ---------------------------------------------------------------------------
- * 3. E-book (en autonomie)
+ * 2. E-book (en autonomie)
  * ------------------------------------------------------------------------- */
 const ebook = {
   titre: '[TITRE DE L’E-BOOK]',
@@ -251,7 +237,7 @@ const ebook = {
 };
 
 /* ---------------------------------------------------------------------------
- * 4. Formulaire de commande de la formule Prêt (envoi des documents après paiement)
+ * 3. Formulaire de commande de la formule Prêt (envoi des documents après paiement)
  * ------------------------------------------------------------------------- */
 const commande = {
   // Lien du formulaire Tally (gratuit, accepte l'envoi de fichiers).
@@ -286,14 +272,6 @@ const formuleSchema = z.object({
 });
 
 const schema = z.object({
-  diagnostic: z.object({
-    nom: z.string(),
-    duree: z.string(),
-    format: z.string(),
-    prix: prixSchema,
-    description: z.string(),
-    lien: lienOuPageSchema,
-  }),
   parcours: z.array(
     z.object({
       id: z.string(),
@@ -333,7 +311,7 @@ const schema = z.object({
   commande: z.object({ lienFormulaire: lienSchema }),
 });
 
-export const offres = schema.parse({ diagnostic, parcours, ebook, commande });
+export const offres = schema.parse({ parcours, ebook, commande });
 
 export type Formule = z.infer<typeof formuleSchema>;
 export type Parcours = (typeof offres.parcours)[number];
