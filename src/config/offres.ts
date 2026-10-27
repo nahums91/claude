@@ -152,7 +152,7 @@ const parcours = [
         id: 'carte-linkedin',
         nom: 'Audit du profil LinkedIn',
         description: 'Des conseils concrets pour améliorer ta visibilité et ton image.',
-        detail: 'Livraison sous 5 jours ouvrés',
+        detail: 'Livraison sous 3 jours ouvrés',
         prix: 35,
         reservation: { type: 'demande', libelle: 'Faire une demande', lien: '/demande?formule=carte-linkedin' },
       },
