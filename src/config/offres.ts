@@ -60,7 +60,7 @@ const parcours = [
           libelle: 'Commander',
           // Lien de paiement Stripe. Après paiement, Stripe redirige vers
           // /commande où la personne envoie ses documents.
-          lien: 'https://buy.stripe.com/[LIEN-ESSENTIEL]',
+          lien: 'https://buy.stripe.com/4gM3cu7hc3Cc0Qje6j43S0d',
         },
       },
       {
