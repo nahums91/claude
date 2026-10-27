@@ -18,7 +18,7 @@ export const etapes = [
   {
     titre: 'Envoyer sa demande',
     texte:
-      'Un formulaire avec la formule choisie, puis une réponse par e-mail avec les créneaux disponibles. Pour la formule Essentiel, paiement en ligne et envoi des documents.',
+      'Un formulaire avec la formule choisie, puis une réponse par e-mail avec les créneaux disponibles. Pour la formule Prêt, paiement en ligne et envoi des documents.',
   },
   {
     titre: 'Avancer ensemble',

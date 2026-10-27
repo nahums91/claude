@@ -51,12 +51,12 @@ const parcours = [
     numero: 1,
     titre: 'Décroche ton alternance',
     resume:
-      'CV, lettre de motivation, profil LinkedIn, préparation aux entretiens et suivi pendant ta recherche.',
+      'CV, lettre de motivation, profil LinkedIn, préparation aux entretiens et suivi sur l’année scolaire.',
     pourQui: 'les étudiants en recherche d’alternance.',
     formules: [
       {
-        id: 'essentiel',
-        nom: 'Essentiel',
+        id: 'pret',
+        nom: 'Prêt',
         prix: 87,
         precisionPrix: '',
         duree: 'Livraison sous 5 jours ouvrés',
@@ -73,13 +73,13 @@ const parcours = [
           type: 'stripe',
           libelle: 'Commander',
           // Lien de paiement Stripe. Après paiement, Stripe redirige vers
-          // /commande-essentiel où la personne envoie ses documents.
+          // /commande où la personne envoie ses documents.
           lien: 'https://buy.stripe.com/[LIEN-ESSENTIEL]',
         },
       },
       {
-        id: 'accompagne',
-        nom: 'Accompagné',
+        id: 'prepare',
+        nom: 'Préparé',
         prix: 107,
         precisionPrix: '',
         duree: 'Visio de 1 h · livraison sous 2 jours ouvrés',
@@ -87,7 +87,7 @@ const parcours = [
         description:
           "La refonte complète, plus une visio de restitution pour t’approprier tes documents et préparer tes entretiens.",
         points: [
-          'Tout le contenu de la formule Essentiel',
+          'Tout le contenu de la formule Prêt',
           'Livraison des documents sous 2 jours ouvrés',
           'Visio de restitution de 1 h',
           'Préparation aux entretiens',
@@ -96,46 +96,49 @@ const parcours = [
         reservation: {
           type: 'demande',
           libelle: 'Faire une demande',
-          lien: '/demande?formule=accompagne',
+          lien: '/demande?formule=prepare',
         },
       },
       {
-        id: 'suivi',
-        nom: 'Suivi',
+        id: 'accompagne',
+        nom: 'Accompagné',
         prix: 117,
         precisionPrix: '',
         duree: 'Sur l’année scolaire en cours',
-        format: 'Refonte + visios régulières',
+        format: 'Refonte + visios collectives et individuelles',
         description:
-          "L'offre Accompagné, plus des visios de suivi régulières pendant ta recherche et l'accès au groupe privé.",
+          'La formule Préparé, plus des visios collectives chaque semaine dans le groupe privé et une visio individuelle par mois, sur toute l’année scolaire.',
         points: [
-          'Tout le contenu de la formule Accompagné',
-          'Visios de suivi régulières pendant ta recherche',
-          'Accès au groupe privé des élèves (Podia)',
-          'Entraide, partage d’offres, motivation',
+          'Tout le contenu de la formule Préparé',
+          'Visios collectives hebdomadaires dans le groupe privé (Podia)',
+          '1 visio de suivi individuelle par mois',
+          'Groupe privé : entraide, partage d’offres, motivation',
+          'Visio individuelle supplémentaire : 35 €',
         ],
         miseEnAvant: true,
         reservation: {
           type: 'demande',
           libelle: 'Faire une demande',
-          lien: '/demande?formule=suivi',
+          lien: '/demande?formule=accompagne',
         },
       },
     ],
     /**
      * Tableau comparatif. Pour chaque ligne :
      *   true = inclus, false = non inclus, ou un texte court (ex. '1 visio').
-     * Les clés (essentiel, accompagne, suivi) correspondent aux id ci-dessus.
+     * Les clés (pret, prepare, accompagne) correspondent aux id ci-dessus.
      */
     comparatif: [
-      { critere: 'Refonte du CV', essentiel: true, accompagne: true, suivi: true },
-      { critere: 'Refonte de la lettre de motivation', essentiel: true, accompagne: true, suivi: true },
-      { critere: 'Refonte du profil LinkedIn', essentiel: true, accompagne: true, suivi: true },
-      { critere: 'Délai de livraison des documents', essentiel: '5 jours ouvrés', accompagne: '2 jours ouvrés', suivi: '2 jours ouvrés' },
-      { critere: 'Visio de restitution (1 h)', essentiel: false, accompagne: true, suivi: true },
-      { critere: 'Préparation aux entretiens', essentiel: false, accompagne: true, suivi: true },
-      { critere: 'Visios de suivi sur l’année scolaire', essentiel: false, accompagne: false, suivi: '[RYTHME]' },
-      { critere: 'Groupe privé des élèves (Podia)', essentiel: false, accompagne: false, suivi: true },
+      { critere: 'Refonte du CV', pret: true, prepare: true, accompagne: true },
+      { critere: 'Refonte de la lettre de motivation', pret: true, prepare: true, accompagne: true },
+      { critere: 'Refonte du profil LinkedIn', pret: true, prepare: true, accompagne: true },
+      { critere: 'Délai de livraison des documents', pret: '5 jours ouvrés', prepare: '2 jours ouvrés', accompagne: '2 jours ouvrés' },
+      { critere: 'Visio de restitution (1 h)', pret: false, prepare: true, accompagne: true },
+      { critere: 'Préparation aux entretiens', pret: false, prepare: true, accompagne: true },
+      { critere: 'Visios collectives hebdomadaires (groupe Podia)', pret: false, prepare: false, accompagne: true },
+      { critere: 'Visio de suivi individuelle', pret: false, prepare: false, accompagne: '1 par mois' },
+      { critere: 'Groupe privé des élèves (Podia)', pret: false, prepare: false, accompagne: true },
+      { critere: 'Visio individuelle supplémentaire', pret: false, prepare: false, accompagne: '35 €' },
     ],
     /**
      * Prestations à la carte : un seul élément, sans prendre une formule complète.
@@ -248,9 +251,9 @@ const ebook = {
 };
 
 /* ---------------------------------------------------------------------------
- * 4. Formulaire de commande Essentiel (envoi des documents après paiement)
+ * 4. Formulaire de commande de la formule Prêt (envoi des documents après paiement)
  * ------------------------------------------------------------------------- */
-const commandeEssentiel = {
+const commande = {
   // Lien du formulaire Tally (gratuit, accepte l'envoi de fichiers).
   lienFormulaire: 'https://tally.so/r/[ID-FORMULAIRE]',
 };
@@ -327,10 +330,10 @@ const schema = z.object({
     lien: lienSchema,
     couverture: z.string(),
   }),
-  commandeEssentiel: z.object({ lienFormulaire: lienSchema }),
+  commande: z.object({ lienFormulaire: lienSchema }),
 });
 
-export const offres = schema.parse({ diagnostic, parcours, ebook, commandeEssentiel });
+export const offres = schema.parse({ diagnostic, parcours, ebook, commande });
 
 export type Formule = z.infer<typeof formuleSchema>;
 export type Parcours = (typeof offres.parcours)[number];

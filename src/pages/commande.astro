@@ -1,9 +1,9 @@
 ---
 /**
- * Page de retour après le paiement Stripe de la formule Essentiel.
+ * Page de retour après le paiement Stripe de la formule Prêt (adresse : /commande).
  * À indiquer dans Stripe comme « page de confirmation » du lien de paiement
  * (voir README). Le client y trouve le formulaire d'envoi de ses documents.
- * Tutoiement : la formule Essentiel s'adresse aux étudiants.
+ * Tutoiement : la formule Prêt s'adresse aux étudiants.
  * Exclue des moteurs de recherche et du sitemap.
  */
 import Base from '../layouts/Base.astro';
@@ -41,7 +41,7 @@ const etapes = [
     </ol>
 
     <div class="anim-entree mt-10 flex flex-col items-center gap-4" style="--delai: 600ms">
-      <Bouton href={offres.commandeEssentiel.lienFormulaire} fleche evenement="essentiel-envoi-documents">
+      <Bouton href={offres.commande.lienFormulaire} fleche evenement="pret-envoi-documents">
         Envoyer mes documents
       </Bouton>
       <p class="flex flex-wrap items-center justify-center gap-x-2 text-sm text-gris">

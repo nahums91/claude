@@ -14,7 +14,7 @@ export default defineConfig({
   integrations: [
     sitemap({
       // Les pages de confirmation n'ont rien à faire dans Google.
-      filter: (page) => !page.includes('/commande-essentiel') && !page.includes('/demande-envoyee'),
+      filter: (page) => !page.includes('/commande') && !page.includes('/demande-envoyee'),
     }),
   ],
   vite: { plugins: [tailwindcss()] },
