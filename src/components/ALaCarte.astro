@@ -6,7 +6,7 @@
  * Données dans src/config/offres.ts (parcours[].aLaCarte).
  */
 import Bouton from './Bouton.astro';
-import { formaterPrix, type Parcours } from '../config/offres';
+import { formaterPrix, reservationEffective, type Parcours } from '../config/offres';
 
 interface Props {
   parcours: Parcours;
@@ -37,12 +37,12 @@ const { parcours: p, class: classe = '' } = Astro.props;
             <div class="flex items-center justify-between gap-5 sm:justify-end">
               <span class="font-titre text-2xl font-bold tracking-[-0.03em]">{formaterPrix(prestation.prix)}</span>
               <Bouton
-                href={prestation.reservation.lien}
+                href={reservationEffective(prestation).lien}
                 variante="secondaire"
-                ariaLabel={`${prestation.reservation.libelle} : ${prestation.nom}`}
+                ariaLabel={`${reservationEffective(prestation).libelle} : ${prestation.nom}`}
                 evenement={prestation.id}
               >
-                {prestation.reservation.libelle}
+                {reservationEffective(prestation).libelle}
               </Bouton>
             </div>
           </li>

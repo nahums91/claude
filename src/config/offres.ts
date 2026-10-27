@@ -342,3 +342,19 @@ export function trouverParcours(id: string): Parcours {
   if (!p) throw new Error(`Parcours introuvable : ${id}`);
   return p;
 }
+
+/** Vrai quand l'e-book est rédigé (titre renseigné) : sinon la section est masquée. */
+export const ebookPret = !/\[[^\]]+\]/.test(offres.ebook.titre);
+
+/**
+ * Réservation effective d'une formule ou d'une prestation à la carte.
+ * Tant qu'un lien de paiement Stripe contient encore des [CROCHETS], le bouton
+ * bascule sur le formulaire de demande, pour ne jamais afficher de lien cassé.
+ */
+export function reservationEffective(item: { id: string; reservation: { type: 'demande' | 'stripe'; libelle: string; lien: string } }) {
+  const r = item.reservation;
+  if (r.type === 'stripe' && /\[[^\]]+\]/.test(r.lien)) {
+    return { type: 'demande' as const, libelle: 'Faire une demande', lien: `/demande?formule=${item.id}` };
+  }
+  return r;
+}

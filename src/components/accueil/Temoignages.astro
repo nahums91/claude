@@ -1,15 +1,20 @@
 ---
 /**
- * Témoignages (placeholders tant que tu n'as pas les vrais retours).
+ * Témoignages. La section n'apparaît que si au moins un témoignage est rédigé.
  * Textes dans src/config/contenus.ts. Mets idéalement 3 témoignages réels,
  * avec l'accord écrit des personnes.
  */
-import { temoignages } from '../../config/contenus';
+import { temoignagesPrets as temoignages } from '../../config/contenus';
+
+interface Props {
+  numero: string;
+}
+const { numero } = Astro.props;
 ---
 
 <section id="temoignages" class="section conteneur" aria-labelledby="titre-temoignages">
   <div class="max-w-2xl" data-reveal>
-    <p class="surtitre"><span>06</span> Témoignages</p>
+    <p class="surtitre"><span>{numero}</span> Témoignages</p>
     <h2 id="titre-temoignages" class="mt-5 text-[2.5rem] md:text-6xl">Leurs <em>retours</em></h2>
   </div>
 

@@ -7,7 +7,7 @@
  */
 import Bouton from './Bouton.astro';
 import Icon from './Icon.astro';
-import { formaterPrix, type Formule } from '../config/offres';
+import { formaterPrix, reservationEffective, type Formule } from '../config/offres';
 
 interface Props {
   formule: Formule;
@@ -17,6 +17,7 @@ interface Props {
 
 const { formule: f, delai = 0 } = Astro.props;
 const sombre = f.miseEnAvant;
+const reservation = reservationEffective(f);
 const prixConnu = typeof f.prix === 'number';
 // Icône du format : document pour une formule sans visio, caméra sinon
 const sansVisio = /sans visio/i.test(f.format);
@@ -82,17 +83,17 @@ const sansVisio = /sans visio/i.test(f.format);
 
   <div class="mt-auto pt-8">
     <Bouton
-      href={f.reservation.lien}
+      href={reservation.lien}
       variante={sombre ? 'inverse' : 'principal'}
       pleineLargeur
       fleche
-      ariaLabel={`${f.reservation.libelle} la formule ${f.nom}`}
+      ariaLabel={`${reservation.libelle} la formule ${f.nom}`}
       evenement={`formule-${f.id}`}
     >
-      {f.reservation.libelle}
+      {reservation.libelle}
     </Bouton>
     {
-      f.reservation.type === 'stripe' && (
+      reservation.type === 'stripe' && (
         <p class:list={['mt-3 flex gap-2 text-sm', sombre ? 'text-sombre-doux' : 'text-gris']}>
           <Icon nom="cadenas" class="mt-0.5 size-4 shrink-0" />
           Paiement sécurisé, puis envoi de tes documents

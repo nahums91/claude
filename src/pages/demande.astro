@@ -14,7 +14,7 @@
  */
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
-import { offres, formaterPrix } from '../config/offres';
+import { offres, formaterPrix, reservationEffective } from '../config/offres';
 import { site } from '../config/site';
 
 // Liste des choix : « je ne sais pas encore », puis les formules de chaque parcours et l'à la carte
@@ -23,13 +23,13 @@ const groupes = [
     {
       label: p.titre,
       options: p.formules
-        .filter((f) => f.reservation.type === 'demande')
+        .filter((f) => reservationEffective(f).type === 'demande')
         .map((f) => ({ id: f.id, nom: f.nom, prix: f.prix })),
     },
     {
       label: `${p.titre} : à la carte`,
       options: p.aLaCarte
-        .filter((c) => c.reservation.type === 'demande')
+        .filter((c) => reservationEffective(c).type === 'demande')
         .map((c) => ({ id: c.id, nom: c.nom, prix: c.prix })),
     },
   ]),

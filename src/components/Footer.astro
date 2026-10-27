@@ -5,6 +5,8 @@
 import Icon from './Icon.astro';
 import Logo from './Logo.astro';
 import { site } from '../config/site';
+import { faqPrete } from '../config/contenus';
+import { ebookPret } from '../config/offres';
 
 const reseaux = [
   { nom: 'TikTok', icone: 'tiktok', url: site.reseaux.tiktok },
@@ -18,13 +20,13 @@ const colonnes = [
     liens: [
       { href: '/alternance', label: 'Décroche ton alternance' },
       { href: '/orientation', label: 'Clarifiez votre projet' },
-      { href: '/#ebook', label: 'E-book' },
+      ...(ebookPret ? [{ href: '/#ebook', label: 'E-book' }] : []),
     ],
   },
   {
     titre: 'Infos',
     liens: [
-      { href: '/#faq', label: 'FAQ' },
+      ...(faqPrete.length > 0 ? [{ href: '/#faq', label: 'FAQ' }] : []),
       { href: '/mentions-legales', label: 'Mentions légales' },
       { href: '/cgv', label: 'CGV' },
       { href: '/confidentialite', label: 'Confidentialité' },
@@ -93,7 +95,7 @@ const annee = new Date().getFullYear();
     <!-- Identité légale visible : un signal de sérieux, notamment pour les parents -->
     <div class="mono mt-14 flex flex-col gap-2 border-t border-ligne pt-6 text-[0.625rem] text-gris md:flex-row md:justify-between">
       <p>© {annee} {site.nom}. Tous droits réservés.</p>
-      <p>{site.legal.nomComplet} · {site.legal.statut} · SIRET {site.legal.siret}</p>
+      {!site.legal.siret.startsWith('[') && <p>{site.legal.nomComplet} · {site.legal.statut} · SIRET {site.legal.siret}</p>}
     </div>
   </div>
 </footer>

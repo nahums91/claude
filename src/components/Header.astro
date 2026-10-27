@@ -7,13 +7,15 @@ import Bouton from './Bouton.astro';
 import Icon from './Icon.astro';
 import Logo from './Logo.astro';
 import { site } from '../config/site';
+import { faqPrete } from '../config/contenus';
+import { ebookPret } from '../config/offres';
 
 const liens = [
   { href: '/alternance', label: 'Alternance' },
   { href: '/orientation', label: 'Orientation' },
-  { href: '/#ebook', label: 'E-book' },
-  { href: '/#faq', label: 'FAQ' },
-];
+  { href: '/#ebook', label: 'E-book', visible: ebookPret },
+  { href: '/#faq', label: 'FAQ', visible: faqPrete.length > 0 },
+].filter((l) => l.visible !== false);
 
 const cheminActuel = Astro.url.pathname.replace(/\.html$/, '');
 ---

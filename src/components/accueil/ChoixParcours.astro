@@ -9,7 +9,7 @@
  */
 import BlocHesitation from '../BlocHesitation.astro';
 import Icon, { type NomIcone } from '../Icon.astro';
-import { offres, formaterPrix, prixMinimum } from '../../config/offres';
+import { offres, formaterPrix, prixMinimum, ebookPret } from '../../config/offres';
 
 const icones: Record<string, NomIcone> = { alternance: 'document', orientation: 'boussole' };
 ---
@@ -79,12 +79,16 @@ const icones: Record<string, NomIcone> = { alternance: 'document', orientation: 
   <!-- Pour qui hésite : une demande, réponse par e-mail -->
   <BlocHesitation class="mt-4" delai={240} />
 
-  <!-- Pour qui veut avancer seul : l'e-book -->
-  <p class="mt-6 flex flex-wrap items-center gap-x-2 text-gris" data-reveal style="--delai: 300ms">
-    <Icon nom="livre" class="size-5" />
-    Plutôt en autonomie ?
-    <a href="#ebook" class="inline-flex min-h-11 items-center font-medium text-encre underline decoration-accent decoration-[3px] underline-offset-4">
-      Découvrir l’e-book
-    </a>
-  </p>
+  <!-- Pour qui veut avancer seul : l'e-book (affiché quand il est prêt) -->
+  {
+    ebookPret && (
+      <p class="mt-6 flex flex-wrap items-center gap-x-2 text-gris" data-reveal style="--delai: 300ms">
+        <Icon nom="livre" class="size-5" />
+        Plutôt en autonomie ?
+        <a href="#ebook" class="inline-flex min-h-11 items-center font-medium text-encre underline decoration-accent decoration-[3px] underline-offset-4">
+          Découvrir l’e-book
+        </a>
+      </p>
+    )
+  }
 </section>

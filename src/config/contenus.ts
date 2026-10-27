@@ -43,3 +43,10 @@ export const faq = [
 
 /** Vrai si un texte contient encore un emplacement [À COMPLÉTER]. */
 export const estProvisoire = (texte: string) => /\[[^\]]+\]/.test(texte);
+
+/**
+ * Sections affichées seulement quand leur contenu est rédigé
+ * (tant qu'il reste des [CROCHETS], la section et ses liens sont masqués).
+ */
+export const faqPrete = faq.filter((q) => !estProvisoire(q.question) && !estProvisoire(q.reponse));
+export const temoignagesPrets = temoignages.filter((t) => !estProvisoire(t.texte) && !estProvisoire(t.auteur));

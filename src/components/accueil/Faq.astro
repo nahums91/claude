@@ -2,16 +2,22 @@
 /**
  * FAQ en accordéon, avec les balises natives <details>/<summary> :
  * accessibles au clavier et aux lecteurs d'écran, sans JavaScript.
- * Questions et réponses dans src/config/contenus.ts.
+ * Questions et réponses dans src/config/contenus.ts. La section n'apparaît
+ * que si au moins une question est rédigée.
  */
 import Icon from '../Icon.astro';
-import { faq } from '../../config/contenus';
+import { faqPrete as faq } from '../../config/contenus';
+
+interface Props {
+  numero: string;
+}
+const { numero } = Astro.props;
 ---
 
 <section id="faq" class="section conteneur" aria-labelledby="titre-faq">
   <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
     <div data-reveal>
-      <p class="surtitre"><span>08</span> FAQ</p>
+      <p class="surtitre"><span>{numero}</span> FAQ</p>
       <h2 id="titre-faq" class="mt-5 text-[2.5rem] md:text-6xl">Questions <em>fréquentes</em></h2>
     </div>
 
