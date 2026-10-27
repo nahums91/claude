@@ -9,22 +9,23 @@
 
 @theme {
   /* Couleurs (contrastes vérifiés selon WCAG AA)
-   * Identité : bleu nuit + crème, avec une touche de cuivre (boutons,
-   * surligneur, badges). */
-  --color-fond: #f4f1ea; /* crème : fond principal */
-  --color-pale: #ebe5d9; /* fond des sections alternées */
-  --color-surface: #fbf9f5; /* fond des cartes */
-  --color-encre: #0e1626; /* bleu nuit : texte principal (16:1 sur le fond) */
-  --color-gris: #5a5f6b; /* texte secondaire (5,7:1 sur le fond) */
-  --color-ligne: #e2dcd0; /* bordures */
-  --color-primaire: #0e1626; /* bleu nuit : aplats sombres (pastilles, bandeau) */
+   * Identité tirée de la photo de profil : bleu de la veste, gris-vert
+   * ardoise du fond, avec une touche de cuivre (boutons, surligneur, badges). */
+  --color-fond: #e9eeed; /* gris-vert très pâle : fond principal */
+  --color-pale: #dbe3e2; /* fond des sections alternées */
+  --color-surface: #f7f9f9; /* fond des cartes */
+  --color-encre: #0e1626; /* bleu nuit : texte principal (15:1 sur le fond) */
+  --color-gris: #525c66; /* texte secondaire (5,8:1 sur le fond) */
+  --color-ligne: #cdd7d6; /* bordures */
+  --color-ardoise: #879597; /* gris-vert du fond de la photo : décor uniquement, jamais en fond de texte clair */
+  --color-primaire: #2a3550; /* bleu veste : aplats sombres (pastilles, bandeau) */
   --color-accent: #e39a6c; /* cuivre : boutons principaux et surligneur, texte bleu nuit dessus (7,8:1) */
-  --color-accent-fonce: #a8512a; /* cuivre foncé : icônes et liens sur fond clair (4,8:1) */
+  --color-accent-fonce: #96461f; /* cuivre foncé : icônes et liens sur fond clair (5,6:1) */
   --color-accent-doux: #f6e4d6; /* fond des pastilles d'icônes */
-  --color-sombre: #0e1626; /* bleu nuit : formule mise en avant, e-book */
-  --color-sombre-2: #162036; /* cartes posées sur fond sombre */
-  --color-sombre-doux: #a9b0be; /* texte secondaire sur fond sombre (8,3:1) */
-  --color-creme: #f1ece2; /* texte principal sur fond sombre (15:1) */
+  --color-sombre: #2a3550; /* bleu veste : en-tête, hero, formule mise en avant */
+  --color-sombre-2: #222c44; /* cartes posées sur fond sombre */
+  --color-sombre-doux: #b8c2cf; /* texte secondaire sur fond sombre (6,8:1) */
+  --color-creme: #f3f5f4; /* texte principal sur fond sombre (11:1) */
 
   /* Polices (auto-hébergées, voir src/layouts/Base.astro) */
   --font-titre: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
