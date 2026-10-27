@@ -10,7 +10,9 @@
  *  Règles simples :
  *  - prix : un nombre (ex. 117) ou un texte entre crochets tant que tu ne l'as
  *    pas fixé (ex. '[PRIX]'). 0 affiche « Gratuit ».
- *  - liens : remplace chaque 'https://cal.com/[...]' par ton vrai lien.
+ *  - demandes : les boutons des formules mènent au formulaire /demande, avec la
+ *    formule déjà sélectionnée. Tu reçois la demande par e-mail et tu réponds
+ *    avec tes créneaux.
  *  - le texte entre [CROCHETS] est un emplacement à compléter.
  *
  *  Si tu fais une erreur de format (ex. un prix négatif, un lien sans https),
@@ -31,7 +33,7 @@ const diagnostic = {
   format: 'Visio',
   prix: '[PRIX]' as number | string,
   description: 'Un point complet sur la situation pour identifier la formule adaptée.',
-  lien: 'https://cal.com/[TON-COMPTE]/diagnostic',
+  lien: '/demande?formule=diagnostic',
 };
 
 /* ---------------------------------------------------------------------------
@@ -40,7 +42,8 @@ const diagnostic = {
  *  Chaque formule a :
  *  - id : identifiant technique, ne pas modifier (utilisé dans le tableau)
  *  - miseEnAvant : true pour la carte bleu nuit (une seule par parcours)
- *  - reservation.type : 'cal' (rendez-vous Cal.com) ou 'stripe' (paiement direct)
+ *  - reservation.type : 'demande' (formulaire de demande, réponse par e-mail)
+ *    ou 'stripe' (paiement direct, sans rendez-vous)
  * ------------------------------------------------------------------------- */
 const parcours = [
   {
@@ -90,9 +93,9 @@ const parcours = [
         ],
         miseEnAvant: false,
         reservation: {
-          type: 'cal',
-          libelle: 'Réserver',
-          lien: 'https://cal.com/[TON-COMPTE]/accompagne',
+          type: 'demande',
+          libelle: 'Faire une demande',
+          lien: '/demande?formule=accompagne',
         },
       },
       {
@@ -112,9 +115,9 @@ const parcours = [
         ],
         miseEnAvant: true,
         reservation: {
-          type: 'cal',
-          libelle: 'Réserver',
-          lien: 'https://cal.com/[TON-COMPTE]/suivi',
+          type: 'demande',
+          libelle: 'Faire une demande',
+          lien: '/demande?formule=suivi',
         },
       },
     ],
@@ -157,9 +160,9 @@ const parcours = [
         ],
         miseEnAvant: false,
         reservation: {
-          type: 'cal',
-          libelle: 'Réserver',
-          lien: 'https://cal.com/[TON-COMPTE]/orientation-scolaire',
+          type: 'demande',
+          libelle: 'Faire une demande',
+          lien: '/demande?formule=orientation-scolaire',
         },
       },
       {
@@ -178,9 +181,9 @@ const parcours = [
         ],
         miseEnAvant: false,
         reservation: {
-          type: 'cal',
-          libelle: 'Réserver',
-          lien: 'https://cal.com/[TON-COMPTE]/orientation-pro',
+          type: 'demande',
+          libelle: 'Faire une demande',
+          lien: '/demande?formule=orientation-pro',
         },
       },
     ],
@@ -215,6 +218,10 @@ const commandeEssentiel = {
  * ========================================================================= */
 const prixSchema = z.union([z.number().min(0), z.string().min(1)]);
 const lienSchema = z.string().startsWith('https://', 'Un lien doit commencer par https://');
+// Lien externe (https://…) ou page du site (/…)
+const lienOuPageSchema = z
+  .string()
+  .regex(/^(https:\/\/|\/)/, 'Un lien doit commencer par https:// ou par / pour une page du site');
 
 const formuleSchema = z.object({
   id: z.string(),
@@ -227,9 +234,9 @@ const formuleSchema = z.object({
   points: z.array(z.string()),
   miseEnAvant: z.boolean(),
   reservation: z.object({
-    type: z.enum(['cal', 'stripe']),
+    type: z.enum(['demande', 'stripe']),
     libelle: z.string(),
-    lien: lienSchema,
+    lien: lienOuPageSchema,
   }),
 });
 
@@ -240,7 +247,7 @@ const schema = z.object({
     format: z.string(),
     prix: prixSchema,
     description: z.string(),
-    lien: lienSchema,
+    lien: lienOuPageSchema,
   }),
   parcours: z.array(
     z.object({

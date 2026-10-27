@@ -20,8 +20,8 @@ const diagnostic = offres.diagnostic;
 
 // Garanties affichées sous les boutons
 const garanties: { icone: NomIcone; texte: string }[] = [
-  { icone: 'cadenas', texte: 'Paiement sécurisé par Stripe' },
-  { icone: 'calendrier', texte: 'Réservation en ligne' },
+  { icone: 'cadenas', texte: 'Paiement sécurisé' },
+  { icone: 'mail', texte: 'Créneaux proposés par e-mail' },
   { icone: 'visio', texte: 'Séances en visio' },
 ];
 ---
@@ -52,7 +52,7 @@ const garanties: { icone: NomIcone; texte: string }[] = [
           {site.boutonPrincipal.libelle}
         </Bouton>
         <Bouton href={diagnostic.lien} variante="contour-inverse" evenement="diagnostic-hero">
-          Réserver un diagnostic
+          Demander un diagnostic
         </Bouton>
       </div>
 

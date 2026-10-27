@@ -13,8 +13,8 @@ export default defineConfig({
   build: { format: 'file' },
   integrations: [
     sitemap({
-      // La page de confirmation de commande n'a rien à faire dans Google.
-      filter: (page) => !page.includes('/commande-essentiel'),
+      // Les pages de confirmation n'ont rien à faire dans Google.
+      filter: (page) => !page.includes('/commande-essentiel') && !page.includes('/demande-envoyee'),
     }),
   ],
   vite: { plugins: [tailwindcss()] },

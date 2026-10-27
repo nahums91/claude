@@ -16,9 +16,9 @@ export const etapes = [
       'Un parcours (alternance ou orientation), puis la formule adaptée. En cas de doute, le diagnostic aide à trancher.',
   },
   {
-    titre: 'Réserver et payer en ligne',
+    titre: 'Envoyer sa demande',
     texte:
-      'Réservation du créneau sur Cal.com et paiement sécurisé par Stripe. Pour la formule Essentiel, envoi des documents juste après le paiement.',
+      'Un formulaire avec la formule choisie, puis une réponse par e-mail avec les créneaux disponibles. Pour la formule Essentiel, paiement en ligne et envoi des documents.',
   },
   {
     titre: 'Avancer ensemble',
