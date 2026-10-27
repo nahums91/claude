@@ -7,12 +7,11 @@
  * Motion : apparition au défilement, carte qui se soulève et flèche qui se
  * remplit au survol.
  */
-import Bouton from '../Bouton.astro';
+import BlocDiagnostic from '../BlocDiagnostic.astro';
 import Icon, { type NomIcone } from '../Icon.astro';
 import { offres, formaterPrix, prixMinimum } from '../../config/offres';
 
 const icones: Record<string, NomIcone> = { alternance: 'document', orientation: 'boussole' };
-const diagnostic = offres.diagnostic;
 ---
 
 <section id="parcours" class="section conteneur" aria-labelledby="parcours-titre">
@@ -78,23 +77,7 @@ const diagnostic = offres.diagnostic;
   </ul>
 
   <!-- Pour qui hésite : le diagnostic -->
-  <div
-    class="fond-sombre mt-4 flex flex-col gap-6 rounded-carte bg-sombre p-6 text-creme md:flex-row md:items-center md:justify-between md:p-10"
-    data-reveal
-    style="--delai: 240ms"
-  >
-    <div class="max-w-xl">
-      <h3 class="text-[1.75rem] md:text-4xl">Besoin d’y voir <em>clair</em> ?</h3>
-      <p class="mt-2 text-sombre-doux">{diagnostic.description}</p>
-      <p class="mono mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[0.6875rem] text-sombre-doux">
-        <span>{diagnostic.nom}</span><span>{diagnostic.format}</span><span>{diagnostic.duree}</span>
-        <span class="text-accent">{formaterPrix(diagnostic.prix)}</span>
-      </p>
-    </div>
-    <Bouton href={diagnostic.lien} variante="inverse" fleche class="shrink-0" evenement="diagnostic-parcours">
-      Demander un diagnostic
-    </Bouton>
-  </div>
+  <BlocDiagnostic class="mt-4" delai={240} />
 
   <!-- Pour qui veut avancer seul : l'e-book -->
   <p class="mt-6 flex flex-wrap items-center gap-x-2 text-gris" data-reveal style="--delai: 300ms">

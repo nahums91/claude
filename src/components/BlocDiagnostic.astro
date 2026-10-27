@@ -1,0 +1,38 @@
+---
+/**
+ * Encart « Besoin d'y voir clair ? » qui présente le diagnostic payant.
+ * Utilisé sur l'accueil (choix du parcours) et sur les pages de parcours.
+ */
+import Bouton from './Bouton.astro';
+import { offres, formaterPrix } from '../config/offres';
+
+interface Props {
+  /** Décalage de l'animation d'apparition, en millisecondes. */
+  delai?: number;
+  class?: string;
+}
+
+const { delai = 0, class: classe = '' } = Astro.props;
+const d = offres.diagnostic;
+---
+
+<div
+  class:list={[
+    'fond-sombre flex flex-col gap-6 rounded-carte bg-sombre p-6 text-creme md:flex-row md:items-center md:justify-between md:p-10',
+    classe,
+  ]}
+  data-reveal
+  style={`--delai: ${delai}ms`}
+>
+  <div class="max-w-xl">
+    <h3 class="text-[1.75rem] md:text-4xl">Besoin d’y voir <em>clair</em> ?</h3>
+    <p class="mt-2 text-sombre-doux">{d.description}</p>
+    <p class="mono mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[0.6875rem] text-sombre-doux">
+      <span>{d.nom}</span><span>{d.format}</span><span>{d.duree}</span>
+      <span class="text-accent">{formaterPrix(d.prix)}</span>
+    </p>
+  </div>
+  <Bouton href={d.lien} variante="inverse" fleche class="shrink-0" evenement="diagnostic">
+    Demander un diagnostic
+  </Bouton>
+</div>

@@ -1,0 +1,56 @@
+---
+/**
+ * Page de retour après le paiement Stripe de la formule Essentiel.
+ * À indiquer dans Stripe comme « page de confirmation » du lien de paiement
+ * (voir README). Le client y trouve le formulaire d'envoi de ses documents.
+ * Tutoiement : la formule Essentiel s'adresse aux étudiants.
+ * Exclue des moteurs de recherche et du sitemap.
+ */
+import Base from '../layouts/Base.astro';
+import Bouton from '../components/Bouton.astro';
+import Icon from '../components/Icon.astro';
+import { offres } from '../config/offres';
+import { site } from '../config/site';
+
+const etapes = [
+  'Envoie ton CV actuel, ta lettre de motivation et le lien de ton profil LinkedIn via le formulaire.',
+  'Précise l’alternance ou le poste visé, pour une refonte adaptée.',
+  'Livraison de tes documents retravaillés sous 5 jours ouvrés, par e-mail.',
+];
+---
+
+<Base titre="Commande confirmée" noindex>
+  <section class="conteneur pt-12 pb-20 md:pt-20 md:pb-28">
+    <div class="mx-auto max-w-2xl text-center">
+      <span class="anim-entree inline-flex size-16 items-center justify-center rounded-full bg-primaire text-accent">
+        <Icon nom="check" class="size-8" />
+      </span>
+      <h1 class="anim-entree mt-8 text-[2.5rem] md:text-6xl" style="--delai: 100ms">Paiement <em>confirmé</em></h1>
+      <p class="anim-entree mt-6 text-lg text-gris" style="--delai: 200ms">Dernière étape : l’envoi de tes documents.</p>
+    </div>
+
+    <ol class="mx-auto mt-12 grid max-w-3xl gap-4">
+      {
+        etapes.map((e, i) => (
+          <li class="anim-entree flex gap-4 rounded-carte border border-ligne bg-surface p-5 md:p-6" style={`--delai: ${300 + i * 100}ms`}>
+            <span class="font-titre inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-primaire font-bold text-accent">{i + 1}</span>
+            <span class="pt-1.5">{e}</span>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="anim-entree mt-10 flex flex-col items-center gap-4" style="--delai: 600ms">
+      <Bouton href={offres.commandeEssentiel.lienFormulaire} fleche evenement="essentiel-envoi-documents">
+        Envoyer mes documents
+      </Bouton>
+      <p class="flex flex-wrap items-center justify-center gap-x-2 text-sm text-gris">
+        <Icon nom="mail" class="size-4" />
+        Un souci avec le formulaire ?
+        <a href={`mailto:${site.contact.email}`} class="inline-flex min-h-11 items-center font-medium text-encre underline decoration-accent decoration-[3px] underline-offset-4">
+          {site.contact.email}
+        </a>
+      </p>
+    </div>
+  </section>
+</Base>

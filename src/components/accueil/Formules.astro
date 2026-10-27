@@ -39,7 +39,7 @@ const colonnes = p.formules.length === 3 ? 'lg:grid-cols-3' : 'md:grid-cols-2';
         <p class="mt-4 text-lg text-gris">{p.resume}</p>
       </div>
       <a
-        href={`/${p.id}`}
+        href={`/${p.id}${p.comparatif.length ? "#comparatif" : ""}`}
         class="inline-flex min-h-11 shrink-0 items-center gap-2 font-medium underline decoration-accent decoration-[3px] underline-offset-4"
       >
         {p.comparatif.length ? 'Comparer les formules en détail' : 'En savoir plus'}
