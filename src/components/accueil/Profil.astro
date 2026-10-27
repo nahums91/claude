@@ -1,11 +1,12 @@
 ---
 /**
  * « Qui suis-je ? » : présentation de ton profil, juste après le hero.
- * - à gauche : ton nom, ta présentation et tes réseaux
- * - à droite : une carte de profil avec ton parcours en frise
+ * - à gauche : ta photo, avec ton prénom et ton rôle en légende
+ * - à droite : ta présentation, tes réseaux et ton parcours en frise
  * Les contenus se modifient dans src/config/site.ts (site.profil).
  *
- * Sans photo, un monogramme « N » s'affiche dans l'avatar.
+ * Sans photo, la colonne de gauche disparaît et un monogramme « N »
+ * s'affiche en tête de la carte de parcours.
  * Motion : apparition au défilement, les étapes de la frise l'une après l'autre.
  */
 import Icon from '../Icon.astro';
@@ -20,9 +21,30 @@ const reseaux = [
 ---
 
 <section id="profil" class="section conteneur" aria-labelledby="titre-profil">
-  <div class="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20">
+  <div class:list={['grid gap-12 lg:gap-20', p.photo ? 'lg:grid-cols-[0.85fr_1.15fr]' : 'items-center lg:grid-cols-[1fr_1fr]']}>
+    <!-- Photo : sous le titre sur mobile, en colonne de gauche sur grand écran -->
+    {
+      p.photo && (
+        <figure class="relative order-2 lg:sticky lg:top-28 lg:order-1 lg:row-span-2 lg:self-start" data-reveal>
+          <img
+            src={p.photo}
+            alt={`Portrait de ${site.prenom}`}
+            width="800"
+            height="1000"
+            loading="lazy"
+            decoding="async"
+            class="aspect-[4/5] w-full rounded-carte bg-accent object-cover"
+          />
+          <figcaption class="absolute inset-x-4 bottom-4 rounded-petit bg-surface/95 px-5 py-4 backdrop-blur-sm">
+            <p class="font-titre text-xl font-bold tracking-[-0.03em]">{site.prenom}</p>
+            <p class="text-gris">{p.role}</p>
+          </figcaption>
+        </figure>
+      )
+    }
+
     <!-- Présentation -->
-    <div data-reveal>
+    <div class="order-1 lg:order-2" data-reveal>
       <p class="surtitre"><span>01</span> À propos</p>
       <h2 id="titre-profil" class="mt-5 text-[2.5rem] md:text-6xl">Qui <em>suis-je</em> ?</h2>
       <p class="mt-6 max-w-xl text-lg text-gris">{p.pitch}</p>
@@ -50,26 +72,28 @@ const reseaux = [
       </div>
     </div>
 
-    <!-- Carte de profil -->
-    <div class="rounded-carte border border-ligne bg-surface p-6 shadow-[0_30px_60px_-40px_rgb(14_22_38/0.35)] md:p-8" data-reveal style="--delai: 120ms">
-      <div class="flex items-center gap-4 border-b border-ligne pb-6">
-        {
-          p.photo ? (
-            <img src={p.photo} alt={`Portrait de ${site.prenom}`} width="64" height="64" loading="lazy" class="size-16 rounded-full object-cover" />
-          ) : (
+    <!-- Carte de parcours -->
+    <div
+      class="order-3 rounded-carte border border-ligne bg-surface p-6 shadow-[0_30px_60px_-40px_rgb(14_22_38/0.35)] md:p-8"
+      data-reveal
+      style="--delai: 120ms"
+    >
+      {
+        !p.photo && (
+          <div class="mb-6 flex items-center gap-4 border-b border-ligne pb-6">
             <span class="inline-flex size-16 shrink-0 items-center justify-center rounded-full bg-primaire font-serif text-3xl text-accent italic" aria-hidden="true">
               {site.prenom.charAt(0)}
             </span>
-          )
-        }
-        <div>
-          <p class="font-titre text-2xl font-bold tracking-[-0.03em]">{site.prenom}</p>
-          <p class="text-gris">{p.role}</p>
-        </div>
-      </div>
+            <div>
+              <p class="font-titre text-2xl font-bold tracking-[-0.03em]">{site.prenom}</p>
+              <p class="text-gris">{p.role}</p>
+            </div>
+          </div>
+        )
+      }
 
       <!-- Parcours en frise -->
-      <ol class="relative mt-6 space-y-6 before:absolute before:top-2 before:bottom-2 before:left-[0.4375rem] before:w-px before:bg-ligne">
+      <ol class="relative space-y-6 before:absolute before:top-2 before:bottom-2 before:left-[0.4375rem] before:w-px before:bg-ligne">
         {
           p.parcours.map((etape, i) => (
             <li class="relative pl-9" data-reveal style={`--delai: ${200 + i * 120}ms`}>

@@ -45,8 +45,8 @@ export const site = {
     pitch:
       'Ce que j’ai appris en 5 ans d’alternance, je le partage pour que ton entrée dans le monde pro ne dépende pas de qui tu connais.',
     // Photo de profil facultative : dépose-la dans /public puis indique son chemin (ex. '/nahum.jpg').
-    photo: '',
-    // Ton parcours. Mets « actuel: true » sur l'étape à mettre en avant (point cuivre).
+    photo: '/nahum.webp',
+    // Ton parcours. Mets « actuel: true » sur l'étape à mettre en avant (point gris-vert).
     parcours: [
       {
         periode: '5 ans d’alternance',
