@@ -9,8 +9,8 @@
 
 @theme {
   /* Couleurs (contrastes vérifiés selon WCAG AA)
-   * Identité : bleu nuit + crème, avec une touche de cuivre (boutons,
-   * surligneur, badges). */
+   * Identité : bleu nuit + crème, avec une touche de gris-vert ardoise
+   * (boutons, surligneur, badges), repris du fond de la photo de profil. */
   --color-fond: #f4f1ea; /* crème : fond principal */
   --color-pale: #ebe5d9; /* fond des sections alternées */
   --color-surface: #fbf9f5; /* fond des cartes */
@@ -18,9 +18,9 @@
   --color-gris: #5a5f6b; /* texte secondaire (5,7:1 sur le fond) */
   --color-ligne: #e2dcd0; /* bordures */
   --color-primaire: #0e1626; /* bleu nuit : aplats sombres (pastilles, bandeau) */
-  --color-accent: #e39a6c; /* cuivre : boutons principaux et surligneur, texte bleu nuit dessus (7,8:1) */
-  --color-accent-fonce: #a8512a; /* cuivre foncé : icônes et liens sur fond clair (4,8:1) */
-  --color-accent-doux: #f6e4d6; /* fond des pastilles d'icônes */
+  --color-accent: #74a39b; /* gris-vert soutenu : boutons principaux et surligneur, texte bleu nuit dessus (6,4:1) */
+  --color-accent-fonce: #3a635c; /* gris-vert foncé : icônes et liens sur fond clair (6:1) */
+  --color-accent-doux: #dcebe8; /* fond des pastilles d'icônes */
   --color-sombre: #0e1626; /* bleu nuit : formule mise en avant, e-book */
   --color-sombre-2: #162036; /* cartes posées sur fond sombre */
   --color-sombre-doux: #a9b0be; /* texte secondaire sur fond sombre (8,3:1) */
@@ -112,7 +112,7 @@
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
   }
-  /* Sur fond sombre : même surligneur cuivre, sous un mot couleur crème */
+  /* Sur fond sombre : même surligneur gris-vert, sous un mot couleur crème */
   .fond-sombre h1 em,
   .fond-sombre h2 em,
   .fond-sombre h3 em {
@@ -130,9 +130,13 @@
 
   /* Focus clavier bien visible, uniquement à la navigation au clavier */
   :focus-visible {
-    outline: 3px solid var(--color-accent);
+    outline: 3px solid var(--color-accent-fonce);
     outline-offset: 3px;
     border-radius: 8px;
+  }
+  /* Sur fond sombre, le gris-vert clair reste bien visible */
+  .fond-sombre :focus-visible {
+    outline-color: var(--color-accent);
   }
 }
 
