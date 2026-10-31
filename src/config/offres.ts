@@ -99,7 +99,7 @@ const parcours = [
           'Visios collectives hebdomadaires dans le groupe privé (Podia)',
           '1 visio de suivi individuelle par mois',
           'Groupe privé : entraide, partage d’offres, motivation',
-          'Visio individuelle supplémentaire : 35 €',
+          'Visio individuelle supplémentaire : 35\u00a0€',
         ],
         miseEnAvant: true,
         reservation: {
@@ -124,7 +124,7 @@ const parcours = [
       { critere: 'Visios collectives hebdomadaires (groupe Podia)', pret: false, prepare: false, accompagne: true },
       { critere: 'Visio de suivi individuelle', pret: false, prepare: false, accompagne: '1 par mois' },
       { critere: 'Groupe privé des élèves (Podia)', pret: false, prepare: false, accompagne: true },
-      { critere: 'Visio individuelle supplémentaire', pret: false, prepare: false, accompagne: '35 €' },
+      { critere: 'Visio individuelle supplémentaire', pret: false, prepare: false, accompagne: '35\u00a0€' },
     ],
     /**
      * Prestations à la carte : un seul élément, sans prendre une formule complète.
