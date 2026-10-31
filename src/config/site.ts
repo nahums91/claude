@@ -79,7 +79,7 @@ export const site = {
   reseaux: {
     tiktok: 'https://www.tiktok.com/@nahum_apc',
     instagram: 'https://www.instagram.com/nahum_apc',
-    linkedin: '', // [LIEN LINKEDIN]
+    linkedin: 'https://www.linkedin.com/in/nahum-sonkere/',
   },
 
   /**

@@ -27,8 +27,8 @@
   --color-creme: #f1ece2; /* texte principal sur fond sombre (15:1) */
 
   /* Polices (auto-hébergées, voir src/layouts/Base.astro) */
-  --font-titre: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-texte: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-titre: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-texte: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
   --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
   --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
 
@@ -87,10 +87,10 @@
   h3,
   h4 {
     font-family: var(--font-titre);
-    /* Bricolage Grotesque : du caractère, sans être austère */
+    /* Plus Jakarta Sans : moderne, aux courbes douces */
     font-weight: 700;
-    line-height: 1.02;
-    letter-spacing: -0.035em;
+    line-height: 1.04;
+    letter-spacing: -0.03em;
     text-wrap: balance;
   }
 

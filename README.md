@@ -208,7 +208,7 @@ netlify.toml       ← réglages de déploiement Netlify
   même en 4G depuis TikTok ou Instagram.
 - **Tailwind CSS** pour la mise en forme ; la charte (couleurs, polices) est centralisée dans
   `src/styles/global.css`.
-- **Polices hébergées sur le site** (Bricolage Grotesque, Geist, Instrument Serif) : plus
+- **Polices hébergées sur le site** (Plus Jakarta Sans, Geist Mono, Instrument Serif) : plus
   rapide, et aucune donnée envoyée à Google Fonts.
 - **Animations** en CSS, désactivées automatiquement si le visiteur a activé « Réduire les
   animations » sur son téléphone.
